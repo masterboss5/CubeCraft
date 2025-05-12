@@ -1,5 +1,6 @@
 package util;
 
+import graphic.Camera;
 import io.Window;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -38,15 +39,15 @@ public class Math {
         return projectionMatrix;
     }
 
-//    public static Matrix4f createViewMatrix(Camera camera) {
-//        Matrix4f viewMatrix = new Matrix4f().identity();
-//        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().x), new Vector3f(0, 1, 0), viewMatrix);
-//        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().y), new Vector3f(1, 0, 0), viewMatrix);
-//        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().z), new Vector3f(0, 1, 0), viewMatrix);
-//        Vector3f cameraPos = camera.getPosition();
-//        Vector3f negativeCameraPos = new Vector3f(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-//        viewMatrix.translate(negativeCameraPos, viewMatrix);
-//
-//        return viewMatrix;
-//    }
+    public static Matrix4f createViewMatrix(Camera camera) {
+        Matrix4f viewMatrix = new Matrix4f().identity();
+        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().x), new Vector3f(0, 1, 0), viewMatrix);
+        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().y), new Vector3f(1, 0, 0), viewMatrix);
+        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().z), new Vector3f(0, 1, 0), viewMatrix);
+        Vector3f cameraPos = camera.getPosition();
+        Vector3f negativeCameraPos = new Vector3f(-cameraPos.x, -cameraPos.y, -cameraPos.z);
+        viewMatrix.translate(negativeCameraPos, viewMatrix);
+
+        return viewMatrix;
+    }
 }

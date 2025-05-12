@@ -15,7 +15,7 @@ public class Camera {
     private static final float FOV = 70;
     private static final float NEAR_PLANE = 0.1F;
     private static final float FAR_PLANE = 100F;
-    private Matrix4f projectionMatrix = util.Math.createProjectionMatrix(window, FOV, NEAR_PLANE, FAR_PLANE);
+    private Matrix4f viewMatrix;
 
     public Camera(Window window, InputHandler inputHandler) {
         this.window = window;
@@ -23,6 +23,8 @@ public class Camera {
     }
 
     public void tick() {
+        this.viewMatrix = util.Math.createViewMatrix(this);
+
         if (this.inputHandler.isKeyDown(GLFW.GLFW_KEY_W)) {
             this.position.z = this.position.z - 0.02F;
         }
@@ -54,6 +56,8 @@ public class Camera {
         if (this.inputHandler.isKeyDown(GLFW.GLFW_KEY_RIGHT)) {
             this.rotation.x = this.rotation.x + Math.toRadians(15);
         }
+
+        this.viewMatrix.translate(this.position.negate());
     }
 
     public Vector3f getPosition() {
@@ -70,5 +74,9 @@ public class Camera {
 
     public void setRotation(Vector3f rotation) {
         this.rotation = rotation;
+    }
+
+    public Matrix4f getViewMatrix() {
+        return viewMatrix;
     }
 }
