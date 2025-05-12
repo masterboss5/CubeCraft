@@ -1,7 +1,9 @@
 package graphic;
 
 import io.InputHandler;
+import io.Window;
 import org.joml.Math;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
@@ -9,8 +11,14 @@ public class Camera {
     private InputHandler inputHandler;
     private Vector3f position = new Vector3f();
     private Vector3f rotation = new Vector3f();
+    private Window window;
+    private static final float FOV = 70;
+    private static final float NEAR_PLANE = 0.1F;
+    private static final float FAR_PLANE = 100F;
+    private Matrix4f projectionMatrix = util.Math.createProjectionMatrix(window, FOV, NEAR_PLANE, FAR_PLANE);
 
-    public Camera(InputHandler inputHandler) {
+    public Camera(Window window, InputHandler inputHandler) {
+        this.window = window;
         this.inputHandler = inputHandler;
     }
 
