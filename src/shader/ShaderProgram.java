@@ -1,5 +1,6 @@
 package shader;
 
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL46;
 
 public abstract class ShaderProgram implements glUniformManager, ShaderLoader {
@@ -25,5 +26,17 @@ public abstract class ShaderProgram implements glUniformManager, ShaderLoader {
     @Override
     public int getProgramID() {
         return this.programID;
+    }
+
+    public void setViewMatrix4fUniform(Matrix4f value) {
+        this.setUniformMatrix4f("view", value);
+    }
+
+    public void setTransformationMatrix4fUniform(Matrix4f value) {
+        this.setUniformMatrix4f("transform", value);
+    }
+
+    public void setProjectionMatrix4fUniform(Matrix4f value) {
+        this.setUniformMatrix4f("projection", value);
     }
 }

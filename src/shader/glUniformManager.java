@@ -1,6 +1,8 @@
 package shader;
 
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL46;
+import util.Math;
 
 public interface glUniformManager {
     int getProgramID();
@@ -39,5 +41,9 @@ public interface glUniformManager {
 
     default void setUniform4i(String location, int i1, int i2, int i3, int i4) {
         GL46.glUniform4i(getLocation(location), i1, i2, i3, i4);
+    }
+
+    default void setUniformMatrix4f(String location, Matrix4f m1) {
+        GL46.glUniformMatrix4fv(getLocation(location), false, Math.matrix4fToFloatArray(m1));
     }
 }

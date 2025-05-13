@@ -1,6 +1,7 @@
 package main;
 
 import graphic.BasicModel;
+import graphic.Camera;
 import io.InputHandler;
 import io.Window;
 import org.lwjgl.glfw.GLFW;
@@ -14,6 +15,7 @@ public class Main {
     public static Main INSTANCE;
     private InputHandler inputHandler;
     public Window window;
+    private Camera camera;
 
     BasicModel testModel;
 
@@ -41,6 +43,7 @@ public class Main {
 
     private void update() {
         this.window.updateWindow();
+        this.camera.tick();
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glClearColor(1, 0, 0, 1F);
         GLFW.glfwPollEvents();
@@ -54,6 +57,8 @@ public class Main {
 
         this.inputHandler = new InputHandler(this.window);
         this.testModel = ModelBuilder.buildBasicModel(ShaderPrograms.COLOR_SHADER_PROGRAM, this.vertices, this.indices);
+        this.camera = new Camera(this.window, this.inputHandler);
+        RenderSystem.init(this.window, this.camera);
     }
 
     private void start() {
