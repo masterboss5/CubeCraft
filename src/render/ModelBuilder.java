@@ -1,6 +1,7 @@
 package render;
 
 import graphic.BasicModel;
+import graphic.BlockModel;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL45;
 import org.lwjgl.opengl.GL46;
@@ -21,6 +22,15 @@ public class ModelBuilder {
         unbindVAO();
 
         return new BasicModel(shaderProgram, vaoID, positions.length, indices.length);
+    }
+
+    public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] positions, int[] indices) {
+        int vaoID = createVAO();
+        storeDataInAttributeList(0, positions, 3);
+        storeDataInIndicesBuffer(indices);
+        unbindVAO();
+
+        return new BlockModel(shaderProgram, vaoID, positions.length, indices.length);
     }
 
     private static void storeDataInIndicesBuffer(int[] indices) {

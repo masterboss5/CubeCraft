@@ -1,17 +1,18 @@
 package block;
 
-import graphic.BasicModel;
+import graphic.BlockModel;
+import graphic.Model;
 import render.Renderable;
 
 public abstract class AbstractBlock implements Renderable {
-    BasicModel model;
+    BlockModel model;
 
-    protected AbstractBlock(BasicModel model) {
+    protected AbstractBlock(BlockModel model) {
         this.model = model;
     }
 
     @Override
-    public BasicModel getModel() {
+    public Model getModel() {
         return model;
     }
 }

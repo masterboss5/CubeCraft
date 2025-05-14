@@ -1,7 +1,8 @@
 package render;
 
 import graphic.BasicModel;
+import graphic.Model;
 
 public interface Renderable {
-    BasicModel getModel();
+    Model getModel();
 }

@@ -1,15 +1,15 @@
 package main;
 
+import block.GrassBlock;
 import graphic.BasicModel;
 import graphic.Camera;
+import graphic.Models;
 import io.InputHandler;
 import io.Window;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
-import render.ModelBuilder;
 import render.RenderSystem;
-import shader.ShaderPrograms;
 
 public class Main {
     public static Main INSTANCE;
@@ -17,19 +17,7 @@ public class Main {
     public Window window;
     private Camera camera;
 
-    BasicModel testModel;
-
-    float[] vertices = {
-            -0.5f, 0.5f, 0f,
-            -0.5f, -0.5f, 0f,
-            0.5f, -0.5f, 0f,
-            0.5f, 0.5f, 0f,
-    };
-
-    int[] indices = {
-            0, 1, 3,
-            3, 1, 2
-    };
+    GrassBlock grassBlock;
 
     public static void main(String[] args) {
         INSTANCE = new Main();
@@ -37,7 +25,7 @@ public class Main {
     }
 
     private void render() {
-        RenderSystem.render(this.testModel);
+        RenderSystem.render(this.grassBlock);
         GLFW.glfwSwapBuffers(this.window.getWindowAddress());
     }
 
@@ -56,9 +44,10 @@ public class Main {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
 
         this.inputHandler = new InputHandler(this.window);
-        this.testModel = ModelBuilder.buildBasicModel(ShaderPrograms.COLOR_SHADER_PROGRAM, this.vertices, this.indices);
+        this.grassBlock = new GrassBlock();
         this.camera = new Camera(this.window, this.inputHandler);
         RenderSystem.init(this.window, this.camera);
+        Models.loadModels();
     }
 
     private void start() {
