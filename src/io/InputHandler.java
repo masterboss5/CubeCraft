@@ -64,7 +64,7 @@ public class InputHandler {
         GLFW.glfwSetWindowSizeCallback(this.windowAddress, this.windowResizeCallback);
     }
 
-    public void cleanUp() {
+    public void cleanup() {
         this.keyPress.free();
         this.mouseMove.free();
         this.mouseClick.free();
