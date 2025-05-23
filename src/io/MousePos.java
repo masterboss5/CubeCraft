@@ -55,4 +55,9 @@ public class MousePos {
     public void setPrevY(double prevY) {
         this.prevY = prevY;
     }
+
+    public void resetDelta() {
+        this.setDeltaX(0);
+        this.setDeltaY(0);
+    }
 }

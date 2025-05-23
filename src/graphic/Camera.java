@@ -17,6 +17,7 @@ public class Camera {
     private static final float FOV = 70;
     private static final float NEAR_PLANE = 0.1F;
     private static final float FAR_PLANE = 100F;
+    private static final float SENSITIVITY = 0.15F;
     private Matrix4f viewMatrix;
 
     public Camera(Window window, InputHandler inputHandler, Mouse mouse) {
@@ -59,11 +60,11 @@ public class Camera {
         }
 
         if (this.mouse.isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
-            this.rotation.y += (float) (this.mouse.getMousePos().getDeltaX() * 1);
-            this.rotation.x -= (float) this.mouse.getMousePos().getDeltaX();
-
-            this.rotation.x = Math.max(-89f, Math.min(89f, this.rotation.x));
+            this.rotation.y += ((float) (this.mouse.getMousePos().getDeltaY() * SENSITIVITY));
+            this.rotation.x -= -((float) (this.mouse.getMousePos().getDeltaX() * SENSITIVITY));
         }
+
+        this.mouse.getMousePos().resetDelta();
     }
 
     public Vector3f getPosition() {
