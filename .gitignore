@@ -27,3 +27,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/.idea/.gitignore
+/CubeCraft.iml
+/.idea/libraries/LWJGL.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml

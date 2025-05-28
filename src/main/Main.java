@@ -3,9 +3,7 @@ package main;
 import block.GrassBlock;
 import graphic.Camera;
 import graphic.Models;
-import io.InputHandler;
-import io.Mouse;
-import io.Window;
+import io.*;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -13,7 +11,6 @@ import render.RenderSystem;
 
 public class Main {
     public static Main INSTANCE;
-    private InputHandler inputHandler;
     private Mouse mouse;
     public Window window;
     private Camera camera;
@@ -37,7 +34,12 @@ public class Main {
         GL11.glClearColor(1, 0, 0, 1F);
         GLFW.glfwPollEvents();
 
-        System.out.println(this.mouse.getMousePos().getDeltaX());
+        System.out.println(InputManager.getMouse().getMousePos().getDeltaX());
+    }
+
+    private void initInputs() {
+        InputManager.registerMouseInput(new Mouse(this.window));
+        InputManager.registerKeyboardInput(new Keyboard(this.window));
     }
 
     private void init() {
@@ -47,10 +49,9 @@ public class Main {
         GL.createCapabilities();
         GL11.glEnable(GL11.GL_DEPTH_TEST);
 
-        this.inputHandler = new InputHandler(this.window);
-        this.mouse = new Mouse(this.window);
+        this.initInputs();
         this.grassBlock = new GrassBlock();
-        this.camera = new Camera(this.window, this.inputHandler, this.mouse);
+        this.camera = new Camera(this.window, this.mouse);
         RenderSystem.init(this.window, this.camera);
         Models.loadModels();
     }
@@ -62,7 +63,7 @@ public class Main {
             this.update();
             this.render();
 
-            if (this.inputHandler.isKeyDown(GLFW.GLFW_KEY_F11)) {
+            if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_F11)) {
                 this.window.setFullscreen(!this.window.isFullscreen());
                 System.out.println("F11");
             };
@@ -72,8 +73,7 @@ public class Main {
     }
 
     private void cleanUp() {
-        this.inputHandler.cleanup();
-        this.mouse.cleanup();
+        InputManager.cleanUp();
 
         GLFW.glfwWindowShouldClose(this.window.getWindowAddress());
         GLFW.glfwDestroyWindow(this.window.getWindowAddress());
