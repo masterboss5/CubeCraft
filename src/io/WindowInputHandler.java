@@ -13,7 +13,6 @@ public class WindowInputHandler implements IInputHandler {
         this.windowResizeCallback = new GLFWWindowSizeCallback() {
             @Override
             public void invoke(long window, int width, int height) {
-
             }
         };
     }
