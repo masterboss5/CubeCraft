@@ -40,6 +40,7 @@ public class Main {
     private void initInputs() {
         InputManager.registerMouseInput(new Mouse(this.window));
         InputManager.registerKeyboardInput(new Keyboard(this.window));
+        InputManager.registerWindowInput(new WindowInput(this.window));
     }
 
     private void init() {

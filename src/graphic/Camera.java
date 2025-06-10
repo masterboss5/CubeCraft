@@ -1,6 +1,5 @@
 package graphic;
 
-import io.InputHandler;
 import io.InputManager;
 import io.Mouse;
 import io.Window;

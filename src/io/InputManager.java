@@ -3,9 +3,10 @@ package io;
 import exception.InputAlreadyInitializedException;
 
 public class InputManager {
-    private static boolean[] registered = {false, false};
+    private static boolean[] registered = {false, false, false};
     private static Mouse mouse;
     private static Keyboard keyboard;
+    private static WindowInput windowInput;
 
     public static void registerMouseInput(Mouse mouseInput) {
         if (registered[0]) throw new InputAlreadyInitializedException("Mouse");
@@ -17,6 +18,12 @@ public class InputManager {
         if (registered[1]) throw new InputAlreadyInitializedException("Keyboard");
         keyboard = keyboardInput;
         registered[1] = true;
+    }
+
+    public static void registerWindowInput(WindowInput _windowInput) {
+        if (registered[2]) throw new InputAlreadyInitializedException("Window");
+        windowInput = _windowInput;
+        registered[2] = true;
     }
 
     public static void cleanUp() {

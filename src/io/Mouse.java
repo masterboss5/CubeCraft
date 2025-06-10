@@ -4,7 +4,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
-public class Mouse implements IInputHandler {
+public class Mouse implements InputHandler {
     private static boolean[] mouseButtons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private final MousePos mousePos = new MousePos();
     private GLFWCursorPosCallback mouseMove;

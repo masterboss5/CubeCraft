@@ -3,7 +3,7 @@ package io;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
 
-public class Keyboard implements IInputHandler {
+public class Keyboard implements InputHandler {
     public static boolean[] keys = new boolean[GLFW.GLFW_KEY_LAST];
     private Window window;
     private long windowAddress;
