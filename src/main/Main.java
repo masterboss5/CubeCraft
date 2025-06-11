@@ -8,14 +8,14 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
+import world.World;
 
 public class Main {
     public static Main INSTANCE;
     private Mouse mouse;
     public Window window;
     private Camera camera;
-
-    GrassBlock grassBlock;
+    private World world;
 
     public static void main(String[] args) {
         INSTANCE = new Main();
@@ -23,7 +23,8 @@ public class Main {
     }
 
     private void render() {
-        RenderSystem.render(this.grassBlock);
+//        RenderSystem.render(this.grassBlock);
+        this.world.renderWorld();
         GLFW.glfwSwapBuffers(this.window.getWindowAddress());
     }
 
@@ -51,10 +52,11 @@ public class Main {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
 
         this.initInputs();
-        this.grassBlock = new GrassBlock();
+        Models.loadModels();
+        this.world = new World();
+        this.world.loadWorld();
         this.camera = new Camera(this.window, this.mouse);
         RenderSystem.init(this.window, this.camera);
-        Models.loadModels();
     }
 
     private void start() {

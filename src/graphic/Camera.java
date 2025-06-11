@@ -57,10 +57,10 @@ public class Camera {
             this.rotation.x = this.rotation.x + Math.toRadians(15);
         }
 
-        if (InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
-            this.rotation.y += ((float) (InputManager.getMouse().getMousePos().getDeltaY() * SENSITIVITY));
-            this.rotation.x -= -((float) (InputManager.getMouse().getMousePos().getDeltaX() * SENSITIVITY));
-        }
+//        if (InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
+//            this.rotation.y += ((float) (InputManager.getMouse().getMousePos().getDeltaY() * SENSITIVITY));
+//            this.rotation.x -= -((float) (InputManager.getMouse().getMousePos().getDeltaX() * SENSITIVITY));
+//        }
 
         InputManager.getMouse().getMousePos().resetDelta();
     }

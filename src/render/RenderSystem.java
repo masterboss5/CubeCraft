@@ -1,6 +1,6 @@
 package render;
 
-import block.AbstractBlock;
+import block.Block;
 import graphic.BasicModel;
 import graphic.Camera;
 import graphic.Model;
@@ -20,6 +20,7 @@ public class RenderSystem {
         projectionMatrix = Math.createProjectionMatrix(window, camera.getFOV(), camera.getNearPlane(), camera.getFarPlane());
     }
 
+/*    @Deprecated
     public static void render(BasicModel model) {
         model.startShader();
         GL46.glBindVertexArray(model.getVaoID());
@@ -33,9 +34,9 @@ public class RenderSystem {
         GL46.glDisableVertexAttribArray(0);
         GL46.glBindVertexArray(0);
         model.stopShader();
-    }
+    }*/
 
-    public static void render(AbstractBlock block) {
+    public static void render(Block block) {
 
         Model model = block.getModel();
 
@@ -44,7 +45,7 @@ public class RenderSystem {
         GL46.glEnableVertexAttribArray(0);
 
         model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
-        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(model.getPosition(), model.getRotation(), model.getScale()));
+        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition(), model.getRotation(), model.getScale()));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
         GL46.glDrawElements(GL46.GL_TRIANGLES, model.getVertices(), GL46.GL_UNSIGNED_INT, 0);

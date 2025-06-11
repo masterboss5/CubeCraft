@@ -8,7 +8,6 @@ public abstract class Model {
     private int vaoID;
     private int vertices;
     private int indices;
-    private Vector3f position = new Vector3f(0, 0, -1);
     private Vector3f rotation = new Vector3f();
     private Vector3f scale = new Vector3f(1);
     private ShaderProgram shaderProgram;
@@ -26,14 +25,6 @@ public abstract class Model {
 
     public void stopShader() {
         GL46.glUseProgram(0);
-    }
-
-    public Vector3f getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector3f position) {
-        this.position = position;
     }
 
     public Vector3f getRotation() {
