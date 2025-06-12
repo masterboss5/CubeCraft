@@ -10,11 +10,17 @@ import java.util.Map;
 
 public class World {
     Map<BlockPosition, Block> blocks = new HashMap<>();
-
     public void loadWorld() {
-        blocks.put(new BlockPosition(0, 0, 0), new GrassBlock());
-        blocks.put(new BlockPosition(0, 1, 0), new GrassBlock());
-        blocks.put(new BlockPosition(0, 2, 0), new GrassBlock());
+        for (int x = 0; x < 10; x++) {
+            for (int z = 0; z < 10; z++) {
+                for (int y = 0; y < 1; y++) {
+                    blocks.put(new BlockPosition(x, y, z), new GrassBlock());
+                }
+            }
+        }
+    }
+
+    public void tickWorld() {
     }
 
     public void renderWorld() {

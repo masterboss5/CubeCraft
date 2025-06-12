@@ -1,6 +1,6 @@
 package io;
 
-public class MousePos {
+public class MousePosition {
     double x;
     double y;
     double prevX;

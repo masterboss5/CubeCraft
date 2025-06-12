@@ -6,7 +6,7 @@ import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
 public class Mouse implements InputHandler {
     private static boolean[] mouseButtons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
-    private final MousePos mousePos = new MousePos();
+    private final MousePosition mousePosition = new MousePosition();
     private GLFWCursorPosCallback mouseMove;
     private GLFWMouseButtonCallback mouseClick;
     public Window window;
@@ -59,8 +59,8 @@ public class Mouse implements InputHandler {
         this.mouseClick.free();
     }
 
-    public MousePos getMousePos() {
-        return mousePos;
+    public MousePosition getMousePos() {
+        return mousePosition;
     }
 
     public boolean isMouseButtonDown(int button) {

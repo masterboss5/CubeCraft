@@ -25,6 +25,7 @@ public class Main {
     private void render() {
 //        RenderSystem.render(this.grassBlock);
         this.world.renderWorld();
+        this.world.tickWorld();
         GLFW.glfwSwapBuffers(this.window.getWindowAddress());
     }
 
@@ -34,8 +35,6 @@ public class Main {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glClearColor(1, 0, 0, 1F);
         GLFW.glfwPollEvents();
-
-        System.out.println(InputManager.getMouse().getMousePos().getDeltaX());
     }
 
     private void initInputs() {
