@@ -12,7 +12,8 @@ import javax.imageio.ImageIO;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Texture {
-    private int width, height;
+    private int width;
+    private int height;
     private int texture;
 
     public Texture(String path) {
@@ -43,18 +44,16 @@ public class Texture {
             data[i] = a << 24 | b << 16 | g << 8 | r;
         }
 
-        int result = glGenTextures();
-        glBindTexture(GL_TEXTURE_2D, result);
+        int textureID = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, textureID);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-        IntBuffer buffer = ByteBuffer.allocateDirect(data.length << 2)
-                .order(ByteOrder.nativeOrder()).asIntBuffer();
+        IntBuffer buffer = ByteBuffer.allocateDirect(data.length << 2).order(ByteOrder.nativeOrder()).asIntBuffer();
         buffer.put(data).flip();
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA,
-                GL_UNSIGNED_BYTE, buffer);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
         glBindTexture(GL_TEXTURE_2D, 0);
-        return result;
+        return textureID;
     }
 }
