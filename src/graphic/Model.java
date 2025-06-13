@@ -20,11 +20,15 @@ public abstract class Model {
     }
 
     public void startShader() {
-        GL46.glUseProgram(shaderProgram.getProgramID());
+        GL46.glUseProgram(this.shaderProgram.getProgramID());
     }
 
     public void stopShader() {
         GL46.glUseProgram(0);
+    }
+
+    public void tickShaderProgram() {
+        this.shaderProgram.tickShaderProgram();
     }
 
     public Vector3f getRotation() {

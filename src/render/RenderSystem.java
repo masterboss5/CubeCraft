@@ -40,6 +40,7 @@ public class RenderSystem {
         Model model = block.getModel();
 
         model.startShader();
+        model.tickShaderProgram();
         GL46.glBindVertexArray(model.getVaoID());
         GL46.glEnableVertexAttribArray(0);
 

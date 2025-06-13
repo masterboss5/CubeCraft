@@ -23,6 +23,8 @@ public abstract class ShaderProgram implements glUniformManager, ShaderLoader {
         GL46.glLinkProgram(this.programID);
     }
 
+    public abstract void tickShaderProgram();
+
     @Override
     public int getProgramID() {
         return this.programID;
