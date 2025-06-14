@@ -29,8 +29,8 @@ public class Texture {
             this.height = image.getHeight();
             pixels = new int[this.width * this.height];
             image.getRGB(0, 0, this.width, this.height, pixels, 0, this.width);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
 
         int[] data = new int[this.width * this.height];
