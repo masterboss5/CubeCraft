@@ -1,16 +1,20 @@
 package graphic;
 
 public class UVCoordinates {
+    // Top-left corner (0,1)
     float topLeftX = 0f;
-    float topLeftY = 0f;
+    float topLeftY = 1f;
 
-    float topRightX = 1.0f;
-    float topRightY = 0f;
+    // Top-right corner (1,1)
+    float topRightX = 1f;
+    float topRightY = 1f;
 
-    float bottomLeftX = 0.0f;
+    // Bottom-left corner (0,0)
+    float bottomLeftX = 0f;
+    float bottomLeftY = 0f;
+
+    // Bottom-right corner (1,0)
     float bottomRightX = 1.0f;
-
-    float bottomLeftY = 0.0f;
     float bottomRightY = 0.0f;
 
     public UVCoordinates() {
