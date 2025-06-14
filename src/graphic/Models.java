@@ -54,5 +54,5 @@ public class Models {
     public static void loadModels() {
     }
 
-    public static final BlockModel GRASS_BLOCK_MODEL = ModelBuilder.buildBlockModel(ShaderPrograms.COLOR_SHADER_PROGRAM, VERTICES, INDICES);
+    public static final BlockModel GRASS_BLOCK_MODEL = ModelBuilder.buildBlockModel(ShaderPrograms.CUBE_ALL_TEXTURED_SHADER_PROGRAM, VERTICES, INDICES, new UVCoordinates());
 }

@@ -14,10 +14,10 @@ import static org.lwjgl.opengl.GL11.*;
 public class Texture {
     private int width;
     private int height;
-    private int texture;
+    final private int textureID;
 
     public Texture(String path) {
-        this.texture = this.loadFromPath(path);
+        this.textureID = this.loadFromPath(path);
     }
 
     private int loadFromPath(String path) {
@@ -54,6 +54,19 @@ public class Texture {
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
         glBindTexture(GL_TEXTURE_2D, 0);
+
         return textureID;
+    }
+
+    public int getTextureID() {
+        return textureID;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

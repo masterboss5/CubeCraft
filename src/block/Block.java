@@ -1,29 +1,24 @@
 package block;
 
 import graphic.BlockModel;
-import graphic.Model;
+import graphic.Texture;
 import org.joml.Vector3f;
 import render.Renderable;
 
 public abstract class Block implements Renderable {
+    final Texture texture;
     BlockModel model;
     int x;
     int y;
     int z;
 
-    public Block(BlockModel model, int x, int y, int z) {
-        this.model = model;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
     protected Block(BlockModel model) {
         this.model = model;
+        this.texture = model.getTexture();
     }
 
     @Override
-    public Model getModel() {
+    public BlockModel getModel() {
         return model;
     }
 

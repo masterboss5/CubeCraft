@@ -1,13 +1,15 @@
 package graphic;
 
 public class UVCoordinates {
-    float topLeftX = 0.0f;
+    float topLeftX = 0f;
+    float topLeftY = 0f;
+
     float topRightX = 1.0f;
+    float topRightY = 0f;
+
     float bottomLeftX = 0.0f;
     float bottomRightX = 1.0f;
 
-    float topLeftY = 1.0f;
-    float topRightY = 1.0f;
     float bottomLeftY = 0.0f;
     float bottomRightY = 0.0f;
 
@@ -23,6 +25,15 @@ public class UVCoordinates {
         this.topRightY = topRightY;
         this.bottomLeftY = bottomLeftY;
         this.bottomRightY = bottomRightY;
+    }
+
+    public float[] toFloatArray() {
+        return new float[] {
+                topLeftX, topLeftY,
+                topRightX, topRightY,
+                bottomLeftX, bottomLeftY,
+                bottomRightX, bottomRightY
+        };
     }
 
     public float getTopLeftX() {

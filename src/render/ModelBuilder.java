@@ -2,12 +2,14 @@ package render;
 
 import graphic.BasicModel;
 import graphic.BlockModel;
+import graphic.UVCoordinates;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL45;
 import org.lwjgl.opengl.GL46;
 import shader.EmptyShaderProgram;
 import shader.ShaderProgram;
 import shader.ShaderPrograms;
+import shader.TexturedShaderProgram;
 
 public class ModelBuilder {
 
@@ -24,9 +26,10 @@ public class ModelBuilder {
         return new BasicModel(shaderProgram, vaoID, positions.length, indices.length);
     }
 
-    public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] positions, int[] indices) {
+    public static BlockModel buildBlockModel(TexturedShaderProgram shaderProgram, float[] positions, int[] indices, UVCoordinates uvCoordinates) {
         int vaoID = createVAO();
         storeDataInAttributeList(0, positions, 3);
+        storeDataInAttributeList(1, uvCoordinates.toFloatArray(), 2);
         storeDataInIndicesBuffer(indices);
         unbindVAO();
 
