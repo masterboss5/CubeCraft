@@ -11,6 +11,10 @@ public class BlockModel extends Model {
         return this.getShaderProgram().getTexture();
     }
 
+    public int getTextureID() {
+        return this.getTexture().getTextureID();
+    }
+
     @Override
     public TexturedShaderProgram getShaderProgram() {
         return (TexturedShaderProgram) super.getShaderProgram();

@@ -9,7 +9,7 @@ public abstract class Model {
     private int vertices;
     private int indices;
     private Vector3f rotation = new Vector3f();
-    private Vector3f scale = new Vector3f(1);
+    private Vector3f scale = new Vector3f(1F);
     private ShaderProgram shaderProgram;
 
     protected Model(ShaderProgram shaderProgram, int vaoID, int vertices, int indices) {
