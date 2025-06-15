@@ -20,19 +20,44 @@ public class UVCoordinates {
     public UVCoordinates() {
     }
 
-    public UVCoordinates(float topLeftX, float topRightX, float bottomLeftX, float bottomRightX, float topLeftY, float topRightY, float bottomLeftY, float bottomRightY) {
+    public UVCoordinates(float topLeftX, float topLeftY, float topRightX, float topRightY, float bottomLeftX, float bottomLeftY, float bottomRightX, float bottomRightY) {
         this.topLeftX = topLeftX;
-        this.topRightX = topRightX;
-        this.bottomLeftX = bottomLeftX;
-        this.bottomRightX = bottomRightX;
         this.topLeftY = topLeftY;
+        this.topRightX = topRightX;
         this.topRightY = topRightY;
+        this.bottomLeftX = bottomLeftX;
         this.bottomLeftY = bottomLeftY;
+        this.bottomRightX = bottomRightX;
         this.bottomRightY = bottomRightY;
     }
 
     public float[] toFloatArray() {
         return new float[] {
+                topLeftX, topLeftY,
+                topRightX, topRightY,
+                bottomLeftX, bottomLeftY,
+                bottomRightX, bottomRightY,
+
+                topLeftX, topLeftY,
+                topRightX, topRightY,
+                bottomLeftX, bottomLeftY,
+                bottomRightX, bottomRightY,
+
+                topLeftX, topLeftY,
+                topRightX, topRightY,
+                bottomLeftX, bottomLeftY,
+                bottomRightX, bottomRightY,
+
+                topLeftX, topLeftY,
+                topRightX, topRightY,
+                bottomLeftX, bottomLeftY,
+                bottomRightX, bottomRightY,
+
+                topLeftX, topLeftY,
+                topRightX, topRightY,
+                bottomLeftX, bottomLeftY,
+                bottomRightX, bottomRightY,
+
                 topLeftX, topLeftY,
                 topRightX, topRightY,
                 bottomLeftX, bottomLeftY,
