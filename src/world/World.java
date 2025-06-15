@@ -13,7 +13,7 @@ public class World {
     public void loadWorld() {
         for (int x = 0; x < 10; x++) {
             for (int z = 0; z < 10; z++) {
-                for (int y = 0; y < 1; y++) {
+                for (int y = 0; y < 2; y++) {
                     blocks.put(new BlockPosition(x, y, z), new GrassBlock());
                 }
             }
