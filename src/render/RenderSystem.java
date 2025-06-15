@@ -3,7 +3,6 @@ package render;
 import block.Block;
 import graphic.BlockModel;
 import graphic.Camera;
-import graphic.Model;
 import io.Window;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL13;
@@ -18,6 +17,10 @@ public class RenderSystem {
     public static void init(Window _window, Camera _camera) {
         window = _window;
         camera = _camera;
+        createProjectionMatrix();
+    }
+
+    public static void createProjectionMatrix() {
         projectionMatrix = Math.createProjectionMatrix(window, camera.getFOV(), camera.getNearPlane(), camera.getFarPlane());
     }
 
@@ -57,12 +60,11 @@ public class RenderSystem {
     }*/
 
     public static void render(Block block) {
-
         BlockModel model = block.getModel();
 
         model.startShader();
-
         model.tickShaderProgram();
+
         GL46.glBindVertexArray(model.getVaoID());
         GL46.glEnableVertexAttribArray(0);
         GL46.glEnableVertexAttribArray(1);
@@ -70,6 +72,7 @@ public class RenderSystem {
         model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
         model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition(), model.getRotation(), model.getScale()));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
+
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
 

@@ -4,6 +4,8 @@ import exception.WindowInitializationException;
 import exception.WindowNotCreatedException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
+import render.RenderSystem;
+import util.Math;
 
 public class Window {
     private int x;
@@ -108,6 +110,7 @@ public class Window {
 
     public void setHeight(int height) {
         this.height = height;
+        RenderSystem.createProjectionMatrix();
         GL11.glViewport(0, 0, this.getWidth(), this.getHeight());
     }
 
@@ -117,6 +120,7 @@ public class Window {
 
     public void setWidth(int width) {
         this.width = width;
+        RenderSystem.createProjectionMatrix();
         GL11.glViewport(0, 0, this.getWidth(), this.getHeight());
     }
 

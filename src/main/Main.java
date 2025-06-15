@@ -44,7 +44,7 @@ public class Main {
     }
 
     private void init() {
-        this.window = new Window("CubeCraft3D", 600, 800, 0, 0);
+        this.window = new Window("CubeCraft3D", 1200, 2000, 0, 0);
         this.window.init();
 
         GL.createCapabilities();
