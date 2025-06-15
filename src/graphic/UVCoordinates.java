@@ -14,20 +14,20 @@ public class UVCoordinates {
     float bottomLeftY = 0f;
 
     // Bottom-right corner (1,0)
-    float bottomRightX = 1.0f;
-    float bottomRightY = 0.0f;
+    float bottomRightX = 1f;
+    float bottomRightY = 0f;
 
     public UVCoordinates() {
     }
 
-    public UVCoordinates(float topLeftX, float topLeftY, float topRightX, float topRightY, float bottomLeftX, float bottomLeftY, float bottomRightX, float bottomRightY) {
+    public UVCoordinates(float topLeftX, float topRightX, float bottomLeftX, float bottomRightX, float topLeftY, float topRightY, float bottomLeftY, float bottomRightY) {
         this.topLeftX = topLeftX;
-        this.topLeftY = topLeftY;
         this.topRightX = topRightX;
-        this.topRightY = topRightY;
         this.bottomLeftX = bottomLeftX;
-        this.bottomLeftY = bottomLeftY;
         this.bottomRightX = bottomRightX;
+        this.topLeftY = topLeftY;
+        this.topRightY = topRightY;
+        this.bottomLeftY = bottomLeftY;
         this.bottomRightY = bottomRightY;
     }
 

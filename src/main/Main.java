@@ -33,7 +33,7 @@ public class Main {
         this.window.updateWindow();
         this.camera.tick();
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-        GL11.glClearColor(1, 0, 0, 1F);
+        GL11.glClearColor(0.53f, 0.81f, 0.92f, 1.0f);
         GLFW.glfwPollEvents();
     }
 

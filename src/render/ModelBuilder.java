@@ -2,6 +2,7 @@ package render;
 
 import graphic.BasicModel;
 import graphic.BlockModel;
+import graphic.Models;
 import graphic.UVCoordinates;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL45;
@@ -29,7 +30,7 @@ public class ModelBuilder {
     public static BlockModel buildBlockModel(TexturedShaderProgram shaderProgram, float[] positions, int[] indices, UVCoordinates uvCoordinates) {
         int vaoID = createVAO();
         storeDataInAttributeList(0, positions, 3);
-        storeDataInAttributeList(1, uvCoordinates.toFloatArray(), 2);
+        storeDataInAttributeList(1, Models.UV, 2);
         storeDataInIndicesBuffer(indices);
         unbindVAO();
 
