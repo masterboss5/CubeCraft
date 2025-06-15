@@ -23,7 +23,6 @@ public class Main {
     }
 
     private void render() {
-//        RenderSystem.render(this.grassBlock);
         this.world.renderWorld();
         this.world.tickWorld();
         GLFW.glfwSwapBuffers(this.window.getWindowAddress());
