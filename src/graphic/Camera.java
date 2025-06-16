@@ -26,27 +26,27 @@ public class Camera {
 
     public void tick() {
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_W)) {
-            this.position.z = this.position.z - 0.02F;
+            this.position.z = this.position.z - 0.1F;
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_S)) {
-            this.position.z = this.position.z + 0.02F;
+            this.position.z = this.position.z + 0.1F;
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_D)) {
-            this.position.x = this.position.x + 0.02F;
+            this.position.x = this.position.x + 0.1F;
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_A)) {
-            this.position.x = this.position.x - 0.02F;
+            this.position.x = this.position.x - 0.1F;
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_UP)) {
-            this.position.y = this.position.y + 0.02F;
+            this.position.y = this.position.y + 0.1F;
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_DOWN)) {
-            this.position.y = this.position.y - 0.02F;
+            this.position.y = this.position.y - 0.1F;
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT)) {
