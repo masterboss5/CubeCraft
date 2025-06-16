@@ -1,15 +1,8 @@
-package render;
+package graphic;
 
-import graphic.BasicModel;
-import graphic.BlockModel;
-import graphic.Models;
-import graphic.UVCoordinates;
 import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL45;
 import org.lwjgl.opengl.GL46;
-import shader.EmptyShaderProgram;
 import shader.ShaderProgram;
-import shader.ShaderPrograms;
 import shader.TexturedShaderProgram;
 
 public class ModelBuilder {
