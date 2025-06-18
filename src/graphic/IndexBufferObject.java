@@ -8,16 +8,20 @@ public final class IndexBufferObject {
     private final int indexBufferID;
     private final glUsage bufferUsage;
     private final int count;
+    private final VertexBuffer parent;
 
-    protected IndexBufferObject(int[] indices, glUsage bufferUsage) {
+    protected IndexBufferObject(VertexBuffer parent, int[] indices, glUsage bufferUsage) {
+        this.parent = parent;
         this.indices = indices;
         this.indexBufferID = GL46.glGenBuffers();
         this.bufferUsage = bufferUsage;
         this.count = indices.length;
 
+        this.parent.bind();
         this.bind();
         GL46.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, this.indices, this.bufferUsage.getID());
         this.unbind();
+        this.parent.unbind();
     }
 
     public int[] getIndices() {
@@ -36,7 +40,11 @@ public final class IndexBufferObject {
         GL46.glDeleteBuffers(this.indexBufferID);
     }
 
-    public int getCount() {
+    public glUsage getBufferUsage() {
+        return bufferUsage;
+    }
+
+    public int getIndicesCount() {
         return count;
     }
 }
