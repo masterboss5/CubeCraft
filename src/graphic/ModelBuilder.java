@@ -39,7 +39,7 @@ public class ModelBuilder {
     private static void storeDataInAttributeList(int attributeID, float[] values, int size) {
         int vboID = GL46.glGenBuffers();
         GL46.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
-        GL46.glBufferData(GL15.GL_ARRAY_BUFFER, values, GL46.GL_STATIC_DRAW);
+        GL46.glBufferData(GL15.GL_ARRAY_BUFFER, values, GL15.GL_STATIC_DRAW);
         GL46.glVertexAttribPointer(attributeID, size, GL46.GL_FLOAT, false, 0, 0);
         GL46.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
     }
