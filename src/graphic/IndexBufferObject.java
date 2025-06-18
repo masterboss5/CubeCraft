@@ -13,11 +13,11 @@ public final class IndexBufferObject {
     protected IndexBufferObject(VertexBuffer parent, int[] indices, glUsage bufferUsage) {
         this.parent = parent;
         this.indices = indices;
-        this.indexBufferID = GL46.glGenBuffers();
         this.bufferUsage = bufferUsage;
         this.count = indices.length;
 
         this.parent.bind();
+        this.indexBufferID = GL46.glGenBuffers();
         this.bind();
         GL46.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, this.indices, this.bufferUsage.getID());
         this.unbind();
