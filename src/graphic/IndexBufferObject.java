@@ -24,10 +24,6 @@ public final class IndexBufferObject {
         this.parent.unbind();
     }
 
-    public int[] getIndices() {
-        return indices;
-    }
-
     private void bind() {
         GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.indexBufferID);
     }
@@ -40,11 +36,15 @@ public final class IndexBufferObject {
         GL46.glDeleteBuffers(this.indexBufferID);
     }
 
-    public glUsage getBufferUsage() {
-        return bufferUsage;
+    public int[] getIndices() {
+        return indices;
     }
 
     public int getIndicesCount() {
         return count;
+    }
+
+    public glUsage getBufferUsage() {
+        return bufferUsage;
     }
 }

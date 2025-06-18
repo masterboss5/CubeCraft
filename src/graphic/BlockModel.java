@@ -3,8 +3,8 @@ package graphic;
 import shader.TexturedShaderProgram;
 
 public class BlockModel extends Model {
-    public BlockModel(TexturedShaderProgram shaderProgram, int vaoID, int vertices, int indices) {
-        super(shaderProgram, vaoID, vertices, indices);
+    public BlockModel(TexturedShaderProgram shaderProgram, VertexBuffer vertexBuffer, int vertices, int indices) {
+        super(shaderProgram, vertexBuffer, vertices, indices);
     }
 
     public Texture getTexture() {

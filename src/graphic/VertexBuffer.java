@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VertexBuffer {
-    private int attributes = 0;
+    private int attributes = -1;
     private final int vertexArrayID;
     private final glUsage bufferUsage;
     private VertexBufferObject positionBufferObject;
     private IndexBufferObject indexBufferObject;
-    Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
+    public Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
     ArrayList<Float> vertexes = new ArrayList<>();
 
     public VertexBuffer(glUsage bufferUsage) {
@@ -35,16 +35,26 @@ public class VertexBuffer {
         return this;
     }
 
-    public VertexBuffer vertexes(Float[] vertexes) {
+    public VertexBuffer vertexes(float[] vertexes) {
         if (vertexes.length % 3 != 0) throw new IllegalArgumentException("vertexes must be in groups of 3");
 
-        Collections.addAll(this.vertexes, vertexes);
+        Float[] floatObjectArray = new Float[vertexes.length];
+        for (int i = 0; i < vertexes.length; i++) {
+            floatObjectArray[i] = vertexes[i];
+        }
+
+        Collections.addAll(this.vertexes, floatObjectArray);
 
         return this;
     }
 
+    public void createNewVertexBufferObject(Object data, byte size, boolean normalized, glUsage bufferUsage) {
+        this.vertexBufferObjects.put(this.attributes + 1, new VertexBufferObject(this, this.attributes, data, size, normalized, bufferUsage));
+    }
+
     public void build() {
-        this.positionBufferObject = new VertexBufferObject(this, 0, this.vertexes.toArray(new Float[0]), (byte) 0, false, glUsage.GL_STATIC_DRAW);
+        this.positionBufferObject = new VertexBufferObject(this, 0, this.vertexes.toArray(new Float[0]), (byte) 3, false, glUsage.GL_STATIC_DRAW);
+        this.vertexBufferObjects.put(this.attributes, positionBufferObject);
     }
 
     public void bind() {
@@ -55,16 +65,24 @@ public class VertexBuffer {
         GL46.glBindVertexArray(0);
     }
 
-    public int[] getIndices() {
-        return this.indexBufferObject.getIndices();
-    }
-
     public int getAttributes() {
         return attributes;
     }
 
+    public VertexBufferObject getAttribute(int attribute) {
+        return this.vertexBufferObjects.get(attribute);
+    }
+
     protected void incrementAttributes() {
         this.attributes = attributes + 1;
+    }
+
+    public int getVertices() {
+        return ((Object[]) this.positionBufferObject.getData()).length;
+    }
+
+    public int[] getIndices() {
+        return this.indexBufferObject.getIndices();
     }
 
     public glUsage getBufferUsage() {

@@ -5,16 +5,16 @@ import org.lwjgl.opengl.GL46;
 import shader.ShaderProgram;
 
 public abstract class Model {
-    private int vaoID;
-    private int vertices;
-    private int indices;
+    private final VertexBuffer vertexBuffer;
+    private final int vertices;
+    private final int indices;
     private Vector3f rotation = new Vector3f();
     private Vector3f scale = new Vector3f(1F);
-    private ShaderProgram shaderProgram;
+    private final ShaderProgram shaderProgram;
 
-    protected Model(ShaderProgram shaderProgram, int vaoID, int vertices, int indices) {
+    protected Model(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, int vertices, int indices) {
         this.shaderProgram = shaderProgram;
-        this.vaoID = vaoID;
+        this.vertexBuffer = vertexBuffer;
         this.vertices = vertices;
         this.indices = indices;
     }
@@ -51,8 +51,8 @@ public abstract class Model {
         return shaderProgram;
     }
 
-    public int getVaoID() {
-        return vaoID;
+    public VertexBuffer getVertexBuffer() {
+        return vertexBuffer;
     }
 
     public int getVertices() {

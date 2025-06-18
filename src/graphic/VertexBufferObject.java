@@ -9,14 +9,18 @@ public final class VertexBufferObject {
     private final int size;
     private final glUsage bufferUsage;
     private final VertexBuffer parent;
+    Object data;
+    private final boolean normalized;
 
     protected VertexBufferObject(VertexBuffer parent, int attribute, Object data, byte size, boolean normalized, glUsage bufferUsage) {
         this.parent = parent;
         this.attribute = attribute;
-        this.vertexBufferID = GL46.glGenBuffers();
+        this.data = data;
         this.size = size;
         this.bufferUsage = bufferUsage;
+        this.normalized = normalized;
 
+        this.vertexBufferID = GL46.glGenBuffers();
         this.parent.bind();
         bind();
         this.parent.incrementAttributes();
@@ -59,6 +63,10 @@ public final class VertexBufferObject {
 
     public int getAttribute() {
         return attribute;
+    }
+
+    public Object getData() {
+        return data;
     }
 
     public glUsage getBufferUsage() {

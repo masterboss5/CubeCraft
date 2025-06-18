@@ -2,7 +2,6 @@ package graphic;
 
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
-import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
 
 public class ModelBuilder {
@@ -11,23 +10,31 @@ public class ModelBuilder {
         throw new UnsupportedOperationException();
     }
 
-    public static BasicModel buildBasicModel(ShaderProgram shaderProgram, float[] positions, int[] indices) {
+/*    public static BasicModel buildBasicModel(ShaderProgram shaderProgram, float[] positions, int[] indices) {
         int vaoID = createVAO();
         storeDataInAttributeList(0, positions, 3);
         storeDataInIndicesBuffer(indices);
         unbindVAO();
 
         return new BasicModel(shaderProgram, vaoID, positions.length, indices.length);
-    }
+    }*/
 
     public static BlockModel buildBlockModel(TexturedShaderProgram shaderProgram, float[] positions, int[] indices, UVCoordinates uvCoordinates) {
-        int vaoID = createVAO();
+/*        int vaoID = createVAO();
         storeDataInAttributeList(0, positions, 3);
         storeDataInAttributeList(1, Models.UV, 2);
         storeDataInIndicesBuffer(indices);
         unbindVAO();
 
-        return new BlockModel(shaderProgram, vaoID, positions.length, indices.length);
+        return new BlockModel(shaderProgram, vaoID, positions.length, indices.length);*/
+
+        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(positions);
+        vertexBuffer.indices(indices);
+        vertexBuffer.build();
+
+        vertexBuffer.createNewVertexBufferObject(Models.UV, (byte) 2, false, glUsage.GL_STATIC_DRAW);
+
+        return new BlockModel(shaderProgram, vertexBuffer, vertexBuffer.getVertices(), vertexBuffer.getIndices().length);
     }
 
     private static void storeDataInIndicesBuffer(int[] indices) {
