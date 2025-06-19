@@ -12,8 +12,8 @@ public class VertexBuffer {
     private final int vertexArrayID;
     private final glUsage bufferUsage;
     private VertexBufferObject positionBufferObject;
-    private IndexBufferObject indexBufferObject;
-    public Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
+    public IndexBufferObject indexBufferObject;
+    private Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
     ArrayList<Float> vertexes = new ArrayList<>();
 
     public VertexBuffer(glUsage bufferUsage) {
@@ -77,8 +77,16 @@ public class VertexBuffer {
         this.attributes = attributes + 1;
     }
 
-    public int getVertices() {
+    public int getVerticesCount() {
         return ((Float[]) this.positionBufferObject.getData()).length / 3;
+    }
+
+    public int getIndicesCount() {
+        return this.indexBufferObject.getIndicesCount();
+    }
+
+    public Float[] getVertices() {
+        return (Float[]) this.positionBufferObject.getData();
     }
 
     public int[] getIndices() {

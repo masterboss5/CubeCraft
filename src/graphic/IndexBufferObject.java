@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL46;
 
 public final class IndexBufferObject {
     private final int[] indices;
-    private final int indexBufferID;
+    public final int indexBufferID;
     private final glUsage bufferUsage;
     private final int count;
     private final VertexBuffer parent;

@@ -34,7 +34,7 @@ public class ModelBuilder {
 
         vertexBuffer.createNewVertexBufferObject(Models.UV, (byte) 2, false, glUsage.GL_STATIC_DRAW);
 
-        return new BlockModel(shaderProgram, vertexBuffer, vertexBuffer.getVertices(), vertexBuffer.getIndices().length);
+        return new BlockModel(shaderProgram, vertexBuffer);
     }
 
     private static void storeDataInIndicesBuffer(int[] indices) {

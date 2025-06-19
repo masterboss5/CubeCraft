@@ -6,17 +6,13 @@ import shader.ShaderProgram;
 
 public abstract class Model {
     private final VertexBuffer vertexBuffer;
-    private final int vertices;
-    private final int indices;
     private Vector3f rotation = new Vector3f();
     private Vector3f scale = new Vector3f(1F);
     private final ShaderProgram shaderProgram;
 
-    protected Model(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, int vertices, int indices) {
+    protected Model(ShaderProgram shaderProgram, VertexBuffer vertexBuffer) {
         this.shaderProgram = shaderProgram;
         this.vertexBuffer = vertexBuffer;
-        this.vertices = vertices;
-        this.indices = indices;
     }
 
     public void startShader() {
@@ -55,11 +51,19 @@ public abstract class Model {
         return vertexBuffer;
     }
 
-    public int getVertices() {
-        return vertices;
+    public int getVerticesCount() {
+        return this.vertexBuffer.getVerticesCount();
     }
 
-    public int getIndices() {
-        return indices;
+    public int getIndicesCount() {
+        return this.vertexBuffer.getIndicesCount();
+    }
+
+    public Float[] getVertices() {
+        return this.vertexBuffer.getVertices();
+    }
+
+    public int[] getIndices() {
+        return this.vertexBuffer.getIndices();
     }
 }
