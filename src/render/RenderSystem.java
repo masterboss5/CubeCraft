@@ -81,9 +81,10 @@ public class RenderSystem {
 
 
         GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, model.getVertexBuffer().getIndexBufferObject().getID());
-        System.out.println(GL46.glIsBuffer(5));
+//        System.out.println(GL46.glIsBuffer(5));
 
-        GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+//        GL46.glDrawArrays(GL46.GL_TRIANGLES, 0, 3);
+//        GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
 
         GL46.glDisableVertexAttribArray(0);
         GL46.glDisableVertexAttribArray(1);
