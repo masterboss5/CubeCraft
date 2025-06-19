@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VertexBuffer {
-    private int attributes = -1;
+    private int attributeCount = 0;
     private final int vertexArrayID;
     private final glUsage bufferUsage;
     private VertexBufferObject positionBufferObject;
     public IndexBufferObject indexBufferObject;
-    private Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
+    private final Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
     ArrayList<Float> vertexes = new ArrayList<>();
 
     public VertexBuffer(glUsage bufferUsage) {
@@ -49,12 +49,18 @@ public class VertexBuffer {
     }
 
     public void createNewVertexBufferObject(Object data, byte size, boolean normalized, glUsage bufferUsage) {
-        this.vertexBufferObjects.put(this.attributes + 1, new VertexBufferObject(this, this.attributes, data, size, normalized, bufferUsage));
+        this.vertexBufferObjects.put(this.attributeCount, new VertexBufferObject(this, this.attributeCount, data, size, normalized, bufferUsage));
+        this.incrementAttributeCount();
     }
 
     public void build() {
         this.positionBufferObject = new VertexBufferObject(this, 0, this.vertexes.toArray(new Float[0]), (byte) 3, false, glUsage.GL_STATIC_DRAW);
-        this.vertexBufferObjects.put(this.attributes, positionBufferObject);
+        this.vertexBufferObjects.put(0, positionBufferObject);
+        this.incrementAttributeCount();
+    }
+
+    public int getID() {
+        return vertexArrayID;
     }
 
     public void bind() {
@@ -65,16 +71,20 @@ public class VertexBuffer {
         GL46.glBindVertexArray(0);
     }
 
-    public int getAttributes() {
-        return attributes;
+    public int getAttributeCount() {
+        return attributeCount;
     }
 
-    public VertexBufferObject getAttribute(int attribute) {
+    public VertexBufferObject getAttribute(Integer attribute) {
         return this.vertexBufferObjects.get(attribute);
     }
 
-    protected void incrementAttributes() {
-        this.attributes = attributes + 1;
+    public IndexBufferObject getIndexBufferObject() {
+        return indexBufferObject;
+    }
+
+    protected void incrementAttributeCount() {
+        this.attributeCount = attributeCount + 1;
     }
 
     public int getVerticesCount() {

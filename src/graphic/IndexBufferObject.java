@@ -24,6 +24,10 @@ public final class IndexBufferObject {
         this.parent.unbind();
     }
 
+    public int getID() {
+        return indexBufferID;
+    }
+
     private void bind() {
         GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.indexBufferID);
     }

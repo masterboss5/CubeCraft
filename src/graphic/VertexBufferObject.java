@@ -22,8 +22,7 @@ public final class VertexBufferObject {
 
         this.vertexBufferID = GL46.glGenBuffers();
         this.parent.bind();
-        bind();
-        this.parent.incrementAttributes();
+        this.bind();
 
         if (data instanceof short[] bufferData) {
             GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
@@ -45,8 +44,12 @@ public final class VertexBufferObject {
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_DOUBLE, normalized, 0, 0);
         }
 
-        unbind();
+        this.unbind();
         this.parent.unbind();
+    }
+
+    public int getID() {
+        return vertexBufferID;
     }
 
     private void bind() {
