@@ -53,8 +53,10 @@ public class Main {
         Models.loadModels();
         this.world = new World();
         this.world.loadWorld();
-        this.camera = new Camera(this.window, this.mouse);
+        this.camera = new Camera(this.window);
         RenderSystem.init(this.window, this.camera);
+
+        glDebugger.init();
     }
 
     private void start() {

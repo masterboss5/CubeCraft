@@ -10,6 +10,8 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import util.Math;
 
+import java.util.Arrays;
+
 public class RenderSystem {
     private static Matrix4f projectionMatrix;
     private static Window window;
@@ -76,10 +78,12 @@ public class RenderSystem {
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
-        GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, model.getVertexBuffer().indexBufferObject.indexBufferID);
+        GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, model.getVertexBuffer().getIndexBufferObject().getID());
 
+        System.out.println(Arrays.toString(model.getVertexBuffer().getIndices()));
+
+        GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
 //        GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
-        GL46.glDrawElements(GL46.GL_ELEMENT_ARRAY_BUFFER, model.getIndicesCount(), GL46.GL_INT, 0);
 
         GL46.glDisableVertexAttribArray(0);
         GL46.glDisableVertexAttribArray(1);

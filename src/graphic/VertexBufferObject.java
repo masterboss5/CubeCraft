@@ -20,28 +20,35 @@ public final class VertexBufferObject {
         this.bufferUsage = bufferUsage;
         this.normalized = normalized;
 
-        this.vertexBufferID = GL46.glGenBuffers();
         this.parent.bind();
+        this.vertexBufferID = GL46.glGenBuffers();
         this.bind();
 
         if (data instanceof short[] bufferData) {
             GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_SHORT, normalized, 0, 0);
+            GL46.glEnableVertexAttribArray(attribute);
         }
 
         if (data instanceof int[] bufferData) {
             GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
             GL46.glVertexAttribIPointer(attribute, size, GL46.GL_INT, 0, 0);
+            GL46.glEnableVertexAttribArray(attribute);
+
         }
 
         if (data instanceof float[] bufferData) {
             GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_FLOAT, normalized, 0, 0);
+            GL46.glEnableVertexAttribArray(attribute);
+
         }
 
         if (data instanceof double[] bufferData) {
             GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_DOUBLE, normalized, 0, 0);
+            GL46.glEnableVertexAttribArray(attribute);
+
         }
 
         this.unbind();

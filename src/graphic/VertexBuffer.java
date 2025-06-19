@@ -12,7 +12,7 @@ public class VertexBuffer {
     private final int vertexArrayID;
     private final glUsage bufferUsage;
     private VertexBufferObject positionBufferObject;
-    public IndexBufferObject indexBufferObject;
+    private IndexBufferObject indexBufferObject;
     private final Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
     ArrayList<Float> vertexes = new ArrayList<>();
 

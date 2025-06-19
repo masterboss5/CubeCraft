@@ -12,16 +12,14 @@ public class Camera {
     private Vector3f position = new Vector3f();
     private Vector3f rotation = new Vector3f();
     private Window window;
-    private Mouse mouse;
     private static final float FOV = 70;
     private static final float NEAR_PLANE = 0.1F;
     private static final float FAR_PLANE = 100F;
     private static final float SENSITIVITY = 0.15F;
     private Matrix4f viewMatrix;
 
-    public Camera(Window window, Mouse mouse) {
+    public Camera(Window window) {
         this.window = window;
-        this.mouse = mouse;
     }
 
     public void tick() {
