@@ -80,8 +80,6 @@ public class RenderSystem {
         GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
         GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, model.getVertexBuffer().getIndexBufferObject().getID());
 
-        System.out.println(Arrays.toString(model.getVertexBuffer().getIndices()));
-
         GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
 //        GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
 
