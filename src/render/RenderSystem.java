@@ -6,11 +6,8 @@ import graphic.Camera;
 import io.Window;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import util.Math;
-
-import java.util.Arrays;
 
 public class RenderSystem {
     private static Matrix4f projectionMatrix;
