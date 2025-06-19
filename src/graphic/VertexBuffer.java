@@ -78,7 +78,7 @@ public class VertexBuffer {
     }
 
     public int getVertices() {
-        return ((Object[]) this.positionBufferObject.getData()).length / 3;
+        return ((Float[]) this.positionBufferObject.getData()).length / 3;
     }
 
     public int[] getIndices() {
