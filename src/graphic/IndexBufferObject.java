@@ -28,11 +28,11 @@ public final class IndexBufferObject {
         return indexBufferID;
     }
 
-    private void bind() {
+    public void bind() {
         GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.indexBufferID);
     }
 
-    private void unbind() {
+    public void unbind() {
         GL46.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 

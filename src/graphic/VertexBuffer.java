@@ -1,6 +1,8 @@
 package graphic;
 
+import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
+import util.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +16,7 @@ public class VertexBuffer {
     private VertexBufferObject positionBufferObject;
     private IndexBufferObject indexBufferObject;
     private final Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
-    ArrayList<Float> vertexes = new ArrayList<>();
+    ArrayList<Float> vertices = new ArrayList<>();
 
     public VertexBuffer(glUsage bufferUsage) {
         this.bufferUsage = bufferUsage;
@@ -28,9 +30,9 @@ public class VertexBuffer {
     }
 
     public VertexBuffer vertex(float x, float y, float z) {
-        this.vertexes.add(x);
-        this.vertexes.add(y);
-        this.vertexes.add(z);
+        this.vertices.add(x);
+        this.vertices.add(y);
+        this.vertices.add(z);
 
         return this;
     }
@@ -43,7 +45,7 @@ public class VertexBuffer {
             floatObjectArray[i] = vertexes[i];
         }
 
-        Collections.addAll(this.vertexes, floatObjectArray);
+        Collections.addAll(this.vertices, floatObjectArray);
 
         return this;
     }
@@ -54,13 +56,31 @@ public class VertexBuffer {
     }
 
     public void build() {
-        this.positionBufferObject = new VertexBufferObject(this, 0, this.vertexes.toArray(new Float[0]), (byte) 3, false, glUsage.GL_STATIC_DRAW);
+        this.positionBufferObject = new VertexBufferObject(this, 0, ArrayUtils.convertWrapperFloatToPrimitiveFloat(this.vertices.toArray(new Float[0])), (byte) 3, false, glUsage.GL_STATIC_DRAW);
         this.vertexBufferObjects.put(0, positionBufferObject);
         this.incrementAttributeCount();
     }
 
     public int getID() {
         return vertexArrayID;
+    }
+
+    public void bindAll() {
+        this.bind();
+        this.getIndexBufferObject().bind();
+
+        this.vertexBufferObjects.forEach(((attrib, vertexBufferObject) -> {
+            GL46.glEnableVertexAttribArray(attrib);
+        }));
+    }
+
+    public void unbindAll() {
+        this.unbind();
+        this.getIndexBufferObject().unbind();
+
+        this.vertexBufferObjects.forEach(((attrib, vertexBufferObject) -> {
+            GL46.glDisableVertexAttribArray(attrib);
+        }));
     }
 
     public void bind() {
