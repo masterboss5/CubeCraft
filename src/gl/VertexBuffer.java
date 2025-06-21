@@ -1,6 +1,5 @@
-package graphic;
+package gl;
 
-import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import util.ArrayUtils;
 

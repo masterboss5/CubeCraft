@@ -1,4 +1,4 @@
-package graphic;
+package gl;
 
 public enum glUsage {
     GL_STREAM_DRAW(0x88E0),

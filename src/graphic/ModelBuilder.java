@@ -1,5 +1,7 @@
 package graphic;
 
+import gl.VertexBuffer;
+import gl.glUsage;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import shader.TexturedShaderProgram;

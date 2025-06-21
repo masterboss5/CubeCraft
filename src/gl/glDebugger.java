@@ -1,4 +1,4 @@
-package io;
+package gl;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL46;

@@ -1,5 +1,6 @@
 package graphic;
 
+import gl.VertexBuffer;
 import shader.TexturedShaderProgram;
 
 public class BlockModel extends Model {

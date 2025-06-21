@@ -1,5 +1,6 @@
 package graphic;
 
+import gl.VertexBuffer;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL46;
 import shader.ShaderProgram;
