@@ -1,5 +1,5 @@
 package world;
 
-public class ChunkReigon {
+public class ChunkRegion {
     Chunk[][] chunks = new Chunk[3][3];
 }
