@@ -1,23 +1,23 @@
 package registry;
 
 public final class RegistryKey<T> {
-    String key;
-    T entry;
+    private final Registry<T> registry;
+    private final ResourceLocation key;
 
-    private RegistryKey(String key, T entry) {
+    private RegistryKey(Registry<T> registry, ResourceLocation key) {
+        this.registry = registry;
         this.key = key;
-        this.entry = entry;
     }
 
-    public String getKey() {
+    public Registry<T> getRegistry() {
+        return registry;
+    }
+
+    public ResourceLocation getKey() {
         return key;
     }
 
-    public T getEntry() {
-        return entry;
+    public static <T> RegistryKey<T> of(Registry<T> registry, ResourceLocation key) {
+        return new RegistryKey<>(registry, key);
     }
-
-//    public static <T> RegistryKey<T> of(String key, Registry<T> registry) {
-//        return new RegistryKey<>(key, registry);
-//    }
 }
