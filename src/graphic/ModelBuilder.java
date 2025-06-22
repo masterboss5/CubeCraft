@@ -21,7 +21,7 @@ public class ModelBuilder {
         return new BasicModel(shaderProgram, vaoID, positions.length, indices.length);
     }*/
 
-    public static BlockModel buildBlockModel(TexturedShaderProgram shaderProgram, float[] positions, int[] indices, UVCoordinates uvCoordinates) {
+    public static BlockModel buildBlockModel(TexturedShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates) {
 /*        int vaoID = createVAO();
         storeDataInAttributeList(0, positions, 3);
         storeDataInAttributeList(1, Models.UV, 2);
@@ -30,11 +30,11 @@ public class ModelBuilder {
 
         return new BlockModel(shaderProgram, vaoID, positions.length, indices.length);*/
 
-        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(positions);
+        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(vertices);
         vertexBuffer.indices(indices);
         vertexBuffer.build();
 
-        vertexBuffer.createNewVertexBufferObject(Models.UV, (byte) 2, false, glUsage.GL_STATIC_DRAW);
+        vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
 
         return new BlockModel(shaderProgram, vertexBuffer);
     }
