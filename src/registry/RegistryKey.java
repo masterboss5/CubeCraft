@@ -17,7 +17,7 @@ public final class RegistryKey<T> {
         return entry;
     }
 
-    public static <T> RegistryKey<T> of(String key, Registry<T> registry) {
-        return new RegistryKey<>(key, registry);
-    }
+//    public static <T> RegistryKey<T> of(String key, Registry<T> registry) {
+//        return new RegistryKey<>(key, registry);
+//    }
 }
