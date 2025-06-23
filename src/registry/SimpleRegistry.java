@@ -3,10 +3,11 @@ package registry;
 import java.util.*;
 
 public class SimpleRegistry<ENTRY> implements Registry<ENTRY> {
-    private final Map<ResourceLocation, ENTRY> entries = new HashMap<>();
+    private boolean frozen = false;
+    private final Map<String, ENTRY> entries = new HashMap<>();
 
     @Override
-    public ENTRY get(ResourceLocation key) {
+    public ENTRY get(String key) {
         return this.entries.get(key);
     }
 
@@ -16,16 +17,15 @@ public class SimpleRegistry<ENTRY> implements Registry<ENTRY> {
     }
 
     @Override
-    public ENTRY register(ResourceLocation key, ENTRY entry) {
+    public ENTRY register(String key, ENTRY entry) {
         this.entries.put(key, entry);
+
         return entry;
     }
 
     @Override
     public ENTRY register(RegistryKey<ENTRY> registryKey, ENTRY entry) {
-        this.register(registryKey.getKey(), entry);
-
-        return entry;
+        return this.register(registryKey.getKey(), entry);
     }
 
     @Override
@@ -34,12 +34,17 @@ public class SimpleRegistry<ENTRY> implements Registry<ENTRY> {
     }
 
     @Override
-    public Set<ResourceLocation> keys() {
+    public Set<String> keys() {
         return Collections.unmodifiableSet(entries.keySet());
     }
 
     @Override
-    public boolean contains(ResourceLocation key) {
+    public boolean contains(String key) {
         return this.entries.containsKey(key);
+    }
+
+    @Override
+    public void freeze() {
+        this.frozen = true;
     }
 }
