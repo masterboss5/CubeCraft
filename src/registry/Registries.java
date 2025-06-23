@@ -1,10 +1,17 @@
 package registry;
 
 import block.Block;
+import exception.RegistriesFrozenException;
+import graphic.Model;
+import graphic.Models;
+
+import java.util.function.Supplier;
 
 public class Registries {
-    private static boolean REGISTRIES_FROZEN = false;
-    public static final Registry<Block> BLOCK = create("");
+    private static boolean FROZEN = false;
+    public static final RootRegistry ROOT = new RootRegistry();
+    public static final SimpleRegistry<Block> BLOCK = createSimple("block");
+    public static final DefaultedRegistry<Model> MODEL = createDefaulted("model", () -> Models.GRASS_BLOCK_MODEL);
 
     public static <R, T extends R> R register(Registry<R> registry, String key, T entry) {
         return registry.register(key, entry);
@@ -14,13 +21,21 @@ public class Registries {
         return register(registry, registryKey.getKey(), entry);
     }
 
-    private static <R> Registry<R> create() {
-        return new SimpleRegistry<R>();
+    private static <T> SimpleRegistry<T> createSimple(String name) {
+        assertNotFrozen();
+        return ROOT.register(new SimpleRegistry<>(), name);
+    }
+
+    private static <T> DefaultedRegistry<T> createDefaulted(String name, Supplier<T> defaultSupplier) {
+        assertNotFrozen();
+        return ROOT.register(new DefaultedRegistry<>(defaultSupplier), name);
     }
 
     public static void freezeRegistries() {
-        REGISTRIES_FROZEN = true;
+        FROZEN = true;
+    }
 
-        for (Registry registry : )
+    private static void assertNotFrozen() {
+        if (FROZEN) throw new RegistriesFrozenException();
     }
 }

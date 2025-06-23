@@ -17,6 +17,4 @@ public interface Registry<ENTRY> {
     Set<String> keys();
 
     boolean contains(String key);
-
-    void freeze();
 }

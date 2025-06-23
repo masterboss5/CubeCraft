@@ -1,21 +1,29 @@
 package registry;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-public class SimpleRegistry<ENTRY> implements Registry<ENTRY> {
+public class DefaultedRegistry<ENTRY> implements Registry<ENTRY> {
     private final Map<String, ENTRY> entries = new HashMap<>();
+    private final Function<String, ENTRY> defaultFunction;
 
-    protected SimpleRegistry() {
+    protected DefaultedRegistry(Supplier<ENTRY> defaultSupplier) {
+        this.defaultFunction = (key) -> defaultSupplier.get();
     }
 
     @Override
     public ENTRY get(String key) {
-        return this.entries.get(key);
+        return this.entries.computeIfAbsent(key, this.defaultFunction);
     }
 
     @Override
     public ENTRY get(RegistryKey<ENTRY> registryKey) {
         return this.get(registryKey.getKey());
+    }
+
+    public ENTRY getDefault() {
+        return this.defaultFunction.apply("");
     }
 
     @Override
