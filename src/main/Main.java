@@ -4,14 +4,11 @@ import gl.glDebugger;
 import graphic.Camera;
 import graphic.Models;
 import io.*;
-import json.JsonLoader;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
 import world.World;
-
-import java.io.IOException;
 
 public class Main {
     public static Main INSTANCE;
@@ -51,6 +48,8 @@ public class Main {
 
         GL.createCapabilities();
         GL11.glEnable(GL11.GL_DEPTH_TEST);
+        glDebugger._glCullFace();
+        glDebugger._glPolygonMode();
 
         this.initInputs();
         Models.loadModels();

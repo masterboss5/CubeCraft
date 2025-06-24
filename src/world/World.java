@@ -5,16 +5,17 @@ import block.BlockPosition;
 import block.GrassBlock;
 import render.RenderSystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class World {
-    Map<BlockPosition, Block> blocks = new HashMap<>();
+    ArrayList<Block> blocks = new ArrayList<>();
     public void loadWorld() {
-        for (int x = 0; x < 10; x++) {
+        for (int x = 0; x < 100; x++) {
             for (int z = 0; z < 10; z++) {
-                for (int y = 0; y < 2; y++) {
-                    blocks.put(new BlockPosition(x, y, z), new GrassBlock());
+                for (int y = 0; y < 10; y++) {
+                    blocks.add(new GrassBlock(x, y ,z));
                 }
             }
         }
@@ -24,9 +25,6 @@ public class World {
     }
 
     public void renderWorld() {
-        blocks.forEach(((blockPosition, block) -> {
-            block.setPosition(blockPosition);
-            RenderSystem.render(block);
-        }));
+        blocks.forEach((RenderSystem::render));
     }
 }

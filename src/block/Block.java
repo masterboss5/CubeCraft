@@ -12,9 +12,12 @@ public abstract class Block implements Renderable {
     int y;
     int z;
 
-    protected Block(BlockModel model) {
+    protected Block(BlockModel model, int x, int y, int z) {
         this.model = model;
         this.texture = model.getTexture();
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     @Override
