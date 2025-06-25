@@ -79,4 +79,25 @@ public class RenderSystem {
         model.getVertexBuffer().unbindAll();
         model.stopShader();
     }
+    
+    public static void renderInstanced(Block block) {
+        BlockModel model = block.getModel();
+
+        model.startShader();
+        model.tickShaderProgram();
+
+        model.getVertexBuffer().bindAll();
+
+        model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
+        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition(), model.getRotation(), model.getScale()));
+        model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
+
+        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
+
+        GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+
+        model.getVertexBuffer().unbindAll();
+        model.stopShader();
+    }
 }
