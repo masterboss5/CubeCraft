@@ -6,11 +6,10 @@ import block.GrassBlock;
 import render.RenderSystem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class World {
     ArrayList<Block> blocks = new ArrayList<>();
+
     public void loadWorld() {
         for (int x = 0; x < 100; x++) {
             for (int z = 0; z < 10; z++) {
