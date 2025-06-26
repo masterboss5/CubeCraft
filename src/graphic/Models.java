@@ -1,20 +1,15 @@
 package graphic;
 
 import json.JsonLoader;
-
-import java.io.IOException;
+import registry.Registries;
 
 public class Models {
+    public static final BlockModel GRASS_BLOCK_MODEL = (BlockModel) Registries.register(Registries.MODEL, "grass_block_model", JsonLoader.readBlockModelJSON("cube.json"));
+
     public static void loadModels() {
     }
 
-    public static final BlockModel GRASS_BLOCK_MODEL;
-
-    static {
-        try {
-            GRASS_BLOCK_MODEL = JsonLoader.readBlockModelJSON("cube.json");
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+    private Models() {
+        throw new UnsupportedOperationException();
     }
 }

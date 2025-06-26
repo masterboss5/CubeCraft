@@ -1,5 +1,6 @@
 package block;
 
+import graphic.BlockModel;
 import graphic.Models;
 
 public class GrassBlock extends Block {

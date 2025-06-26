@@ -1,10 +1,11 @@
 package graphic;
 
 import gl.VertexBuffer;
+import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
 
 public class BlockModel extends Model {
-    public BlockModel(TexturedShaderProgram shaderProgram, VertexBuffer vertexBuffer) {
+    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer) {
         super(shaderProgram, vertexBuffer);
     }
 
