@@ -5,7 +5,6 @@ import exception.WindowNotCreatedException;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
-import util.Math;
 
 public class Window {
     private int x;
@@ -13,7 +12,7 @@ public class Window {
     private int width;
     private int height;
     private String title;
-    private long windowAddress;
+    private long pointer;
     private boolean viewportNeedsAdjusting;
     private boolean fullscreen = false;
 
@@ -30,9 +29,9 @@ public class Window {
             this.setViewportNeedsAdjusting(false);
 
             if (this.fullscreen) {
-                GLFW.glfwSetWindowMonitor(this.windowAddress, GLFW.glfwGetPrimaryMonitor(), 0, 0, this.width, this.height, 180);
+                GLFW.glfwSetWindowMonitor(this.pointer, GLFW.glfwGetPrimaryMonitor(), 0, 0, this.width, this.height, 180);
             } else {
-                GLFW.glfwSetWindowMonitor(this.windowAddress, 0, this.x, this.y, this.width, this.height, 180);
+                GLFW.glfwSetWindowMonitor(this.pointer, 0, this.x, this.y, this.width, this.height, 180);
             }
 
             GL11.glViewport(0, 0, this.getWidth(), this.getHeight());
@@ -44,18 +43,18 @@ public class Window {
             throw new WindowInitializationException();
         }
 
-        this.windowAddress = GLFW.glfwCreateWindow(this.width, this.height, this.title, 0, 0);
+        this.pointer = GLFW.glfwCreateWindow(this.width, this.height, this.title, 0, 0);
 
-        if (this.windowAddress == 0) {
+        if (this.pointer == 0) {
             throw new WindowNotCreatedException();
         }
 
-        GLFW.glfwMakeContextCurrent(this.windowAddress);
-        GLFW.glfwShowWindow(this.windowAddress);
+        GLFW.glfwMakeContextCurrent(this.pointer);
+        GLFW.glfwShowWindow(this.pointer);
     }
 
     public boolean shouldClose() {
-        return GLFW.glfwWindowShouldClose(this.windowAddress);
+        return GLFW.glfwWindowShouldClose(this.pointer);
     }
 
     public void cleanUp() {
@@ -70,12 +69,12 @@ public class Window {
         this.x = x;
     }
 
-    public long getWindowAddress() {
-        return windowAddress;
+    public long getPointer() {
+        return pointer;
     }
 
-    public void setWindowAddress(long windowAddress) {
-        this.windowAddress = windowAddress;
+    public void setPointer(long pointer) {
+        this.pointer = pointer;
     }
 
     public boolean isViewportNeedsAdjusting() {
@@ -101,7 +100,7 @@ public class Window {
 
     public void setTitle(String title) {
         this.title = title;
-        GLFW.glfwSetWindowTitle(this.getWindowAddress(), title);
+        GLFW.glfwSetWindowTitle(this.getPointer(), title);
     }
 
     public int getHeight() {

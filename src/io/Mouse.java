@@ -10,11 +10,11 @@ public class Mouse implements InputHandler {
     private GLFWCursorPosCallback mouseMove;
     private GLFWMouseButtonCallback mouseClick;
     public Window window;
-    private long windowAddress;
+    private final long windowPointer;
 
     public Mouse(Window window) {
         this.window = window;
-        this.windowAddress = window.getWindowAddress();
+        this.windowPointer = window.getPointer();
 
         this.createCallbacks();
         this.bindCallbacks();
@@ -49,8 +49,8 @@ public class Mouse implements InputHandler {
 
     @Override
     public void bindCallbacks() {
-        GLFW.glfwSetCursorPosCallback(this.windowAddress, this.mouseMove);
-        GLFW.glfwSetMouseButtonCallback(this.windowAddress, this.mouseClick);
+        GLFW.glfwSetCursorPosCallback(this.windowPointer, this.mouseMove);
+        GLFW.glfwSetMouseButtonCallback(this.windowPointer, this.mouseClick);
     }
 
     @Override

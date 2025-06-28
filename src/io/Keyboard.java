@@ -6,12 +6,12 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 public class Keyboard implements InputHandler {
     public static boolean[] keys = new boolean[GLFW.GLFW_KEY_LAST];
     private Window window;
-    private long windowAddress;
+    private final long windowPointer;
     private GLFWKeyCallback keyPress;
 
     public Keyboard(Window window) {
         this.window = window;
-        this.windowAddress = window.getWindowAddress();
+        this.windowPointer = window.getPointer();
 
         this.createCallbacks();
         this.bindCallbacks();
@@ -29,7 +29,7 @@ public class Keyboard implements InputHandler {
 
     @Override
     public void bindCallbacks() {
-        GLFW.glfwSetKeyCallback(this.windowAddress, this.keyPress);
+        GLFW.glfwSetKeyCallback(this.windowPointer, this.keyPress);
     }
 
     @Override

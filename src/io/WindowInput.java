@@ -4,13 +4,13 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWWindowSizeCallback;
 
 public class WindowInput implements InputHandler {
-    private Window window;
-    private long windowAddress;
+    private final Window window;
+    private final long windowPointer;
     private GLFWWindowSizeCallback windowResizeCallback;
 
     public WindowInput(Window window) {
         this.window = window;
-        this.windowAddress = window.getWindowAddress();
+        this.windowPointer = window.getPointer();
 
         this.createCallbacks();
         this.bindCallbacks();
@@ -29,7 +29,7 @@ public class WindowInput implements InputHandler {
 
     @Override
     public void bindCallbacks() {
-        GLFW.glfwSetWindowSizeCallback(this.windowAddress, this.windowResizeCallback);
+        GLFW.glfwSetWindowSizeCallback(this.windowPointer, this.windowResizeCallback);
     }
 
     @Override

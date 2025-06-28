@@ -25,7 +25,7 @@ public class Main {
     private void render() {
         this.world.renderWorld();
         this.world.tickWorld();
-        GLFW.glfwSwapBuffers(this.window.getWindowAddress());
+        GLFW.glfwSwapBuffers(this.window.getPointer());
     }
 
     private void update() {
@@ -80,8 +80,8 @@ public class Main {
     private void cleanUp() {
         InputManager.cleanUp();
 
-        GLFW.glfwWindowShouldClose(this.window.getWindowAddress());
-        GLFW.glfwDestroyWindow(this.window.getWindowAddress());
+        GLFW.glfwWindowShouldClose(this.window.getPointer());
+        GLFW.glfwDestroyWindow(this.window.getPointer());
         GLFW.glfwTerminate();
     }
 }
