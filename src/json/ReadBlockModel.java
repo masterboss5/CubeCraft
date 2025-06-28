@@ -1,4 +1,4 @@
 package json;
 
-public record ReadBlockModel(float[] vertices, int[] indices, float[] uv) {
+public record ReadBlockModel(float[] vertices, int[] indices, float[] uv, String shader_program) {
 }

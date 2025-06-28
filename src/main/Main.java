@@ -8,6 +8,7 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
+import shader.ShaderPrograms;
 import world.World;
 
 public class Main {
@@ -52,6 +53,7 @@ public class Main {
         glDebugger._glPolygonMode();
 
         this.initInputs();
+        ShaderPrograms.loadShaderPrograms();
         Models.loadModels();
         this.world = new World();
         this.world.loadWorld();

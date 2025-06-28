@@ -4,6 +4,8 @@ import block.Block;
 import exception.RegistriesFrozenException;
 import graphic.Model;
 import graphic.Models;
+import shader.EmptyShaderProgram;
+import shader.ShaderProgram;
 
 import java.util.function.Supplier;
 
@@ -12,6 +14,7 @@ public class Registries {
     public static final RootRegistry ROOT = new RootRegistry();
     public static final SimpleRegistry<Block> BLOCK = createSimple("block");
     public static final DefaultedRegistry<Model> MODEL = createDefaulted("model", () -> Models.GRASS_BLOCK_MODEL);
+    public static final DefaultedRegistry<ShaderProgram> SHADER_PROGRAM = createDefaulted("shader_program", EmptyShaderProgram::new);
 
     public static <R, T extends R> R register(Registry<R> registry, String key, T entry) {
         return registry.register(key, entry);

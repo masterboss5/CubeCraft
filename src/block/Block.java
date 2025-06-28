@@ -5,6 +5,7 @@ import graphic.Texture;
 import org.joml.Vector3f;
 import render.Renderable;
 
+//TODO switch to block state system
 public abstract class Block implements Renderable {
     final Texture texture;
     BlockModel model;

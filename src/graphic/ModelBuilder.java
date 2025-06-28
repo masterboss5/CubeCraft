@@ -4,6 +4,7 @@ import gl.VertexBuffer;
 import gl.glUsage;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
+import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
 
 public class ModelBuilder {
@@ -21,7 +22,7 @@ public class ModelBuilder {
         return new BasicModel(shaderProgram, vaoID, positions.length, indices.length);
     }*/
 
-    public static BlockModel buildBlockModel(TexturedShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates) {
+    public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates) {
 /*        int vaoID = createVAO();
         storeDataInAttributeList(0, positions, 3);
         storeDataInAttributeList(1, Models.UV, 2);
