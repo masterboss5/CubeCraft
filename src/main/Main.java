@@ -4,19 +4,29 @@ import gl.glDebugger;
 import graphic.Camera;
 import graphic.Models;
 import io.*;
+import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
 import shader.ShaderPrograms;
+import world.ChunkPosition;
 import world.World;
+import world.WorldChunkManager;
 
 public class Main {
     public static Main INSTANCE;
     private Mouse mouse;
     public Window window;
-    private Camera camera;
+    public static Camera camera;
     private World world;
+
+/*    public static void main(String[] args) {
+        WorldChunkManager manager = new WorldChunkManager();
+        Vector3f cameraPos = new Vector3f(64, 0, 64);
+        ChunkPosition chunk = new ChunkPosition(8, 5);
+        System.out.println(manager.isInRange.apply(cameraPos, chunk));
+    }*/
 
     public static void main(String[] args) {
         INSTANCE = new Main();
