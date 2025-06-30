@@ -7,4 +7,8 @@ public class GrassBlock extends Block {
     public GrassBlock(int x, int y, int z) {
         super(Models.GRASS_BLOCK_MODEL, x, y, z);
     }
+
+    public GrassBlock(BlockPosition blockPosition) {
+        this(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
+    }
 }

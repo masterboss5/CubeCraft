@@ -2,7 +2,10 @@ package world;
 
 import block.Block;
 import block.BlockPosition;
+import render.RenderSystem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Chunk {
@@ -19,6 +22,21 @@ public class Chunk {
         this.chunkManager = chunkManager;
 
         chunkManager.cache(this);
+    }
+
+    public void render() {
+        List<Block> blocks = new ArrayList<>();
+
+        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
+            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
+                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
+                    Block block = blockGrid[x][y][z];
+                    blocks.add(block);
+                }
+            }
+        }
+
+        RenderSystem.renderBatched(blocks);
     }
 
     public ChunkPosition getChunkPosition() {

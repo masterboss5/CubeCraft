@@ -97,6 +97,9 @@ public class RenderSystem {
         GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
 
         for (Block block : blocks) {
+
+            if (block == null) continue;
+
             model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition(), model.getRotation(), model.getScale()));
             GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
         }
