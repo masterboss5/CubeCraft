@@ -48,11 +48,11 @@ public class Camera {
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT)) {
-            this.rotation.x = this.rotation.x - org.joml.Math.toRadians(15);
+            this.rotation.x = this.rotation.x - org.joml.Math.toRadians(90);
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_RIGHT)) {
-            this.rotation.x = this.rotation.x + Math.toRadians(15);
+            this.rotation.x = this.rotation.x + Math.toRadians(90);
         }
 
 //        if (InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {

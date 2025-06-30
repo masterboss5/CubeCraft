@@ -11,7 +11,7 @@ import java.util.function.BiFunction;
 
 public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
-    private static final int RENDER_DISTANCE = 4;
+    private static final int RENDER_DISTANCE = 5;
     private final World world;
 
     public final BiFunction<Vector3f, ChunkPosition, Boolean> isInRange = (cameraPosition, chunkPosition) -> {
@@ -49,16 +49,11 @@ public class WorldChunkManager {
     }
 
     public void generateChunks(int centerX, int centerZ) {
-        this.solidChunk(new ChunkPosition(0, 0));
-        this.solidChunk(new ChunkPosition(1, 0));
-        this.solidChunk(new ChunkPosition(2, 0));
-        this.solidChunk(new ChunkPosition(3, 0));
-        this.solidChunk(new ChunkPosition(4, 0));
-        this.solidChunk(new ChunkPosition(5, 0));
-        this.solidChunk(new ChunkPosition(6, 0));
-        this.solidChunk(new ChunkPosition(7, 0));
-        this.solidChunk(new ChunkPosition(8, 0));
-        this.solidChunk(new ChunkPosition(9, 0));
+        for (int x = -25; x <= 25; x++) {
+            for (int z = -25; z <= 25; z++) {
+                this.solidChunk(new ChunkPosition(x, z));
+            }
+        }
     }
 
     public Chunk[] getVisibleChunks() {
