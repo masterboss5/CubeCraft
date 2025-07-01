@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class JsonLoader {
-    public static final String ROOT_MODEL_PATH = "C:/Users/Armen/Desktop/CubeCraft/resources/models/";
+    public static final String ROOT_MODEL_PATH = "C:/Users//Desktop/CubeCraft/resources/models/";
     public static final Gson INSTANCE = new Gson();
 
     public static BlockModel readBlockModelJSON(String fileName) {
