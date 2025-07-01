@@ -7,14 +7,16 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
-
 public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
     private static final int RENDER_DISTANCE = 5;
     private final World world;
 
-    public final BiFunction<Vector3f, ChunkPosition, Boolean> isInRange = (cameraPosition, chunkPosition) -> {
+    public WorldChunkManager(World world) {
+        this.world = world;
+    }
+
+    private boolean isInRange(Vector3f cameraPosition, ChunkPosition chunkPosition) {
         int cameraChunkX = (int) Math.floor(cameraPosition.x) >> 4;
         int cameraChunkZ = (int) Math.floor(cameraPosition.z) >> 4;
         System.out.println(cameraChunkX);
@@ -24,10 +26,6 @@ public class WorldChunkManager {
         int dz = chunkPosition.getZ() - cameraChunkZ;
 
         return dx * dx + dz * dz <= getRenderDistance() * getRenderDistance();
-    };
-
-    public WorldChunkManager(World world) {
-        this.world = world;
     }
 
     public void solidChunk(ChunkPosition chunkPosition) {
@@ -60,7 +58,7 @@ public class WorldChunkManager {
         List<Chunk> visibleChunks = new ArrayList<>();
 
         for (Chunk chunk : CHUNK_CACHE) {
-            if (isInRange.apply(Main.camera.getPosition(), chunk.getChunkPosition())) {
+            if (this.isInRange(Main.camera.getPosition(), chunk.getChunkPosition())) {
                 visibleChunks.add(chunk);
             }
         }
