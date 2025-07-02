@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class Chunk {
+    private final WorldChunkManager chunkManager;
     private Block[][][] blockGrid = new Block[ChunkPosition.CHUNK_WIDTH][ChunkPosition.CHUNK_HEIGHT][ChunkPosition.CHUNK_WIDTH];
     private final ChunkPosition position;
     private boolean needsSaving = false;
     private boolean needsMeshing = false;
     private boolean isLoaded = false;
-    private UUID ID = UUID.randomUUID();
-    private final WorldChunkManager chunkManager;
+    private final UUID ID = UUID.randomUUID();
 
     protected Chunk(ChunkPosition position, WorldChunkManager chunkManager) {
         this.position = position;

@@ -19,8 +19,6 @@ public class WorldChunkManager {
     private boolean isInRange(Vector3f cameraPosition, ChunkPosition chunkPosition) {
         int cameraChunkX = (int) Math.floor(cameraPosition.x) >> 4;
         int cameraChunkZ = (int) Math.floor(cameraPosition.z) >> 4;
-        System.out.println(cameraChunkX);
-        System.out.println(cameraChunkZ);
 
         int dx = chunkPosition.getX() - cameraChunkX;
         int dz = chunkPosition.getZ() - cameraChunkZ;
