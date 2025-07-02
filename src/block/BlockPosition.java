@@ -1,5 +1,6 @@
 package block;
 
+import org.joml.Vector3f;
 import world.ChunkPosition;
 
 import java.util.Objects;
@@ -18,6 +19,10 @@ public class BlockPosition {
 
     public BlockPosition() {
         this(0, 0, 0);
+    }
+
+    public Vector3f toVector3f() {
+        return new Vector3f(this.getX(), this.getY(), this.getZ());
     }
 
     public int getX() {

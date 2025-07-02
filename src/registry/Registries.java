@@ -13,7 +13,7 @@ public class Registries {
     private static boolean FROZEN = false;
     public static final RootRegistry ROOT = new RootRegistry();
     public static final SimpleRegistry<Block> BLOCK = createSimple("block");
-    public static final DefaultedRegistry<Model> MODEL = createDefaulted("model", () -> Models.GRASS_BLOCK_MODEL);
+    public static final DefaultedRegistry<Model> MODEL = createDefaulted("model", () -> Models.AIR_BLOCK_MODEL);
     public static final DefaultedRegistry<ShaderProgram> SHADER_PROGRAM = createDefaulted("shader_program", EmptyShaderProgram::new);
 
     public static <R, T extends R> R register(Registry<R> registry, String key, T entry) {

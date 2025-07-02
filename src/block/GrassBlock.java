@@ -1,14 +1,9 @@
 package block;
 
-import graphic.BlockModel;
 import graphic.Models;
 
 public class GrassBlock extends Block {
-    public GrassBlock(int x, int y, int z) {
-        super(Models.GRASS_BLOCK_MODEL, x, y, z);
-    }
-
-    public GrassBlock(BlockPosition blockPosition) {
-        this(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
+    public GrassBlock(BlockPosition position) {
+        super(Models.GRASS_BLOCK_MODEL, position);
     }
 }

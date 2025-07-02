@@ -2,23 +2,17 @@ package block;
 
 import graphic.BlockModel;
 import graphic.Texture;
-import org.joml.Vector3f;
 import render.Renderable;
 
-//TODO switch to block state system
 public abstract class Block implements Renderable {
     final Texture texture;
-    BlockModel model;
-    int x;
-    int y;
-    int z;
+    final BlockModel model;
+    BlockPosition position;
 
-    protected Block(BlockModel model, int x, int y, int z) {
+    protected Block(BlockModel model, BlockPosition position) {
         this.model = model;
         this.texture = model.getTexture();
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.position = position;
     }
 
     @Override
@@ -26,37 +20,39 @@ public abstract class Block implements Renderable {
         return model;
     }
 
-    public Vector3f getPosition() {
-        return new Vector3f(this.x, this.y, this.z);
+    public BlockPosition getPosition() {
+        return position;
     }
 
-    public void setPosition(BlockPosition blockPosition) {
-        this.x = blockPosition.getX();
-        this.y = blockPosition.getY();
-        this.z = blockPosition.getZ();
+    public void setPosition(BlockPosition position) {
+        this.position = position;
     }
 
     public int getX() {
-        return x;
+        return this.position.getX();
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.position.setX(x);
     }
 
     public int getY() {
-        return y;
+        return this.position.getY();
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.position.setY(y);
     }
 
     public int getZ() {
-        return z;
+        return this.position.getZ();
     }
 
     public void setZ(int z) {
-        this.z = z;
+        this.position.setZ(z);
+    }
+
+    public boolean isAirBlock() {
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package world;
 
+import block.AirBlock;
 import block.BlockPosition;
 import block.GrassBlock;
 import main.Main;
@@ -36,7 +37,7 @@ public class WorldChunkManager {
                     int worldZ = chunkPosition.getZ() * ChunkPosition.CHUNK_WIDTH + z;
                     BlockPosition blockPos = new BlockPosition(worldX, y, worldZ);
 
-                    chunk.setBlock(new GrassBlock(blockPos), x, y, z);
+                    chunk.setBlock(new AirBlock(blockPos), x, y, z);
                 }
             }
         }

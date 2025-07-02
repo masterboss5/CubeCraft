@@ -70,7 +70,7 @@ public class RenderSystem {
         model.getVertexBuffer().bindAll();
 
         model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
-        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition(), model.getRotation(), model.getScale()));
+        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -100,7 +100,7 @@ public class RenderSystem {
 
             if (block == null) continue;
 
-            model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition(), model.getRotation(), model.getScale()));
+            model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
             GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
         }
 
