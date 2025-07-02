@@ -1,4 +1,4 @@
-package world;
+package render;
 
 public class ChunkMesh {
 }
