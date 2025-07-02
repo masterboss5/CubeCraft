@@ -1,5 +1,7 @@
 package render;
 
+import world.Chunk;
+
 public interface ChunkMesher {
-    ChunkMesh meshChunk();
+    ChunkMesh meshChunk(Chunk chunk);
 }
