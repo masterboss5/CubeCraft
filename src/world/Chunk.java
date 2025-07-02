@@ -61,6 +61,24 @@ public class Chunk {
         this.setBlock(newBlock, blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
     }
 
+    public int getBlockCount() {
+        int count = 0;
+
+        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
+            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
+                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
+                    Block block = blockGrid[x][y][z];
+
+                    if (block != null) {
+                        count = count + 1;
+                    }
+                }
+            }
+        }
+
+        return count;
+    }
+
     public boolean isNeedsMeshing() {
         return needsMeshing;
     }
