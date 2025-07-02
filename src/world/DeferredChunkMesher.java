@@ -1,6 +1,4 @@
-package render;
-
-import world.Chunk;
+package world;
 
 public class DeferredChunkMesher implements ChunkMesher {
     @Override

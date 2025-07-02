@@ -1,4 +1,4 @@
-package render;
+package world;
 
 import gl.VertexBuffer;
 
