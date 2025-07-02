@@ -5,7 +5,6 @@ import gl.glUsage;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import shader.ShaderProgram;
-import shader.TexturedShaderProgram;
 
 public class ModelBuilder {
 
@@ -13,24 +12,7 @@ public class ModelBuilder {
         throw new UnsupportedOperationException();
     }
 
-/*    public static BasicModel buildBasicModel(ShaderProgram shaderProgram, float[] positions, int[] indices) {
-        int vaoID = createVAO();
-        storeDataInAttributeList(0, positions, 3);
-        storeDataInIndicesBuffer(indices);
-        unbindVAO();
-
-        return new BasicModel(shaderProgram, vaoID, positions.length, indices.length);
-    }*/
-
     public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates) {
-/*        int vaoID = createVAO();
-        storeDataInAttributeList(0, positions, 3);
-        storeDataInAttributeList(1, Models.UV, 2);
-        storeDataInIndicesBuffer(indices);
-        unbindVAO();
-
-        return new BlockModel(shaderProgram, vaoID, positions.length, indices.length);*/
-
         VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(vertices);
         vertexBuffer.indices(indices);
         vertexBuffer.build();

@@ -98,7 +98,7 @@ public class RenderSystem {
 
         for (Block block : blocks) {
 
-            if (block == null) continue;
+            if (block.isAirBlock()) continue;
 
             model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
             GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);

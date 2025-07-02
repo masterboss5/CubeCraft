@@ -5,5 +5,5 @@
 
   "uv": [],
 
-  "shader_program": "empty_shader"
+  "shader_program": "texture_shader"
 }

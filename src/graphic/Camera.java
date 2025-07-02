@@ -1,7 +1,6 @@
 package graphic;
 
 import io.InputManager;
-import io.Mouse;
 import io.Window;
 import org.joml.Math;
 import org.joml.Matrix4f;

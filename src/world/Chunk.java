@@ -1,5 +1,6 @@
 package world;
 
+import block.AirBlock;
 import block.Block;
 import block.BlockPosition;
 import render.RenderSystem;
@@ -16,6 +17,16 @@ public class Chunk {
     private boolean needsMeshing = false;
     private boolean isLoaded = false;
     private final UUID ID = UUID.randomUUID();
+
+    {
+        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
+            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
+                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
+                    blockGrid[x][y][z] = new AirBlock(new BlockPosition(x, y, z));
+                }
+            }
+        }
+    }
 
     protected Chunk(ChunkPosition position, WorldChunkManager chunkManager) {
         this.position = position;
