@@ -13,8 +13,9 @@ public class Chunk {
     private final WorldChunkManager chunkManager;
     private Block[][][] blockGrid = new Block[ChunkPosition.CHUNK_WIDTH][ChunkPosition.CHUNK_HEIGHT][ChunkPosition.CHUNK_WIDTH];
     private final ChunkPosition position;
-    private boolean needsSaving = false;
-    private boolean needsMeshing = false;
+    private ChunkMesh mesh;
+    private boolean needsSaving = true;
+    private boolean needsMeshing = true;
     private boolean isLoaded = false;
     private final UUID ID = UUID.randomUUID();
 
@@ -36,6 +37,14 @@ public class Chunk {
     }
 
     public void render() {
+
+//        if (this.needsMeshing) {
+//            mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
+//            this.needsMeshing = false;
+//        }
+//
+//        RenderSystem.render();
+
         List<Block> blocks = new ArrayList<>();
 
         for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {

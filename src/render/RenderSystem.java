@@ -8,6 +8,7 @@ import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
 import util.Math;
+import world.ChunkMesh;
 
 import java.util.List;
 
@@ -107,4 +108,23 @@ public class RenderSystem {
         model.getVertexBuffer().unbindAll();
         model.stopShader();
     }
+
+//    public static void renderChunk(ChunkMesh chunkMesh) {
+///*        model.startShader();
+//        model.tickShaderProgram();*/
+//
+//        chunkMesh.getVertexBuffer().bindAll();
+//
+//        model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
+//        model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
+//        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
+//
+///*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+//        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
+//
+//        GL46.glDrawElements(GL46.GL_TRIANGLES, chunkMesh.getVertexBuffer().getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+//
+//        chunkMesh.getVertexBuffer().unbindAll();
+//        model.stopShader();
+//    }
 }

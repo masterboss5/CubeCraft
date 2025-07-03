@@ -11,6 +11,7 @@ public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
     private static final int RENDER_DISTANCE = 2;
     private final World world;
+    public static final ChunkMesher CHUNK_MESHER = new IntegratedChunkMesher();
 
     public WorldChunkManager(World world) {
         this.world = world;
