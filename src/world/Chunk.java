@@ -72,7 +72,7 @@ public class Chunk {
         this.setNeedsMeshing();
         this.setNeedsSaving();
     }
-
+    //TODO fix method
     public int getBlockCount() {
         int count = 0;
 
