@@ -21,13 +21,6 @@ public class Main {
     public static Camera camera;
     private World world;
 
-/*    public static void main(String[] args) {
-        WorldChunkManager manager = new WorldChunkManager();
-        Vector3f cameraPos = new Vector3f(64, 0, 64);
-        ChunkPosition chunk = new ChunkPosition(8, 5);
-        System.out.println(manager.isInRange.apply(cameraPos, chunk));
-    }*/
-
     public static void main(String[] args) {
         INSTANCE = new Main();
         INSTANCE.start();

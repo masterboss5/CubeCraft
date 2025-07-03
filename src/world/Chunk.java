@@ -5,8 +5,6 @@ import block.Block;
 import block.BlockPosition;
 import render.RenderSystem;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class Chunk {
@@ -38,25 +36,12 @@ public class Chunk {
 
     public void render() {
 
-        if (this.needsMeshing) {
+        if (this.isNeedsMeshing()) {
             mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
             this.needsMeshing = false;
         }
 
         RenderSystem.renderChunk(this.mesh, this);
-
-//        List<Block> blocks = new ArrayList<>();
-//
-//        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
-//            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
-//                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
-//                    Block block = blockGrid[x][y][z];
-//                    blocks.add(block);
-//                }
-//            }
-//        }
-//
-//        RenderSystem.renderBatched(blocks);
     }
 
     public ChunkPosition getChunkPosition() {
