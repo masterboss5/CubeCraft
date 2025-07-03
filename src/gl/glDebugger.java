@@ -22,13 +22,12 @@ public class glDebugger {
     }
 
     public static void _glPolygonMode() {
-//        GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+        GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
     }
 
     public static void _glCullFace() {
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glCullFace(GL11.GL_BACK);
-//        GL11.glCullFace(GL11.GL_FRONT_AND_BACK);
-        GL11.glFrontFace(GL11.GL_CCW); // Counter-clockwise is default; use GL_CW for clockwise
+        GL11.glFrontFace(GL11.GL_CCW);
     }
 }

@@ -54,22 +54,14 @@ public class Chunk {
         return position;
     }
 
-    public Block getBlock(int x, int y, int z) {
-        return this.blockGrid[x][y][z];
-    }
-
     public Block getBlock(BlockPosition position) {
         return this.blockGrid[position.getX()][position.getY()][position.getZ()];
     }
 
-    public void setBlock(Block newBlock, int x, int y, int z) {
-        this.blockGrid[x][y][z] = newBlock;
+    public void setBlock(Block newBlock, BlockPosition blockPosition) {
+        this.blockGrid[blockPosition.getX()][blockPosition.getY()][blockPosition.getZ()] = newBlock;
         this.setNeedsMeshing();
         this.setNeedsSaving();
-    }
-
-    public void setBlock(Block newBlock, BlockPosition blockPosition) {
-        this.setBlock(newBlock, blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
     }
 
     public int getBlockCount() {

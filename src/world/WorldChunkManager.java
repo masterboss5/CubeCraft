@@ -36,7 +36,7 @@ public class WorldChunkManager {
                     int worldZ = chunkPosition.getZ() * ChunkPosition.CHUNK_WIDTH + z;
                     BlockPosition blockPos = new BlockPosition(worldX, y, worldZ);
 
-                    chunk.setBlock(new GrassBlock(blockPos), x, y, z);
+                    chunk.setBlock(new GrassBlock(blockPos), new BlockPosition(x, y, z));
                 }
             }
         }
@@ -55,7 +55,7 @@ public class WorldChunkManager {
     public Chunk[] getVisibleChunks() {
         List<Chunk> visibleChunks = new ArrayList<>();
 
-        for (Chunk chunk : CHUNK_CACHE) {
+        for (Chunk chunk : this.getCache()) {
             if (this.isInRange(Main.camera.getPosition(), chunk.getChunkPosition())) {
                 visibleChunks.add(chunk);
             }

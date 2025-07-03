@@ -1,10 +1,13 @@
 package world;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IntegratedChunkMesher implements ChunkMesher {
     @Override
     public ChunkMesh meshChunk(Chunk chunk) {
-        float[] vertexBuffer = new float[16384];
-        int[] indexBuffer = new int[16384];
+        List<Integer> vertices = new ArrayList<>();
+        List<Integer> indices = new ArrayList<>();
 
         return null;
     }
