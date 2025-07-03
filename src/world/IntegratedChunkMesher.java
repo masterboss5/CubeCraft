@@ -65,6 +65,8 @@ public class IntegratedChunkMesher implements ChunkMesher {
                     BlockPosition position = new BlockPosition(x, y, z);
                     Block block = chunk.getBlock(position);
 
+                    if (block.isAirBlock()) continue;
+
                     insertFace(vertices, indices, position, FRONT_FACE);
                     insertFace(vertices, indices, position, BACK_FACE);
                     insertFace(vertices, indices, position, RIGHT_FACE);
@@ -87,6 +89,7 @@ public class IntegratedChunkMesher implements ChunkMesher {
         }
 
         VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(array).indices(array2);
+        vertexBuffer.build();
 
         return new ChunkMesh(vertexBuffer);
     }

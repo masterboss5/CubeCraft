@@ -7,7 +7,7 @@ import shader.ShaderProgram;
 
 public class ChunkMesh {
     private final VertexBuffer vertexBuffer;
-    private final ShaderProgram shaderProgram = Registries.SHADER_PROGRAM.get("color_shader");
+    private final ShaderProgram shaderProgram = Registries.SHADER_PROGRAM.get("texture_shader");
 
     public ChunkMesh(VertexBuffer vertexBuffer) {
         this.vertexBuffer = vertexBuffer;

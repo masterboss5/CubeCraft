@@ -22,7 +22,7 @@ public class glDebugger {
     }
 
     public static void _glPolygonMode() {
-//        GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
+        GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
     }
 
     public static void _glCullFace() {
