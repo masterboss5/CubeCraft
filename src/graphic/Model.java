@@ -16,7 +16,7 @@ public abstract class Model {
         this.vertexBuffer = vertexBuffer;
     }
 
-    public void startShader() {
+    public void startShaderProgram() {
         GL46.glUseProgram(this.shaderProgram.getProgramID());
     }
 

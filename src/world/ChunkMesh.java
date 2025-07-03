@@ -1,6 +1,7 @@
 package world;
 
 import gl.VertexBuffer;
+import org.lwjgl.opengl.GL46;
 import registry.Registries;
 import shader.ShaderProgram;
 
@@ -14,5 +15,13 @@ public class ChunkMesh {
 
     public VertexBuffer getVertexBuffer() {
         return vertexBuffer;
+    }
+
+    public ShaderProgram getShaderProgram() {
+        return shaderProgram;
+    }
+
+    public void startShaderProgram() {
+        GL46.glUseProgram(this.getShaderProgram().getProgramID());
     }
 }

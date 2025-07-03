@@ -5,10 +5,13 @@ import graphic.BlockModel;
 import graphic.Camera;
 import io.Window;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
 import util.Math;
+import world.Chunk;
 import world.ChunkMesh;
+import world.ChunkPosition;
 
 import java.util.List;
 
@@ -65,7 +68,7 @@ public class RenderSystem {
     public static void render(Block block) {
         BlockModel model = block.getModel();
 
-        model.startShader();
+        model.startShaderProgram();
         model.tickShaderProgram();
 
         model.getVertexBuffer().bindAll();
@@ -86,7 +89,7 @@ public class RenderSystem {
     public static void renderBatched(List<Block> blocks) {
         BlockModel model = blocks.getFirst().getModel();
 
-        model.startShader();
+        model.startShaderProgram();
         model.tickShaderProgram();
 
         model.getVertexBuffer().bindAll();
@@ -109,22 +112,36 @@ public class RenderSystem {
         model.stopShader();
     }
 
-//    public static void renderChunk(ChunkMesh chunkMesh) {
-///*        model.startShader();
-//        model.tickShaderProgram();*/
-//
-//        chunkMesh.getVertexBuffer().bindAll();
-//
-//        model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
-//        model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
-//        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
-//
-///*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
-//        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
-//
-//        GL46.glDrawElements(GL46.GL_TRIANGLES, chunkMesh.getVertexBuffer().getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
-//
-//        chunkMesh.getVertexBuffer().unbindAll();
-//        model.stopShader();
-//    }
+    public static void renderChunk(ChunkMesh chunkMesh, Chunk chunk) {
+        chunkMesh.startShaderProgram();
+        chunkMesh.getShaderProgram().tickShaderProgram();
+
+        chunkMesh.getVertexBuffer().bindAll();
+
+        chunkMesh.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
+        chunkMesh.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
+
+        Vector3f chunkGridPos = chunk.getChunkPosition().toVector3f(); // e.g., (2, 0, 3)
+        Vector3f chunkWorldPos = new Vector3f(
+                chunkGridPos.x * ChunkPosition.CHUNK_WIDTH,
+                chunkGridPos.y * ChunkPosition.CHUNK_HEIGHT,
+                chunkGridPos.z * ChunkPosition.CHUNK_WIDTH
+        );
+
+        Matrix4f transform = Math.createTransformationMatrix(
+                chunkWorldPos,
+                new Vector3f(0, 0, 0),          // No rotation
+                new Vector3f(1, 1, 1)           // Uniform scale
+        );
+
+        chunkMesh.getShaderProgram().setTransformationMatrix4fUniform(transform);
+
+/*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
+
+        GL46.glDrawElements(GL46.GL_TRIANGLES, chunkMesh.getVertexBuffer().getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+
+        chunkMesh.getVertexBuffer().unbindAll();
+        GL46.glUseProgram(0);
+    }
 }
