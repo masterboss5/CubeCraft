@@ -13,7 +13,7 @@ public class Camera {
     private Window window;
     private static final float FOV = 70;
     private static final float NEAR_PLANE = 0.1F;
-    private static final float FAR_PLANE = 100F;
+    private static final float FAR_PLANE = 360F;
     private static final float SENSITIVITY = 0.15F;
     private Matrix4f viewMatrix;
 

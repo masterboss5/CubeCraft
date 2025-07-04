@@ -37,6 +37,12 @@ public class Chunk {
     public void render() {
 
         if (this.isNeedsMeshing()) {
+            if (this.getChunkPosition().equals(new ChunkPosition(0, 0))) {
+//                this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
+            }
+
+            this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
+
             mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
             this.needsMeshing = false;
         }
@@ -49,7 +55,11 @@ public class Chunk {
     }
 
     public Block getBlock(BlockPosition position) {
-        return this.blockGrid[position.getX()][position.getY()][position.getZ()];
+        try {
+            return this.blockGrid[position.getX()][position.getY()][position.getZ()];
+        } catch (Exception e) {
+            return new AirBlock(position);
+        }
     }
 
     public void setBlock(Block newBlock, BlockPosition blockPosition) {

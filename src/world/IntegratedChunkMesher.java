@@ -67,13 +67,27 @@ public class IntegratedChunkMesher implements ChunkMesher {
 
                     if (block.isAirBlock()) continue;
 
-                    insertFace(vertices, indices, position, FRONT_FACE);
-                    insertFace(vertices, indices, position, BACK_FACE);
-                    insertFace(vertices, indices, position, RIGHT_FACE);
-                    insertFace(vertices, indices, position, LEFT_FACE);
-                    insertFace(vertices, indices, position, TOP_FACE);
-                    insertFace(vertices, indices, position, BOTTOM_FACE);
 
+                    BlockPosition pos = position.toLocalChunkPosition();
+
+                    if (chunk.getBlock(pos.offset(0, 0, -1)).isAirBlock()) {
+                        insertFace(vertices, indices, position, FRONT_FACE);
+                    }
+                    if (chunk.getBlock(pos.offset(0, 0, 1)).isAirBlock()) {
+                        insertFace(vertices, indices, position, BACK_FACE);
+                    }
+                    if (chunk.getBlock(pos.offset(1, 0, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, position, RIGHT_FACE);
+                    }
+                    if (chunk.getBlock(pos.offset(-1, 0, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, position, LEFT_FACE);
+                    }
+                    if (chunk.getBlock(pos.offset(0, 1, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, position, TOP_FACE);
+                    }
+                    if (chunk.getBlock(pos.offset(0, -1, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, position, BOTTOM_FACE);
+                    }
                 }
             }
         }

@@ -22,7 +22,9 @@ public class Keyboard implements InputHandler {
         this.keyPress = new GLFWKeyCallback() {
             @Override
             public void invoke(long window, int key, int scancode, int action, int mods) {
-                keys[key] = (action != GLFW.GLFW_RELEASE);
+                try {
+                    keys[key] = (action != GLFW.GLFW_RELEASE);
+                } catch (Exception ignored) {}
             }
         };
     }

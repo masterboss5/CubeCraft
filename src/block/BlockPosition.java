@@ -67,8 +67,10 @@ public class BlockPosition {
         return this.distanceTo(ORIGIN);
     }
 
-    public void offset(int dx, int dy, int dz) {
+    public BlockPosition offset(int dx, int dy, int dz) {
         this.set(this.x + dx, this.y + dy, this.z + dz);
+
+        return this;
     }
 
     public boolean isAlignedX(BlockPosition other) {
@@ -114,5 +116,16 @@ public class BlockPosition {
 
     public static BlockPosition fromChunkPosition(ChunkPosition chunkPos) {
         return new BlockPosition(chunkPos.getX() * ChunkPosition.CHUNK_WIDTH, 0, chunkPos.getZ() * ChunkPosition.CHUNK_WIDTH);
+    }
+
+    public BlockPosition toLocalChunkPosition() {
+        int localX = this.x % ChunkPosition.CHUNK_WIDTH;
+        int localZ = this.z % ChunkPosition.CHUNK_WIDTH;
+
+        // Handle negative modulo to keep local coords in [0, CHUNK_WIDTH)
+        if (localX < 0) localX += ChunkPosition.CHUNK_WIDTH;
+        if (localZ < 0) localZ += ChunkPosition.CHUNK_WIDTH;
+
+        return new BlockPosition(localX, this.y, localZ);
     }
 }

@@ -139,6 +139,7 @@ public class RenderSystem {
 /*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
 
+        System.out.println(chunkMesh.getVertexBuffer().getIndicesCount());
         GL46.glDrawElements(GL46.GL_TRIANGLES, chunkMesh.getVertexBuffer().getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
 
         chunkMesh.getVertexBuffer().unbindAll();
