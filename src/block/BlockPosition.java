@@ -5,6 +5,7 @@ import world.ChunkPosition;
 
 import java.util.Objects;
 
+//TODO make immutable
 public class BlockPosition {
     public static final BlockPosition ORIGIN = new BlockPosition();
     private int x;
@@ -68,9 +69,7 @@ public class BlockPosition {
     }
 
     public BlockPosition offset(int dx, int dy, int dz) {
-        this.set(this.x + dx, this.y + dy, this.z + dz);
-
-        return this;
+        return new BlockPosition(this.getX() + dx, this.getY() + dy, this.getZ() + dz);
     }
 
     public boolean isAlignedX(BlockPosition other) {

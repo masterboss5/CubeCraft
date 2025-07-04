@@ -10,14 +10,14 @@ import java.util.List;
 
 public class IntegratedChunkMesher implements ChunkMesher {
     // Front (+Z)
-    private static final float[] FRONT_FACE = {
+    private static final float[] BACK_FACE = {
             0, 0, 1,
             1, 0, 1,
             1, 1, 1,
             0, 1, 1
     };
     // Back (−Z)
-    private static final float[] BACK_FACE = {
+    private static final float[] FRONT_FACE = {
             1, 0, 0,
             0, 0, 0,
             0, 1, 0,
@@ -63,29 +63,29 @@ public class IntegratedChunkMesher implements ChunkMesher {
             for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
                 for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
                     BlockPosition position = new BlockPosition(x, y, z);
-                    Block block = chunk.getBlock(position);
+                    Block block = chunk.safeGetBlock(position);
 
                     if (block.isAirBlock()) continue;
 
 
                     BlockPosition pos = position.toLocalChunkPosition();
 
-                    if (chunk.getBlock(pos.offset(0, 0, -1)).isAirBlock()) {
+                    if (chunk.safeGetBlock(position.offset(0, 0, -1)).isAirBlock()) {
                         insertFace(vertices, indices, position, FRONT_FACE);
                     }
-                    if (chunk.getBlock(pos.offset(0, 0, 1)).isAirBlock()) {
+                    if (chunk.safeGetBlock(position.offset(0, 0, 1)).isAirBlock()) {
                         insertFace(vertices, indices, position, BACK_FACE);
                     }
-                    if (chunk.getBlock(pos.offset(1, 0, 0)).isAirBlock()) {
+                    if (chunk.safeGetBlock(position.offset(1, 0, 0)).isAirBlock()) {
                         insertFace(vertices, indices, position, RIGHT_FACE);
                     }
-                    if (chunk.getBlock(pos.offset(-1, 0, 0)).isAirBlock()) {
+                    if (chunk.safeGetBlock(position.offset(-1, 0, 0)).isAirBlock()) {
                         insertFace(vertices, indices, position, LEFT_FACE);
                     }
-                    if (chunk.getBlock(pos.offset(0, 1, 0)).isAirBlock()) {
+                    if (chunk.safeGetBlock(position.offset(0, 1, 0)).isAirBlock()) {
                         insertFace(vertices, indices, position, TOP_FACE);
                     }
-                    if (chunk.getBlock(pos.offset(0, -1, 0)).isAirBlock()) {
+                    if (chunk.safeGetBlock(position.offset(0, -1, 0)).isAirBlock()) {
                         insertFace(vertices, indices, position, BOTTOM_FACE);
                     }
                 }

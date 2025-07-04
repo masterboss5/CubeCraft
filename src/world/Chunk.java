@@ -3,6 +3,7 @@ package world;
 import block.AirBlock;
 import block.Block;
 import block.BlockPosition;
+import block.GrassBlock;
 import render.RenderSystem;
 
 import java.util.UUID;
@@ -41,7 +42,11 @@ public class Chunk {
 //                this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
             }
 
-            this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
+            for (int x = 0; x < 4; x++) {
+                for (int z = 0; z < 4; z++) {
+                    this.setBlock(new AirBlock(new BlockPosition(4 + x, 4, 4 + z)), new BlockPosition(4 + x, 4, 4 + z));
+                }
+            }
 
             mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
             this.needsMeshing = false;
@@ -55,11 +60,21 @@ public class Chunk {
     }
 
     public Block getBlock(BlockPosition position) {
-        try {
-            return this.blockGrid[position.getX()][position.getY()][position.getZ()];
-        } catch (Exception e) {
-            return new AirBlock(position);
+        return this.blockGrid[position.getX()][position.getY()][position.getZ()];
+    }
+
+    public Block safeGetBlock(BlockPosition position) {
+        int x = position.getX();
+        int y = position.getY();
+        int z = position.getZ();
+
+        if (x < 0 || x >= ChunkPosition.CHUNK_WIDTH ||
+                y < 0 || y >= ChunkPosition.CHUNK_HEIGHT ||
+                z < 0 || z >= ChunkPosition.CHUNK_WIDTH) {
+            return new AirBlock(position); // or null, depending on your preference
         }
+
+        return blockGrid[x][y][z];
     }
 
     public void setBlock(Block newBlock, BlockPosition blockPosition) {
