@@ -42,11 +42,14 @@ public class Chunk {
 //                this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
             }
 
-            for (int x = 0; x < 4; x++) {
-                for (int z = 0; z < 4; z++) {
-                    this.setBlock(new AirBlock(new BlockPosition(4 + x, 4, 4 + z)), new BlockPosition(4 + x, 4, 4 + z));
-                }
-            }
+//            for (int x = 0; x < 4; x++) {
+//                for (int z = 0; z < 4; z++) {
+//                    this.setBlock(new AirBlock(new BlockPosition(4 + x, 4, 4 + z)), new BlockPosition(4 + x, 4, 4 + z));
+//                }
+//            }
+
+            this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
+
 
             mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
             this.needsMeshing = false;
