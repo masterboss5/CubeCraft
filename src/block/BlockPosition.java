@@ -8,9 +8,9 @@ import java.util.Objects;
 //TODO make immutable
 public class BlockPosition {
     public static final BlockPosition ORIGIN = new BlockPosition();
-    private int x;
-    private int y;
-    private int z;
+    private final int x;
+    private final int y;
+    private final int z;
 
     public BlockPosition(int x, int y, int z) {
         this.x = x;
@@ -30,36 +30,34 @@ public class BlockPosition {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public BlockPosition setX(int x) {
+        return new BlockPosition(x, this.getY(), this.getZ());
     }
 
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public BlockPosition setY(int y) {
+        return new BlockPosition(this.getX(), y, this.getZ());
     }
 
     public int getZ() {
         return z;
     }
 
-    public void setZ(int z) {
-        this.z = z;
+    public BlockPosition setZ(int z) {
+        return new BlockPosition(this.getX(), this.getY(), z);
     }
 
-    public void set(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public BlockPosition set(int x, int y, int z) {
+        return new BlockPosition(x, y, z);
     }
 
     public double distanceTo(BlockPosition other) {
-        int dx = this.x - other.x;
-        int dy = this.y - other.y;
-        int dz = this.z - other.z;
+        int dx = this.getX() - other.getX();
+        int dy = this.getY() - other.getY();
+        int dz = this.getZ() - other.getZ();
 
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
@@ -73,15 +71,15 @@ public class BlockPosition {
     }
 
     public boolean isAlignedX(BlockPosition other) {
-        return this.y == other.y && this.z == other.z;
+        return this.getY() == other.getY() && this.getZ() == other.getZ();
     }
 
     public boolean isAlignedY(BlockPosition other) {
-        return this.x == other.x && this.z == other.z;
+        return this.getX() == other.getX() && this.getZ() == other.getZ();
     }
 
     public boolean isAlignedZ(BlockPosition other) {
-        return this.x == other.x && this.y == other.y;
+        return this.getX() == other.getX() && this.getY() == other.getY();
     }
 
     @Override
@@ -90,7 +88,7 @@ public class BlockPosition {
         if (obj == null || getClass() != obj.getClass()) return false;
         BlockPosition other = (BlockPosition) obj;
 
-        return this.x == other.x && this.y == other.y && this.z == other.z;
+        return this.getX() == other.getX() && this.getY() == other.getY() && this.getZ() == other.getZ();
     }
 
     @Override
@@ -99,14 +97,14 @@ public class BlockPosition {
     }
 
     public ChunkPosition toChunkPosition() {
-        int chunkX = this.x / ChunkPosition.CHUNK_WIDTH;
-        int chunkZ = this.z / ChunkPosition.CHUNK_WIDTH;
+        int chunkX = this.getX() / ChunkPosition.CHUNK_WIDTH;
+        int chunkZ = this.getZ() / ChunkPosition.CHUNK_WIDTH;
 
-        if (this.x < 0 && this.x % ChunkPosition.CHUNK_WIDTH != 0) {
+        if (this.getX() < 0 && this.getX() % ChunkPosition.CHUNK_WIDTH != 0) {
             chunkX = chunkX - 1;
         }
 
-        if (this.z < 0 && this.z % ChunkPosition.CHUNK_WIDTH != 0) {
+        if (this.getZ() < 0 && this.getZ() % ChunkPosition.CHUNK_WIDTH != 0) {
             chunkZ = chunkZ - 1;
         }
 
@@ -118,13 +116,12 @@ public class BlockPosition {
     }
 
     public BlockPosition toLocalChunkPosition() {
-        int localX = this.x % ChunkPosition.CHUNK_WIDTH;
-        int localZ = this.z % ChunkPosition.CHUNK_WIDTH;
+        int localX = this.getX() % ChunkPosition.CHUNK_WIDTH;
+        int localZ = this.getZ() % ChunkPosition.CHUNK_WIDTH;
 
-        // Handle negative modulo to keep local coords in [0, CHUNK_WIDTH)
         if (localX < 0) localX += ChunkPosition.CHUNK_WIDTH;
         if (localZ < 0) localZ += ChunkPosition.CHUNK_WIDTH;
 
-        return new BlockPosition(localX, this.y, localZ);
+        return new BlockPosition(localX, this.getY(), localZ);
     }
 }

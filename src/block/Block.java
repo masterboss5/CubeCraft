@@ -33,7 +33,7 @@ public abstract class Block implements Renderable {
     }
 
     public void setX(int x) {
-        this.position.setX(x);
+        this.position = this.position.setX(x);
     }
 
     public int getY() {
@@ -41,7 +41,7 @@ public abstract class Block implements Renderable {
     }
 
     public void setY(int y) {
-        this.position.setY(y);
+        this.position = this.position.setY(y);
     }
 
     public int getZ() {
@@ -49,7 +49,7 @@ public abstract class Block implements Renderable {
     }
 
     public void setZ(int z) {
-        this.position.setZ(z);
+        this.position = this.position.setZ(z);
     }
 
     public boolean isAirBlock() {

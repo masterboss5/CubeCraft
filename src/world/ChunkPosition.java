@@ -9,8 +9,8 @@ public final class ChunkPosition {
     public static final ChunkPosition ORIGIN = new ChunkPosition();
     public static final int CHUNK_HEIGHT = 128;
     public static final int CHUNK_WIDTH = 16;
-    private int x;
-    private int z;
+    private final int x;
+    private final int z;
 
     public ChunkPosition(int x, int z) {
         this.x = x;
@@ -29,21 +29,20 @@ public final class ChunkPosition {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public ChunkPosition setX(int x) {
+        return new ChunkPosition(x, this.getZ());
     }
 
     public int getZ() {
         return z;
     }
 
-    public void setZ(int z) {
-        this.z = z;
+    public ChunkPosition setZ(int z) {
+        return new ChunkPosition(this.getX(), z);
     }
 
-    public void set(int x, int z) {
-        this.x = x;
-        this.z = z;
+    public ChunkPosition set(int x, int z) {
+        return new ChunkPosition(x, z);
     }
 
     public double distanceTo(ChunkPosition other) {
