@@ -5,7 +5,7 @@ import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
 
 public class BlockModel extends Model {
-    final Texture texture;
+    private final Texture texture;
 
     public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, Texture texture) {
         super(shaderProgram, vertexBuffer);
