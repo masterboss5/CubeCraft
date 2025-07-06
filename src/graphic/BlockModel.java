@@ -5,12 +5,16 @@ import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
 
 public class BlockModel extends Model {
-    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer) {
+    final Texture texture;
+
+    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, Texture texture) {
         super(shaderProgram, vertexBuffer);
+
+        this.texture = texture;
     }
 
     public Texture getTexture() {
-        return this.getShaderProgram().getTexture();
+        return texture;
     }
 
     public int getTextureID() {

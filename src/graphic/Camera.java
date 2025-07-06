@@ -7,6 +7,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
+//TODO fix control and add relative movement
 public class Camera {
     private Vector3f position = new Vector3f();
     private Vector3f rotation = new Vector3f();

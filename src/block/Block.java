@@ -1,17 +1,14 @@
 package block;
 
 import graphic.BlockModel;
-import graphic.Texture;
 import render.Renderable;
 
 public abstract class Block implements Renderable {
-    final Texture texture;
     final BlockModel model;
     BlockPosition position;
 
     protected Block(BlockModel model, BlockPosition position) {
         this.model = model;
-        this.texture = model.getTexture();
         this.position = position;
     }
 

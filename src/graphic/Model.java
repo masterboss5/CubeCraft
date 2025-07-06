@@ -7,9 +7,9 @@ import shader.ShaderProgram;
 
 public abstract class Model {
     private final VertexBuffer vertexBuffer;
+    private final ShaderProgram shaderProgram;
     private Vector3f rotation = new Vector3f();
     private Vector3f scale = new Vector3f(1F);
-    private final ShaderProgram shaderProgram;
 
     protected Model(ShaderProgram shaderProgram, VertexBuffer vertexBuffer) {
         this.shaderProgram = shaderProgram;
@@ -17,7 +17,7 @@ public abstract class Model {
     }
 
     public void startShaderProgram() {
-        GL46.glUseProgram(this.shaderProgram.getProgramID());
+        GL46.glUseProgram(this.getShaderProgram().getProgramID());
     }
 
     public void stopShader() {

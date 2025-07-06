@@ -12,14 +12,14 @@ public class ModelBuilder {
         throw new UnsupportedOperationException();
     }
 
-    public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates) {
+    public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates, Texture texture) {
         VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(vertices);
         vertexBuffer.indices(indices);
         vertexBuffer.build();
 
         vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
 
-        return new BlockModel(shaderProgram, vertexBuffer);
+        return new BlockModel(shaderProgram, vertexBuffer, texture);
     }
 
     private static void storeDataInIndicesBuffer(int[] indices) {

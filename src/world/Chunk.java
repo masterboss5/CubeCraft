@@ -6,6 +6,8 @@ import block.BlockPosition;
 import block.GrassBlock;
 import render.RenderSystem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Chunk {
@@ -37,25 +39,37 @@ public class Chunk {
 
     public void render() {
 
-        if (this.isNeedsMeshing()) {
-            if (this.getChunkPosition().equals(new ChunkPosition(0, 0))) {
-//                this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
-            }
+//        if (this.isNeedsMeshing()) {
+//            for (int x = 0; x < 4; x++) {
+//                for (int z = 0; z < 4; z++) {
+//                    this.setBlock(new AirBlock(new BlockPosition(4 + x, 4, 4 + z)), new BlockPosition(4 + x, 4, 4 + z));
+//                }
+//            }
+//
+//            this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
+//
+//
+//            mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
+//            this.needsMeshing = false;
+//        }
+//
+//        RenderSystem.renderChunk(this.mesh, this);
+        this.render2();
+    }
 
-            for (int x = 0; x < 4; x++) {
-                for (int z = 0; z < 4; z++) {
-                    this.setBlock(new AirBlock(new BlockPosition(4 + x, 4, 4 + z)), new BlockPosition(4 + x, 4, 4 + z));
+    public void render2() {
+        List<Block> blocks = new ArrayList<>();
+
+        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
+            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
+                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
+                    Block block = blockGrid[x][y][z];
+                    blocks.add(block);
                 }
             }
-
-            this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
-
-
-            mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
-            this.needsMeshing = false;
         }
 
-        RenderSystem.renderChunk(this.mesh, this);
+        RenderSystem.renderBatched(blocks);
     }
 
     public ChunkPosition getChunkPosition() {
@@ -74,7 +88,7 @@ public class Chunk {
         if (x < 0 || x >= ChunkPosition.CHUNK_WIDTH ||
                 y < 0 || y >= ChunkPosition.CHUNK_HEIGHT ||
                 z < 0 || z >= ChunkPosition.CHUNK_WIDTH) {
-            return new AirBlock(position); // or null, depending on your preference
+            return new AirBlock(position);
         }
 
         return blockGrid[x][y][z];

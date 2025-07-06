@@ -5,5 +5,7 @@
 
   "uv": [],
 
-  "shader_program": "texture_shader"
+  "shader_program": "texture_shader",
+
+  "texture": "C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"
 }
