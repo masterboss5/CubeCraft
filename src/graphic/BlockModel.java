@@ -3,6 +3,7 @@ package graphic;
 import gl.VertexBuffer;
 import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
+import texture.Texture;
 
 public class BlockModel extends Model {
     private final Texture texture;

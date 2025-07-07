@@ -4,15 +4,15 @@ import gl.glDebugger;
 import graphic.Camera;
 import graphic.Models;
 import io.*;
-import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
 import shader.ShaderPrograms;
-import world.ChunkPosition;
+import texture.TextureArrayType;
+import texture.TextureData;
+import texture.TextureManager;
 import world.World;
-import world.WorldChunkManager;
 
 public class Main {
     public static Main INSTANCE;
@@ -62,6 +62,9 @@ public class Main {
         this.world.loadWorld();
         this.camera = new Camera(this.window);
         RenderSystem.init(this.window, this.camera);
+
+        TextureManager.createTextureArrays();
+        TextureManager.upload(TextureArrayType.BLOCK_TEXTURE_ARRAY, new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"));
 
         glDebugger.init();
     }

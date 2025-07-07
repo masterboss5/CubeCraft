@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import exception.JsonParsingException;
 import graphic.BlockModel;
 import graphic.ModelBuilder;
-import graphic.Texture;
+import texture.Texture;
 import registry.Registries;
 
 import java.io.FileReader;

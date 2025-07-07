@@ -1,4 +1,6 @@
-package graphic;
+package texture;
+
+import com.google.gson.annotations.Since;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -9,6 +11,8 @@ import javax.imageio.ImageIO;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL14.GL_MIRRORED_REPEAT;
 
+@Deprecated
+@Since(1.0)
 public class Texture {
     private final int textureID;
     private int width;

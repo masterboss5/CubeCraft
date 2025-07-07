@@ -1,4 +1,4 @@
-package graphic;
+package texture;
 
 public class UVCoordinates {
     // Top-left corner (0,1)

@@ -7,6 +7,7 @@ import render.RenderSystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class Chunk {
@@ -48,7 +49,7 @@ public class Chunk {
 //            this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
 //
 //
-//            mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
+//            this.mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
 //            this.needsMeshing = false;
 //        }
 //
@@ -63,6 +64,7 @@ public class Chunk {
             for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
                 for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
                     Block block = blockGrid[x][y][z];
+
                     blocks.add(block);
                 }
             }
@@ -93,11 +95,6 @@ public class Chunk {
         return blockGrid[x][y][z];
     }
 
-    public void setBlock(Block newBlock, BlockPosition blockPosition) {
-        this.blockGrid[blockPosition.getX()][blockPosition.getY()][blockPosition.getZ()] = newBlock;
-        this.setNeedsMeshing();
-        this.setNeedsSaving();
-    }
     //TODO fix method
     public int getBlockCount() {
         int count = 0;
@@ -115,6 +112,12 @@ public class Chunk {
         }
 
         return count;
+    }
+
+    public void setBlock(Block newBlock, BlockPosition blockPosition) {
+        this.blockGrid[blockPosition.getX()][blockPosition.getY()][blockPosition.getZ()] = newBlock;
+        this.setNeedsMeshing();
+        this.setNeedsSaving();
     }
 
     public boolean isNeedsMeshing() {
