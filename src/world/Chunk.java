@@ -3,7 +3,6 @@ package world;
 import block.AirBlock;
 import block.Block;
 import block.BlockPosition;
-import block.GrassBlock;
 import render.RenderSystem;
 
 import java.util.ArrayList;

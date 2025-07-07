@@ -2,8 +2,8 @@ package block;
 
 import graphic.Models;
 
-public class GrassBlock extends Block {
-    public GrassBlock(BlockPosition position) {
+public class DirtBlock extends Block {
+    public DirtBlock(BlockPosition position) {
         super(Models.DIRT_BLOCK_MODEL, position);
     }
 }

@@ -1,7 +1,7 @@
 package world;
 
 import block.BlockPosition;
-import block.GrassBlock;
+import block.DirtBlock;
 import main.Main;
 import org.joml.Vector3f;
 
@@ -37,7 +37,7 @@ public class WorldChunkManager {
                     int worldZ = chunkPosition.getZ() * ChunkPosition.CHUNK_WIDTH + z;
                     BlockPosition blockPos = new BlockPosition(worldX, y, worldZ);
 
-                    chunk.setBlock(new GrassBlock(blockPos), new BlockPosition(x, y, z));
+                    chunk.setBlock(new DirtBlock(blockPos), new BlockPosition(x, y, z));
                 }
             }
         }
