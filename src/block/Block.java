@@ -5,7 +5,7 @@ import render.Renderable;
 
 public abstract class Block implements Renderable {
     final BlockModel model;
-    BlockPosition position;
+    private BlockPosition position;
 
     protected Block(BlockModel model, BlockPosition position) {
         this.model = model;
