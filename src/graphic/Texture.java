@@ -10,9 +10,9 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL14.GL_MIRRORED_REPEAT;
 
 public class Texture {
+    private final int textureID;
     private int width;
     private int height;
-    final private int textureID;
 
     public Texture(String path) {
         this.textureID = this.loadFromPath(path);
