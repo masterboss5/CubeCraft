@@ -10,8 +10,8 @@ public class TextureManager {
         blockTextureArrayID = GL46.glGenTextures();
         GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, blockTextureArrayID);
 
-        byte width = 16;
-        byte height = 16;
+        int width = 1920;
+        int height = 1920;
         int count = 100;
 
         GL46.glTexStorage3D(GL46.GL_TEXTURE_2D_ARRAY, 1, GL46.GL_RGBA, width, height, count);
