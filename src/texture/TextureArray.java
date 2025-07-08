@@ -10,7 +10,6 @@ public class TextureArray {
     private final int size;
     private final int width;
     private final int height;
-    private boolean bound;
 
     public TextureArray(String name, int textureUnit, int size, int width, int height) {
         this.name = name;
@@ -82,12 +81,10 @@ public class TextureArray {
 
     public void bind() {
         GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, this.ID);
-        this.bound = true;
     }
 
     public void unbind() {
         GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, 0);
-        this.bound = false;
     }
 
     public void destroy() {
@@ -117,9 +114,5 @@ public class TextureArray {
 
     public int getHeight() {
         return height;
-    }
-
-    public boolean isBound() {
-        return bound;
     }
 }
