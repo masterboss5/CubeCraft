@@ -6,12 +6,39 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class TextureData {
-    private int width;
-    private int height;
-    private int[] pixels;
+    private final int width;
+    private final int height;
+    private final int[] pixels;
 
     public TextureData(String path) {
-        this.pixels = this.loadFromPath(path);
+        int w = 0;
+        int h = 0;
+        int[] rawPixels = null;
+
+        try {
+            BufferedImage image = ImageIO.read(new FileInputStream(path));
+            w = image.getWidth();
+            h = image.getHeight();
+
+            rawPixels = new int[w * h];
+            image.getRGB(0, 0, w, h, rawPixels, 0, w);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.width = w;
+        this.height = h;
+        this.pixels = new int[w * h];
+
+        for (int i = 0; i < this.pixels.length; i++) {
+            int argb = rawPixels[i];
+            int a = (argb >> 24) & 0xFF;
+            int r = (argb >> 16) & 0xFF;
+            int g = (argb >> 8) & 0xFF;
+            int b = argb & 0xFF;
+
+            pixels[i] = (a << 24) | (b << 16) | (g << 8) | r;
+        }
     }
 
     public int getWidth() {
@@ -24,30 +51,5 @@ public class TextureData {
 
     public int[] getPixels() {
         return pixels;
-    }
-
-    private int[] loadFromPath(String path) {
-        try {
-            BufferedImage image = ImageIO.read(new FileInputStream(path));
-            this.width = image.getWidth();
-            this.height = image.getHeight();
-            this.pixels = new int[this.width * this.height];
-            image.getRGB(0, 0, this.width, this.height, this.pixels, 0, this.width);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-
-        int[] data = new int[this.width * this.height];
-
-        for (int i = 0; i < this.width * this.height; i++) {
-            int a = (pixels[i] & 0xff000000) >> 24;
-            int r = (pixels[i] & 0xff0000) >> 16;
-            int g = (pixels[i] & 0xff00) >> 8;
-            int b = (pixels[i] & 0xff);
-
-            data[i] = a << 24 | b << 16 | g << 8 | r;
-        }
-
-        return data;
     }
 }

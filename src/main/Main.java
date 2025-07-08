@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
 import shader.ShaderPrograms;
-import texture.TextureArrayType;
 import texture.TextureData;
 import texture.TextureManager;
 import world.World;
@@ -63,8 +62,8 @@ public class Main {
         this.camera = new Camera(this.window);
         RenderSystem.init(this.window, this.camera);
 
-        TextureManager.createTextureArrays();
-        TextureManager.upload(new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"));
+        TextureManager.createTextureArrays(1920, 1920, 4);
+        TextureManager.upload(new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"), 0);
 
         glDebugger.init();
     }
