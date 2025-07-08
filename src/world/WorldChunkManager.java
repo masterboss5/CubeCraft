@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
-    private static final int RENDER_DISTANCE = 8;
+    private static final int RENDER_DISTANCE = 1;
     private final World world;
     public static final ChunkMesher CHUNK_MESHER = new IntegratedChunkMesher();
 
@@ -45,9 +45,9 @@ public class WorldChunkManager {
         this.cache(chunk);
     }
 
-    public void generateChunks(int centerX, int centerZ) {
-        for (int x = -25; x <= 25; x++) {
-            for (int z = -25; z <= 25; z++) {
+    public void generateChunks(int size) {
+        for (int x = -size; x <= size; x++) {
+            for (int z = -size; z <= size; z++) {
                 this.solidChunk(new ChunkPosition(x, z));
             }
         }

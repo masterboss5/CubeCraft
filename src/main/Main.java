@@ -64,7 +64,7 @@ public class Main {
         RenderSystem.init(this.window, this.camera);
 
         TextureManager.createTextureArrays();
-        TextureManager.upload(TextureArrayType.BLOCK_TEXTURE_ARRAY, new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"));
+        TextureManager.upload(new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"));
 
         glDebugger.init();
     }
