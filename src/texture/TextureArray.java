@@ -64,7 +64,6 @@ public class TextureArray {
 
         this.bind();
 
-        this.textures.put(textureData, index);
         GL46.glTexSubImage3D(
                 GL46.GL_TEXTURE_2D_ARRAY,
                 0,

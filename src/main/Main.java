@@ -4,6 +4,7 @@ import gl.glDebugger;
 import graphic.Camera;
 import graphic.Models;
 import io.*;
+import json.TextureArrays;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -59,6 +60,7 @@ public class Main {
         ShaderPrograms.loadShaderPrograms();
         Textures.loadTextures();
         Models.loadModels();
+        TextureArrays.loadTextureArrays();
         this.world = new World();
         this.world.loadWorld();
         this.camera = new Camera(this.window);

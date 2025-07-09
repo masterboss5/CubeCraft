@@ -1,19 +1,28 @@
 package texture;
 
 import json.ReadBlockModel;
+import json.TextureArrays;
 import registry.Registries;
 
-public record BlockTextureMap(TextureData top, TextureData bottom, TextureData front, TextureData back, TextureData left, TextureData right) {
+public record BlockTextureMap(int top, int bottom, int front, int back, int left, int right) {
     public BlockTextureMap(ReadBlockModel readBlockModel) {
-        this(get(readBlockModel.top()),
+        this(
+                get(readBlockModel.top()),
                 get(readBlockModel.bottom()),
                 get(readBlockModel.front()),
-                get(readBlockModel.bottom()),
+                get(readBlockModel.back()),
                 get(readBlockModel.left()),
-                get(readBlockModel.right()));
+                get(readBlockModel.right())
+        );
     }
 
-    private static TextureData get(String key) {
-        return Registries.TEXTURES.get(key);
+    private static int get(String key) {
+        TextureData texture = Registries.TEXTURES.get(key);
+
+        if (key == null) {
+            return -1;
+        }
+
+        return TextureArrays.BLOCK_TEXTURE_ARRAY.registerOrGet(texture);
     }
 }

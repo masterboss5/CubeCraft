@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class TextureData {
     private final int width;
@@ -51,5 +53,16 @@ public class TextureData {
 
     public int[] getPixels() {
         return pixels;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof TextureData that)) return false;
+        return getWidth() == that.getWidth() && getHeight() == that.getHeight() && Objects.deepEquals(getPixels(), that.getPixels());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getWidth(), getHeight(), Arrays.hashCode(getPixels()));
     }
 }
