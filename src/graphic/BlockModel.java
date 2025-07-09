@@ -7,11 +7,13 @@ import texture.BlockTextureMap;
 
 public class BlockModel extends Model {
     private final BlockTextureMap textures;
+    private final BlockFaceMap faces;
 
-    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, BlockTextureMap textures) {
+    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, BlockTextureMap textures, BlockFaceMap faces) {
         super(shaderProgram, vertexBuffer);
 
         this.textures = textures;
+        this.faces = faces;
 
         System.out.println(textures);
     }
@@ -20,12 +22,12 @@ public class BlockModel extends Model {
         return textures;
     }
 
-//    public int getTextureID() {
-//        return this.getTextures().getTextureID();
-//    }
-
     @Override
     public TexturedShaderProgram getShaderProgram() {
         return (TexturedShaderProgram) super.getShaderProgram();
+    }
+
+    public BlockFaceMap getFaces() {
+        return faces;
     }
 }

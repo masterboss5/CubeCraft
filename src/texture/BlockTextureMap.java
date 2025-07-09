@@ -4,7 +4,14 @@ import json.ReadBlockModel;
 import json.TextureArrays;
 import registry.Registries;
 
-public record BlockTextureMap(int top, int bottom, int front, int back, int left, int right) {
+public record BlockTextureMap(
+        int top,
+        int bottom,
+        int front,
+        int back,
+        int left,
+        int right
+) {
     public BlockTextureMap(ReadBlockModel readBlockModel) {
         this(
                 get(readBlockModel.top()),

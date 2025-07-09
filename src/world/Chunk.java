@@ -39,7 +39,7 @@ public class Chunk {
 
     public void render() {
 
-        if (this.isNeedsMeshing()) {
+        /*if (this.isNeedsMeshing()) {
             for (int x = 0; x < 4; x++) {
                 for (int z = 0; z < 4; z++) {
                     this.setBlock(new AirBlock(new BlockPosition(4 + x, 4, 4 + z)), new BlockPosition(4 + x, 4, 4 + z));
@@ -53,8 +53,8 @@ public class Chunk {
             this.needsMeshing = false;
         }
 
-        RenderSystem.renderChunk(this.mesh, this);
-//        this.render2();
+        RenderSystem.renderChunk(this.mesh, this);*/
+        this.render2();
     }
 
     public void render2() {
