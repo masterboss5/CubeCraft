@@ -11,6 +11,7 @@ import render.RenderSystem;
 import shader.ShaderPrograms;
 import texture.TextureData;
 import texture.TextureManager;
+import texture.Textures;
 import world.World;
 
 public class Main {
@@ -56,6 +57,7 @@ public class Main {
 
         this.initInputs();
         ShaderPrograms.loadShaderPrograms();
+        Textures.loadTextures();
         Models.loadModels();
         this.world = new World();
         this.world.loadWorld();

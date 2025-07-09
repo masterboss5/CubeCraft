@@ -13,12 +13,12 @@ import static org.lwjgl.opengl.GL14.GL_MIRRORED_REPEAT;
 
 @Deprecated
 @Since(1.0)
-public class Texture {
+public class OldTexture {
     private final int textureID;
     private int width;
     private int height;
 
-    public Texture(String path) {
+    public OldTexture(String path) {
         this.textureID = this.loadFromPath(path);
     }
 

@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import shader.ShaderProgram;
 import texture.BlockTextureMap;
-import texture.Texture;
 
 public class ModelBuilder {
 
@@ -14,22 +13,23 @@ public class ModelBuilder {
         throw new UnsupportedOperationException();
     }
 
-    public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates, Texture texture) {
+/*    public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates, Texture texture) {
         VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(vertices).indices(indices);
         vertexBuffer.build();
 
         vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
 
         return new BlockModel(shaderProgram, vertexBuffer, texture);
-    }
+    }*/
 
     public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates, BlockTextureMap blockTextureMap) {
         VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(vertices).indices(indices);
         vertexBuffer.build();
 
         vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
+        //add texture id here
 
-        return new BlockModel(shaderProgram, vertexBuffer, texture);
+        return new BlockModel(shaderProgram, vertexBuffer, blockTextureMap);
     }
 
     private static void storeDataInIndicesBuffer(int[] indices) {

@@ -2,11 +2,9 @@ package json;
 
 import com.google.gson.Gson;
 import exception.JsonParsingException;
-import gl.VertexBuffer;
-import gl.glUsage;
 import graphic.BlockModel;
 import graphic.ModelBuilder;
-import texture.Texture;
+import texture.BlockTextureMap;
 import registry.Registries;
 
 import java.io.FileReader;
@@ -30,7 +28,7 @@ public class JsonLoader {
                 readBlockModel.vertices(),
                 readBlockModel.indices(),
                 readBlockModel.uv(),
-                new Texture(ROOT_TEXTURE_PATH + readBlockModel.texture()));
+                new BlockTextureMap(readBlockModel));
     }
 
 //    public static BlockModel readSimpleBlockModelJson(String fileName) {

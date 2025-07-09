@@ -3,24 +3,26 @@ package graphic;
 import gl.VertexBuffer;
 import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
-import texture.Texture;
+import texture.BlockTextureMap;
 
 public class BlockModel extends Model {
-    private final Texture texture;
+    private final BlockTextureMap textures;
 
-    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, Texture texture) {
+    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, BlockTextureMap textures) {
         super(shaderProgram, vertexBuffer);
 
-        this.texture = texture;
+        this.textures = textures;
+
+        System.out.println(textures);
     }
 
-    public Texture getTexture() {
-        return texture;
+    public BlockTextureMap getTextures() {
+        return textures;
     }
 
-    public int getTextureID() {
-        return this.getTexture().getTextureID();
-    }
+//    public int getTextureID() {
+//        return this.getTextures().getTextureID();
+//    }
 
     @Override
     public TexturedShaderProgram getShaderProgram() {

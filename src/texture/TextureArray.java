@@ -3,18 +3,23 @@ package texture;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TextureArray {
     private final String name;
     private final int textureUnit;
-    private final int ID;
+    private final int arrayID;
     private final int size;
     private final int width;
     private final int height;
+    private int registeredIndex = 0;
+    private final Map<TextureData, Integer> textures = new HashMap<>();
 
     public TextureArray(String name, int textureUnit, int size, int width, int height) {
         this.name = name;
         this.textureUnit = textureUnit;
-        this.ID = GL46.glGenTextures();
+        this.arrayID = GL46.glGenTextures();
         this.size = size;
         this.width = width;
         this.height = height;
@@ -35,6 +40,19 @@ public class TextureArray {
         this.unbind();
     }
 
+    public int getIndexByTexture(TextureData texture) {
+        return this.textures.get(texture);
+    }
+
+    public int registerOrGet(TextureData texture) {
+        return this.textures.computeIfAbsent(texture, (absentTexture -> {
+            this.upload(texture, this.registeredIndex);
+            this.registeredIndex = this.registeredIndex + 1;
+
+            return this.registeredIndex - 1;
+        }));
+    }
+
     public void upload(TextureData textureData, int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Texture layer " + index + " out of bounds (0–" + (size - 1) + ")");
@@ -46,6 +64,7 @@ public class TextureArray {
 
         this.bind();
 
+        this.textures.put(textureData, index);
         GL46.glTexSubImage3D(
                 GL46.GL_TEXTURE_2D_ARRAY,
                 0,
@@ -74,13 +93,13 @@ public class TextureArray {
         this.unbind();
     }
 
-    public void bindForRendering() {
+    public void bindAndActivate() {
         GL46.glActiveTexture(GL13.GL_TEXTURE0 + this.getTextureUnit());
         this.bind();
     }
 
     public void bind() {
-        GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, this.ID);
+        GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, this.arrayID);
     }
 
     public void unbind() {
@@ -89,7 +108,7 @@ public class TextureArray {
 
     public void destroy() {
         this.unbind();
-        GL46.glDeleteTextures(this.getID());
+        GL46.glDeleteTextures(this.getArrayID());
     }
 
     public String getName() {
@@ -100,8 +119,8 @@ public class TextureArray {
         return textureUnit;
     }
 
-    public int getID() {
-        return ID;
+    public int getArrayID() {
+        return arrayID;
     }
 
     public int getSize() {

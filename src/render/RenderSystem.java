@@ -79,8 +79,8 @@ public class RenderSystem {
         model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
-        GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
+/*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
 
         GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
 
