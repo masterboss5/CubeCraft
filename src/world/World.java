@@ -13,7 +13,7 @@ public class World {
     }
 
     public void generateWorld() {
-        this.chunkManager.generateChunks(2);
+        this.chunkManager.generateChunks(0);
     }
 
     public void tickWorld() {

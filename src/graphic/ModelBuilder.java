@@ -27,7 +27,7 @@ public class ModelBuilder {
         vertexBuffer.build();
 
         vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
-        //add texture id here
+        vertexBuffer.createNewVertexBufferObject(blockTextureMap.toVertexBuffer(), (byte) 1, false, glUsage.GL_STATIC_DRAW);
 
         return new BlockModel(shaderProgram, vertexBuffer, blockTextureMap);
     }

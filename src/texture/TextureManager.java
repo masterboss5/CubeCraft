@@ -19,7 +19,7 @@ public class TextureManager {
         GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, 0);
     }
 
-    public static void upload(TextureData texture, int textureIndex) {
+    public static void upload(Texture texture, int textureIndex) {
         int width = texture.getWidth();
         int height = texture.getHeight();
         int[] pixels = texture.getPixels();

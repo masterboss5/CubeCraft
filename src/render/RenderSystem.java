@@ -4,11 +4,11 @@ import block.Block;
 import graphic.BlockModel;
 import graphic.Camera;
 import io.Window;
+import json.TextureArrays;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
-import texture.TextureManager;
 import util.Math;
 import world.Chunk;
 import world.ChunkMesh;
@@ -103,7 +103,7 @@ public class RenderSystem {
         GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        GL13.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, TextureManager.getBlockTextureArrayID());
+        GL13.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, TextureArrays.BLOCK_TEXTURE_ARRAY.getArrayID());
 
         for (Block block : blocks) {
 

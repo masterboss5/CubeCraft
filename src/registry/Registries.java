@@ -5,7 +5,7 @@ import graphic.Model;
 import graphic.Models;
 import shader.EmptyShaderProgram;
 import shader.ShaderProgram;
-import texture.TextureData;
+import texture.Texture;
 
 import java.util.function.Supplier;
 
@@ -14,7 +14,7 @@ public class Registries {
     public static final RootRegistry ROOT = new RootRegistry();
     public static final DefaultedRegistry<Model> MODEL = createDefaulted("model", () -> Models.AIR_BLOCK_MODEL);
     public static final DefaultedRegistry<ShaderProgram> SHADER_PROGRAM = createDefaulted("shader_program", EmptyShaderProgram::new);
-    public static final SimpleRegistry<TextureData> TEXTURES = createSimple("textures");
+    public static final SimpleRegistry<Texture> TEXTURES = createSimple("textures");
 
     public static <R, T extends R> R register(Registry<R> registry, String key, T entry) {
         return registry.register(key, entry);

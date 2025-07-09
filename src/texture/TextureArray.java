@@ -14,7 +14,7 @@ public class TextureArray {
     private final int width;
     private final int height;
     private int registeredIndex = 0;
-    private final Map<TextureData, Integer> textures = new HashMap<>();
+    private final Map<Texture, Integer> textures = new HashMap<>();
 
     public TextureArray(String name, int textureUnit, int size, int width, int height) {
         this.name = name;
@@ -23,6 +23,9 @@ public class TextureArray {
         this.size = size;
         this.width = width;
         this.height = height;
+
+        this.allocate();
+        this.texParameters();
     }
 
     public void allocate() {
@@ -40,11 +43,11 @@ public class TextureArray {
         this.unbind();
     }
 
-    public int getIndexByTexture(TextureData texture) {
+    public int getIndexByTexture(Texture texture) {
         return this.textures.get(texture);
     }
 
-    public int registerOrGet(TextureData texture) {
+    public int registerOrGet(Texture texture) {
         return this.textures.computeIfAbsent(texture, (absentTexture -> {
             this.upload(texture, this.registeredIndex);
             this.registeredIndex = this.registeredIndex + 1;
@@ -53,14 +56,14 @@ public class TextureArray {
         }));
     }
 
-    public void upload(TextureData textureData, int index) {
+    public void upload(Texture texture, int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Texture layer " + index + " out of bounds (0–" + (size - 1) + ")");
         }
 
-        int width = textureData.getWidth();
-        int height = textureData.getHeight();
-        int[] pixels = textureData.getPixels();
+        int width = texture.getWidth();
+        int height = texture.getHeight();
+        int[] pixels = texture.getPixels();
 
         this.bind();
 
@@ -85,7 +88,7 @@ public class TextureArray {
         this.bind();
 
         GL46.glTexParameteri(GL46.GL_TEXTURE_2D_ARRAY, GL46.GL_TEXTURE_MIN_FILTER, GL46.GL_NEAREST);
-        GL46.glTexParameteri(GL46.GL_TEXTURE_2D_ARRAY, GL46.GL_TEXTURE_MAG_FILTER, GL46.GL_LINEAR);
+        GL46.glTexParameteri(GL46.GL_TEXTURE_2D_ARRAY, GL46.GL_TEXTURE_MAG_FILTER, GL46.GL_NEAREST);
         GL46.glTexParameteri(GL46.GL_TEXTURE_2D_ARRAY, GL46.GL_TEXTURE_WRAP_S, GL46.GL_MIRRORED_REPEAT);
         GL46.glTexParameteri(GL46.GL_TEXTURE_2D_ARRAY, GL46.GL_TEXTURE_WRAP_T, GL46.GL_MIRRORED_REPEAT);
 

@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class TextureData {
+public class Texture {
     private final int width;
     private final int height;
     private final int[] pixels;
 
-    public TextureData(String path) {
+    public Texture(String path) {
         int w = 0;
         int h = 0;
         int[] rawPixels = null;
@@ -57,7 +57,7 @@ public class TextureData {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof TextureData that)) return false;
+        if (!(o instanceof Texture that)) return false;
         return getWidth() == that.getWidth() && getHeight() == that.getHeight() && Objects.deepEquals(getPixels(), that.getPixels());
     }
 

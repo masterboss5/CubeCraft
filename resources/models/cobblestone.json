@@ -61,10 +61,10 @@
     0, 0,  0, 1,  1, 1,  1, 0
   ],
 
-  "top": "dirt_block_texture",
-  "bottom": "dirt_block_texture",
-  "front": "dirt_block_texture",
-  "back": "dirt_block_texture",
-  "left": "dirt_block_texture",
-  "right": "dirt_block_texture"
+  "top": "cobblestone_block_texture",
+  "bottom": "cobblestone_block_texture",
+  "front": "cobblestone_block_texture",
+  "back": "cobblestone_block_texture",
+  "left": "cobblestone_block_texture",
+  "right": "cobblestone_block_texture"
 }

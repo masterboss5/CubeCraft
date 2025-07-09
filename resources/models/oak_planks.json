@@ -61,10 +61,10 @@
     0, 0,  0, 1,  1, 1,  1, 0
   ],
 
-  "top": "dirt_block_texture",
-  "bottom": "dirt_block_texture",
-  "front": "dirt_block_texture",
-  "back": "dirt_block_texture",
-  "left": "dirt_block_texture",
-  "right": "dirt_block_texture"
+  "top": "oak_planks_block_texture",
+  "bottom": "oak_planks_block_texture",
+  "front": "oak_planks_block_texture",
+  "back": "oak_planks_block_texture",
+  "left": "oak_planks_block_texture",
+  "right": "oak_planks_block_texture"
 }

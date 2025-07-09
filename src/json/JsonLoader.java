@@ -24,7 +24,7 @@ public class JsonLoader {
             throw new JsonParsingException(JsonParsingException.LoadingContext.MODEL, fileName);
         }
 
-        return ModelBuilder.buildBlockModel(Registries.SHADER_PROGRAM.get(readBlockModel.shader_program()),
+        return ModelBuilder.buildBlockModel(Registries.SHADER_PROGRAM.get("texture_shader"),
                 readBlockModel.vertices(),
                 readBlockModel.indices(),
                 readBlockModel.uv(),

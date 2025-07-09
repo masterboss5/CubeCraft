@@ -3,9 +3,5 @@
 
   "indices": [],
 
-  "uv": [],
-
-  "shader_program": "texture_shader",
-
-  "texture": "grass.png"
+  "uv": []
 }

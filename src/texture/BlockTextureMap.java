@@ -16,8 +16,19 @@ public record BlockTextureMap(int top, int bottom, int front, int back, int left
         );
     }
 
+    public int[] toVertexBuffer() {
+        return new int[] {
+                top, top, top, top,
+                bottom, bottom, bottom, bottom,
+                front, front, front, front,
+                back, back, back, back,
+                left, left, left, left,
+                right, right, right, right
+        };
+    }
+
     private static int get(String key) {
-        TextureData texture = Registries.TEXTURES.get(key);
+        Texture texture = Registries.TEXTURES.get(key);
 
         if (key == null) {
             return -1;

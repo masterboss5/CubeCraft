@@ -61,10 +61,10 @@
     0, 0,  0, 1,  1, 1,  1, 0
   ],
 
-  "top": "dirt_block_texture",
+  "top": "grass_block_top_texture",
   "bottom": "dirt_block_texture",
-  "front": "dirt_block_texture",
-  "back": "dirt_block_texture",
-  "left": "dirt_block_texture",
-  "right": "dirt_block_texture"
+  "front": "grass_block_side_texture",
+  "back": "grass_block_side_texture",
+  "left": "grass_block_side_texture",
+  "right": "grass_block_side_texture"
 }

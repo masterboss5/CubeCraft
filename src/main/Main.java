@@ -10,8 +10,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
 import shader.ShaderPrograms;
-import texture.TextureData;
-import texture.TextureManager;
+import texture.TextureArray;
 import texture.Textures;
 import world.World;
 
@@ -28,6 +27,7 @@ public class Main {
     }
 
     private void render() {
+        TextureArray temp = TextureArrays.BLOCK_TEXTURE_ARRAY;
         this.world.renderWorld();
         this.world.tickWorld();
         GLFW.glfwSwapBuffers(this.window.getPointer());
@@ -66,8 +66,8 @@ public class Main {
         this.camera = new Camera(this.window);
         RenderSystem.init(this.window, this.camera);
 
-        TextureManager.createTextureArrays(1920, 1920, 4);
-        TextureManager.upload(new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"), 0);
+        /*TextureManager.createTextureArrays(1920, 1920, 4);
+        TextureManager.upload(new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"), 0);*/
 
         glDebugger.init();
     }
