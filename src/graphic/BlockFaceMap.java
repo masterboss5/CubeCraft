@@ -51,38 +51,50 @@ public record BlockFaceMap(
         System.out.println(this.right.length);*/
     }
 
-    private static float[] centerPointsTo0(float[] points) {
-
+    private static float[] centerPointsTo0(float[] points, String axisExclude) {
         float[] copy = Arrays.copyOf(points, points.length);
 
-        for (int i = 0; i < copy.length; i = i + 1) {
-            copy[i] = copy[i] - 0.5f;
+        for (int i = 0; i < copy.length; i += 3) {
+            // Shift X
+            if (!axisExclude.equalsIgnoreCase("X")) {
+                copy[i] = copy[i] - 0.5f;
+            }
+
+            // Shift Y
+            if (!axisExclude.equalsIgnoreCase("Y")) {
+                copy[i + 1] = copy[i + 1] - 0.5f;
+            }
+
+            // Shift Z
+            if (!axisExclude.equalsIgnoreCase("Z")) {
+                copy[i + 2] = copy[i + 2] - 0.5f;
+            }
         }
 
         return copy;
     }
 
     public float[] getTopFaceCenteredTo0() {
-        return centerPointsTo0(this.top());
+        return centerPointsTo0(this.top(), "y");
     }
 
     public float[] getBottomFaceCenteredTo0() {
-        return centerPointsTo0(this.bottom());
+        return centerPointsTo0(this.bottom(), "y");
     }
 
     public float[] getFrontFaceCenteredTo0() {
-        return centerPointsTo0(this.front());
+        return centerPointsTo0(this.front(), "z");
     }
 
     public float[] getBackFaceCenteredTo0() {
-        return centerPointsTo0(this.back());
+        return centerPointsTo0(this.back(), "z");
     }
 
     public float[] getLeftFaceCenteredTo0() {
-        return centerPointsTo0(this.left());
+        return centerPointsTo0(this.left(), "x");
     }
 
     public float[] getRightFaceCenteredTo0() {
-        return centerPointsTo0(this.right());
+        return centerPointsTo0(this.right(), "x");
     }
 }
