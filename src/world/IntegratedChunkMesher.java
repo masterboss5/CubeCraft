@@ -10,18 +10,18 @@ import java.util.List;
 
 public class IntegratedChunkMesher implements ChunkMesher {
     // Front (+Z)
-    private static final float[] BACK_FACE = {
-            0, 0, 1,
-            1, 0, 1,
-            1, 1, 1,
-            0, 1, 1
-    };
-    // Back (−Z)
     private static final float[] FRONT_FACE = {
             1, 0, 0,
             0, 0, 0,
             0, 1, 0,
             1, 1, 0
+    };
+    // Back (−Z)
+    private static final float[] BACK_FACE = {
+            0, 0, 1,
+            1, 0, 1,
+            1, 1, 1,
+            0, 1, 1
     };
     // Right (+X)
     private static final float[] RIGHT_FACE = {
