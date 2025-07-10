@@ -29,7 +29,7 @@ public class ModelBuilder {
         vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
         vertexBuffer.createNewVertexBufferObject(blockTextureMap.toVertexBuffer(), (byte) 1, false, glUsage.GL_STATIC_DRAW);
 
-        return new BlockModel(shaderProgram, vertexBuffer, blockTextureMap, BlockFaceMap.create(vertices));
+        return new BlockModel(shaderProgram, vertexBuffer, blockTextureMap, BlockFaceMap.create(vertices), uvCoordinates);
     }
 
     private static void storeDataInIndicesBuffer(int[] indices) {

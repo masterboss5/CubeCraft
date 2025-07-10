@@ -55,20 +55,9 @@ public record BlockFaceMap(
         float[] copy = Arrays.copyOf(points, points.length);
 
         for (int i = 0; i < copy.length; i += 3) {
-            // Shift X
-            if (!axisExclude.equalsIgnoreCase("X")) {
-                copy[i] = copy[i] - 0.5f;
-            }
-
-            // Shift Y
-            if (!axisExclude.equalsIgnoreCase("Y")) {
-                copy[i + 1] = copy[i + 1] - 0.5f;
-            }
-
-            // Shift Z
-            if (!axisExclude.equalsIgnoreCase("Z")) {
-                copy[i + 2] = copy[i + 2] - 0.5f;
-            }
+            copy[i] = copy[i] + 0.5f;
+            copy[i + 1] = copy[i + 1] + 0.5f;
+            copy[i + 2] = copy[i + 2] + 0.5f;
         }
 
         return copy;

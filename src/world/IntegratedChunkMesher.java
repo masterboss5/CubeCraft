@@ -4,118 +4,171 @@ import block.Block;
 import block.BlockPosition;
 import gl.VertexBuffer;
 import gl.glUsage;
+import graphic.BlockModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class IntegratedChunkMesher implements ChunkMesher {
-    // Front (+Z)
-    private static final float[] FRONT_FACE = {
-            1, 0, 0,
-            0, 0, 0,
-            0, 1, 0,
-            1, 1, 0
-    };
-    // Back (−Z)
-    private static final float[] BACK_FACE = {
-            0, 0, 1,
-            1, 0, 1,
-            1, 1, 1,
-            0, 1, 1
-    };
-    // Right (+X)
-    private static final float[] RIGHT_FACE = {
-            1, 0, 1,
-            1, 0, 0,
-            1, 1, 0,
-            1, 1, 1
-    };
-    // Left (−X)
-    private static final float[] LEFT_FACE = {
-            0, 0, 0,
-            0, 0, 1,
-            0, 1, 1,
-            0, 1, 0
-    };
-    // Top (+Y)
+    private static final int[] INDICES = {0, 1, 2, 2, 3, 0}; // Assumes quad in CCW order
+
+    // Face definitions match your JSON cube exactly
     private static final float[] TOP_FACE = {
-            0, 1, 1,
-            1, 1, 1,
-            1, 1, 0,
-            0, 1, 0
-    };
-    // Bottom (−Y)
-    private static final float[] BOTTOM_FACE = {
-            0, 0, 0,
-            1, 0, 0,
-            1, 0, 1,
-            0, 0, 1
+            0f, 1f, 0f,
+            0f, 1f, 1f,
+            1f, 1f, 1f,
+            1f, 1f, 0f
     };
 
-    private static final int[] INDICES = {0, 1, 2, 2, 3, 0};
+    private static final float[] BOTTOM_FACE = {
+            0f, 0f, 1f,
+            0f, 0f, 0f,
+            1f, 0f, 0f,
+            1f, 0f, 1f
+    };
+
+    private static final float[] FRONT_FACE = {
+            0f, 1f, 1f,
+            0f, 0f, 1f,
+            1f, 0f, 1f,
+            1f, 1f, 1f
+    };
+
+    private static final float[] BACK_FACE = {
+            1f, 1f, 0f,
+            1f, 0f, 0f,
+            0f, 0f, 0f,
+            0f, 1f, 0f
+    };
+
+    private static final float[] LEFT_FACE = {
+            0f, 1f, 0f,
+            0f, 0f, 0f,
+            0f, 0f, 1f,
+            0f, 1f, 1f
+    };
+
+    private static final float[] RIGHT_FACE = {
+            1f, 1f, 1f,
+            1f, 0f, 1f,
+            1f, 0f, 0f,
+            1f, 1f, 0f
+    };
 
     @Override
     public ChunkMesh meshChunk(Chunk chunk) {
+        long startTime = System.nanoTime(); // Start timing
+
         List<Float> vertices = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
+        List<Integer> faceIndexes = new ArrayList<>();
+        List<Float> uvCoordinates = new ArrayList<>();
 
         for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
             for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
                 for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
-                    BlockPosition position = new BlockPosition(x, y, z);
-                    Block block = chunk.safeGetBlock(position);
+                    BlockPosition pos = new BlockPosition(x, y, z);
+                    Block block = chunk.safeGetBlock(pos);
 
                     if (block.isAirBlock()) continue;
 
-                    if (chunk.safeGetBlock(position.offset(0, 0, -1)).isAirBlock()) {
-                        this.insertFace(vertices, indices, position, FRONT_FACE);
+                    BlockModel blockModel = block.getModel();
+
+                    if (chunk.safeGetBlock(pos.offset(0, 1, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, pos, TOP_FACE);
+                        insertTextureIndex(faceIndexes, blockModel.getTextures().getTopIndexes());
+                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
                     }
-                    if (chunk.safeGetBlock(position.offset(0, 0, 1)).isAirBlock()) {
-                        this.insertFace(vertices, indices, position, BACK_FACE);
+                    if (chunk.safeGetBlock(pos.offset(0, -1, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, pos, blockModel.getFaces().getBottomFaceCenteredTo0());
+                        insertTextureIndex(faceIndexes, blockModel.getTextures().getBottomIndexes());
+                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
                     }
-                    if (chunk.safeGetBlock(position.offset(1, 0, 0)).isAirBlock()) {
-                        this.insertFace(vertices, indices, position, RIGHT_FACE);
+                    if (chunk.safeGetBlock(pos.offset(0, 0, 1)).isAirBlock()) {
+                        insertFace(vertices, indices, pos, blockModel.getFaces().getFrontFaceCenteredTo0());
+                        insertTextureIndex(faceIndexes, blockModel.getTextures().getFrontIndexes());
+                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
                     }
-                    if (chunk.safeGetBlock(position.offset(-1, 0, 0)).isAirBlock()) {
-                        this.insertFace(vertices, indices, position, LEFT_FACE);
+                    if (chunk.safeGetBlock(pos.offset(0, 0, -1)).isAirBlock()) {
+                        insertFace(vertices, indices, pos, blockModel.getFaces().getBackFaceCenteredTo0());
+                        insertTextureIndex(faceIndexes, blockModel.getTextures().getBackIndexes());
+                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
                     }
-                    if (chunk.safeGetBlock(position.offset(0, 1, 0)).isAirBlock()) {
-                        this.insertFace(vertices, indices, position, TOP_FACE);
+                    if (chunk.safeGetBlock(pos.offset(-1, 0, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, pos, blockModel.getFaces().getLeftFaceCenteredTo0());
+                        insertTextureIndex(faceIndexes, blockModel.getTextures().getLeftIndexes());
+                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
                     }
-                    if (chunk.safeGetBlock(position.offset(0, -1, 0)).isAirBlock()) {
-                        this.insertFace(vertices, indices, position, BOTTOM_FACE);
+                    if (chunk.safeGetBlock(pos.offset(1, 0, 0)).isAirBlock()) {
+                        insertFace(vertices, indices, pos, blockModel.getFaces().getRightFaceCenteredTo0());
+                        insertTextureIndex(faceIndexes, blockModel.getTextures().getRightIndexes());
+                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
                     }
                 }
             }
         }
 
-        float[] array = new float[vertices.size()];
-        for (int i = 0; i < vertices.size(); i++) {
-            array[i] = vertices.get(i);
-        }
+        float[] vertexArray = new float[vertices.size()];
+        for (int i = 0; i < vertices.size(); i++) vertexArray[i] = vertices.get(i);
 
-        int[] array2 = new int[indices.size()];
-        for (int i = 0; i < indices.size(); i++) {
-            array2[i] = indices.get(i);
-        }
+        int[] indexArray = new int[indices.size()];
+        for (int i = 0; i < indices.size(); i++) indexArray[i] = indices.get(i);
 
-        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(array).indices(array2);
+        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW)
+                .vertexes(vertexArray)
+                .indices(indexArray);
         vertexBuffer.build();
+
+        vertexBuffer.createNewVertexBufferObject(toFloatArray(uvCoordinates), (byte) 2, false, glUsage.GL_STATIC_DRAW);
+        vertexBuffer.createNewVertexBufferObject(toIntArray(faceIndexes), (byte) 1, false, glUsage.GL_STATIC_DRAW);
+
 
         return new ChunkMesh(vertexBuffer);
     }
 
-    private void insertFace(List<Float> vertices, List<Integer> indices, BlockPosition position, float[] faces) {
+    private int[] toIntArray(List<Integer> list) {
+        int[] array = new int[list.size()];
+
+        for (int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i);
+        }
+
+        return array;
+    }
+
+    private float[] toFloatArray(List<Float> list) {
+        float[] array = new float[list.size()];
+
+        for (int i = 0; i < list.size(); i++) {
+            array[i] = list.get(i);
+        }
+
+        return array;
+    }
+
+    private void unpackArray(List<Float> uvList, float[] values) {
+        for (float value : values) {
+            uvList.add(value);
+        }
+    }
+
+    private void insertTextureIndex(List<Integer> indexList, int[] indexes) {
+        for (int index : indexes) {
+            indexList.add(index);
+        }
+    }
+
+    private void insertFace(List<Float> vertices, List<Integer> indices, BlockPosition pos, float[] face) {
         int vertexCount = vertices.size() / 3;
 
-        for (int i = 0; i < faces.length; i += 3) {
-            float vx = faces[i] + position.getX();
-            float vy = faces[i + 1] + position.getY();
-            float vz = faces[i + 2] + position.getZ();
-
-            vertices.add(vx);
-            vertices.add(vy);
-            vertices.add(vz);
+        for (int i = 0; i < face.length; i += 3) {
+            float x = face[i]     + pos.getX();
+            float y = face[i + 1] + pos.getY();
+            float z = face[i + 2] + pos.getZ();
+            vertices.add(x);
+            vertices.add(y);
+            vertices.add(z);
         }
 
         for (int index : INDICES) {

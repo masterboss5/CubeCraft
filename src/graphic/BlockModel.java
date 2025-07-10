@@ -8,14 +8,16 @@ import texture.BlockTextureMap;
 public class BlockModel extends Model {
     private final BlockTextureMap textures;
     private final BlockFaceMap faces;
+    private final float[] uvCoordinates;
 
-    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, BlockTextureMap textures, BlockFaceMap faces) {
+    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, BlockTextureMap textures, BlockFaceMap faces, float[] uvCoordinates) {
         super(shaderProgram, vertexBuffer);
 
         this.textures = textures;
         this.faces = faces;
+        this.uvCoordinates = uvCoordinates;
 
-        System.out.println(textures);
+//        System.out.println(textures);
     }
 
     public BlockTextureMap getTextures() {
@@ -29,5 +31,9 @@ public class BlockModel extends Model {
 
     public BlockFaceMap getFaces() {
         return faces;
+    }
+
+    public float[] getUvCoordinates() {
+        return uvCoordinates;
     }
 }

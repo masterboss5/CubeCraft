@@ -24,13 +24,67 @@ public record BlockTextureMap(
     }
 
     public int[] toVertexBuffer() {
-        return new int[] {
+        return new int[]{
                 top, top, top, top,
                 bottom, bottom, bottom, bottom,
                 front, front, front, front,
                 back, back, back, back,
                 left, left, left, left,
                 right, right, right, right
+        };
+    }
+
+    public int[] getTopIndexes() {
+        return new int[] {
+                top,
+                top,
+                top,
+                top
+        };
+    }
+
+    public int[] getBottomIndexes() {
+        return new int[] {
+                bottom,
+                bottom,
+                bottom,
+                bottom
+        };
+    }
+
+    public int[] getFrontIndexes() {
+        return new int[] {
+                front,
+                front,
+                front,
+                front
+        };
+    }
+
+    public int[] getBackIndexes() {
+        return new int[] {
+                back,
+                back,
+                back,
+                back
+        };
+    }
+
+    public int[] getLeftIndexes() {
+        return new int[] {
+                left,
+                left,
+                left,
+                left
+        };
+    }
+
+    public int[] getRightIndexes() {
+        return new int[] {
+                right,
+                right,
+                right,
+                right
         };
     }
 
