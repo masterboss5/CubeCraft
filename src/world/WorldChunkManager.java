@@ -36,7 +36,7 @@ public class WorldChunkManager {
                     int worldZ = chunkPosition.getZ() * ChunkPosition.CHUNK_WIDTH + z;
                     BlockPosition blockPos = new BlockPosition(worldX, y, worldZ);
 
-                    chunk.setBlock(new CobblestoneBlock(blockPos), new BlockPosition(x, y, z));
+                    chunk.setBlock(new OakPlanksBlock(blockPos), new BlockPosition(x, y, z));
                 }
             }
         }
