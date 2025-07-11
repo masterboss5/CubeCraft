@@ -41,12 +41,14 @@ public class Math {
 
     public static Matrix4f createViewMatrix(Camera camera) {
         Matrix4f viewMatrix = new Matrix4f().identity();
-        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().x), new Vector3f(0, 1, 0), viewMatrix);
-        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().y), new Vector3f(1, 0, 0), viewMatrix);
-        viewMatrix.rotate((float) java.lang.Math.toRadians(camera.getRotation().z), new Vector3f(0, 1, 0), viewMatrix);
+
+        // Apply pitch (rotation.x) first, then yaw (rotation.y)
+        viewMatrix.rotate(camera.getRotation().x, new Vector3f(1, 0, 0)); // Pitch (X axis)
+        viewMatrix.rotate(camera.getRotation().y, new Vector3f(0, 1, 0)); // Yaw (Y axis)
+
+        // Translate to the negative camera position
         Vector3f cameraPos = camera.getPosition();
-        Vector3f negativeCameraPos = new Vector3f(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-        viewMatrix.translate(negativeCameraPos, viewMatrix);
+        viewMatrix.translate(new Vector3f(-cameraPos.x, -cameraPos.y, -cameraPos.z));
 
         return viewMatrix;
     }

@@ -21,42 +21,74 @@ public class Camera {
     }
 
     public void tick() {
-        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_W)) {
-            this.position.z = this.position.z - 0.1F;
-        }
-
-        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_S)) {
-            this.position.z = this.position.z + 0.1F;
-        }
-
-        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_D)) {
-            this.position.x = this.position.x + 0.1F;
-        }
-
-        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_A)) {
-            this.position.x = this.position.x - 0.1F;
-        }
-
-        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_UP)) {
-            this.position.y = this.position.y + 0.1F;
-        }
-
-        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_DOWN)) {
-            this.position.y = this.position.y - 0.1F;
-        }
+        float moveSpeed = 0.1f;
+        float rotateSpeed = 0.02f;
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT)) {
-            this.rotation.x = this.rotation.x - org.joml.Math.toRadians(90);
+            rotation.y -= rotateSpeed;
         }
-
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_RIGHT)) {
-            this.rotation.x = this.rotation.x + Math.toRadians(90);
+            rotation.y += rotateSpeed;
+        }
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_UP)) {
+            rotation.x -= rotateSpeed;
+        }
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_DOWN)) {
+            rotation.x += rotateSpeed;
         }
 
-//        if (InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
-//            this.rotation.y += ((float) (InputManager.getMouse().getMousePos().getDeltaY() * SENSITIVITY));
-//            this.rotation.x -= -((float) (InputManager.getMouse().getMousePos().getDeltaX() * SENSITIVITY));
-//        }
+        rotation.x = Math.clamp(rotation.x, -Math.toRadians(89), Math.toRadians(89));
+
+        float yaw = rotation.y;
+        float pitch = rotation.x;
+
+        Vector3f forward = new Vector3f(
+                Math.cos(pitch) * Math.sin(yaw),
+                -Math.sin(pitch),
+                -(Math.cos(pitch) * Math.cos(yaw))
+        ).normalize();
+
+        Vector3f right = new Vector3f(
+                Math.cos(yaw),
+                0,
+                Math.sin(yaw)
+        ).normalize();
+
+        Vector3f up = new Vector3f(0, 1, 0);
+
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_W)) {
+            position.add(forward.mul(moveSpeed, new Vector3f()));
+        }
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_S)) {
+            position.sub(forward.mul(moveSpeed, new Vector3f()));
+        }
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_D)) {
+            position.add(right.mul(moveSpeed, new Vector3f()));
+        }
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_A)) {
+            position.sub(right.mul(moveSpeed, new Vector3f()));
+        }
+
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_SPACE)) {
+            position.y += moveSpeed;
+        }
+        if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
+            position.y -= moveSpeed;
+        }
+
+        if (InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
+            float deltaX = (float) InputManager.getMouse().getMousePos().getDeltaX();
+            float deltaY = (float) InputManager.getMouse().getMousePos().getDeltaY();
+
+            rotation.y += deltaX * SENSITIVITY * 0.01f;
+            rotation.x += deltaY * SENSITIVITY * 0.01f;
+            GLFW.glfwSetInputMode(window.getPointer(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
+
+            // Clamp pitch to avoid flipping
+            rotation.x = Math.clamp(rotation.x, -Math.toRadians(89), Math.toRadians(89));
+        } else {
+            GLFW.glfwSetInputMode(window.getPointer(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+        }
 
         InputManager.getMouse().getMousePos().resetDelta();
     }
