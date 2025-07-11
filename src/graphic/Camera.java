@@ -6,35 +6,35 @@ import org.joml.Math;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
-//TODO fix control and add relative movement
 public class Camera {
     private Vector3f position = new Vector3f();
     private Vector3f rotation = new Vector3f();
-    private Window window;
+    private final Window window;
+    private boolean mouseLockedLastFrame = false;
+    private boolean skipRotationFrame = false;
     private static final float FOV = 70;
     private static final float NEAR_PLANE = 0.1F;
     private static final float FAR_PLANE = 360F;
-    private static final float SENSITIVITY = 0.15F;
+    private static final float MOUSE_SENSITIVITY = 0.1F;
+    private static final float MOVE_SPEED = 0.1f;
+    private static final float ROTATION_SPEED = 0.02f;
 
     public Camera(Window window) {
         this.window = window;
     }
 
     public void tick() {
-        float moveSpeed = 0.1f;
-        float rotateSpeed = 0.02f;
-
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT)) {
-            rotation.y -= rotateSpeed;
+            rotation.y -= ROTATION_SPEED;
         }
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_RIGHT)) {
-            rotation.y += rotateSpeed;
+            rotation.y += ROTATION_SPEED;
         }
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_UP)) {
-            rotation.x -= rotateSpeed;
+            rotation.x -= ROTATION_SPEED;
         }
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_DOWN)) {
-            rotation.x += rotateSpeed;
+            rotation.x += ROTATION_SPEED;
         }
 
         rotation.x = Math.clamp(rotation.x, -Math.toRadians(89), Math.toRadians(89));
@@ -54,42 +54,54 @@ public class Camera {
                 Math.sin(yaw)
         ).normalize();
 
-        Vector3f up = new Vector3f(0, 1, 0);
-
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_W)) {
-            position.add(forward.mul(moveSpeed, new Vector3f()));
+            position.add(forward.mul(MOVE_SPEED, new Vector3f()));
         }
+
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_S)) {
-            position.sub(forward.mul(moveSpeed, new Vector3f()));
+            position.sub(forward.mul(MOVE_SPEED, new Vector3f()));
         }
+
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_D)) {
-            position.add(right.mul(moveSpeed, new Vector3f()));
+            position.add(right.mul(MOVE_SPEED, new Vector3f()));
         }
+
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_A)) {
-            position.sub(right.mul(moveSpeed, new Vector3f()));
+            position.sub(right.mul(MOVE_SPEED, new Vector3f()));
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_SPACE)) {
-            position.y += moveSpeed;
+            position.y += MOVE_SPEED;
         }
+
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
-            position.y -= moveSpeed;
+            position.y -= MOVE_SPEED;
         }
 
-        if (InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
-            float deltaX = (float) InputManager.getMouse().getMousePos().getDeltaX();
-            float deltaY = (float) InputManager.getMouse().getMousePos().getDeltaY();
+        boolean mouseDown = InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
 
-            rotation.y += deltaX * SENSITIVITY * 0.01f;
-            rotation.x += deltaY * SENSITIVITY * 0.01f;
-            GLFW.glfwSetInputMode(window.getPointer(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
+        if (mouseDown) {
+            this.getWindow().disableCursor();
 
-            // Clamp pitch to avoid flipping
-            rotation.x = Math.clamp(rotation.x, -Math.toRadians(89), Math.toRadians(89));
+            if (!this.mouseLockedLastFrame) {
+                InputManager.getMouse().getMousePos().reset();
+                this.skipRotationFrame = true;
+            }
+
+            if (!this.skipRotationFrame) {
+                float deltaX = (float) InputManager.getMouse().getMousePos().getDeltaX();
+                float deltaY = (float) InputManager.getMouse().getMousePos().getDeltaY();
+
+                this.rotation.y += deltaX * MOUSE_SENSITIVITY * 0.01f;
+                this.rotation.x += deltaY * MOUSE_SENSITIVITY * 0.01f;
+                this.rotation.x = Math.clamp(this.rotation.x, -Math.toRadians(89), Math.toRadians(89));
+            }
         } else {
-            GLFW.glfwSetInputMode(window.getPointer(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+            this.getWindow().enableCursor();
         }
 
+        this.mouseLockedLastFrame = mouseDown;
+        this.skipRotationFrame = false;
         InputManager.getMouse().getMousePos().resetDelta();
     }
 
@@ -101,12 +113,40 @@ public class Camera {
         this.position = position;
     }
 
+    public void setPositionX(int x) {
+        this.getPosition().x = x;
+    }
+
+    public void setPositionY(int y) {
+        this.getPosition().y = y;
+    }
+
+    public void setPositionZ(int z) {
+        this.getPosition().z = z;
+    }
+
     public Vector3f getRotation() {
         return rotation;
     }
 
     public void setRotation(Vector3f rotation) {
         this.rotation = rotation;
+    }
+
+    public void setRotationX(int x) {
+        this.getRotation().x = x;
+    }
+
+    public void setRotationY(int y) {
+        this.getRotation().y = y;
+    }
+
+    public void setRotationZ(int z) {
+        this.getRotation().z = z;
+    }
+
+    public Window getWindow() {
+        return window;
     }
 
     public float getFOV() {

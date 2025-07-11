@@ -1,6 +1,6 @@
 package gl;
 
-public enum glUsage {
+public enum glBufferUsage {
     GL_STREAM_DRAW(0x88E0),
     GL_STREAM_READ(0x88E1),
     GL_STREAM_COPY(0x88E2),
@@ -13,11 +13,11 @@ public enum glUsage {
 
     private final int constant;
 
-    glUsage(int constant) {
+    glBufferUsage(int constant) {
         this.constant = constant;
     }
 
-    public int getID() {
+    public int getConstant() {
         return constant;
     }
 }

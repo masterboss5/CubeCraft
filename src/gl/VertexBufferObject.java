@@ -7,12 +7,12 @@ public final class VertexBufferObject {
     private final int attribute;
     private final int vertexBufferID;
     private final int size;
-    private final glUsage bufferUsage;
+    private final glBufferUsage bufferUsage;
     private final VertexBuffer parent;
-    Object data;
     private final boolean normalized;
+    final Object data;
 
-    protected VertexBufferObject(VertexBuffer parent, int attribute, Object data, byte size, boolean normalized, glUsage bufferUsage) {
+    protected VertexBufferObject(VertexBuffer parent, int attribute, Object data, byte size, boolean normalized, glBufferUsage bufferUsage) {
         this.parent = parent;
         this.attribute = attribute;
         this.data = data;
@@ -25,22 +25,22 @@ public final class VertexBufferObject {
         this.bind();
 
         if (data instanceof short[] bufferData) {
-            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
+            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.getBufferUsage().getConstant());
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_SHORT, normalized, 0, 0);
         }
 
         if (data instanceof int[] bufferData) {
-            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
+            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.getBufferUsage().getConstant());
             GL46.glVertexAttribIPointer(attribute, size, GL46.GL_INT, 0, 0);
         }
 
         if (data instanceof float[] bufferData) {
-            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
+            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.getBufferUsage().getConstant());
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_FLOAT, normalized, 0, 0);
         }
 
         if (data instanceof double[] bufferData) {
-            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.bufferUsage.getID());
+            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.getBufferUsage().getConstant());
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_DOUBLE, normalized, 0, 0);
         }
 
@@ -53,7 +53,7 @@ public final class VertexBufferObject {
     }
 
     private void bind() {
-        GL46.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.vertexBufferID);
+        GL46.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.getID());
     }
 
     private void unbind() {
@@ -61,7 +61,7 @@ public final class VertexBufferObject {
     }
 
     public void delete() {
-        GL46.glDeleteBuffers(this.vertexBufferID);
+        GL46.glDeleteBuffers(this.getID());
     }
 
     public int getAttribute() {
@@ -72,7 +72,11 @@ public final class VertexBufferObject {
         return data;
     }
 
-    public glUsage getBufferUsage() {
+    public glBufferUsage getBufferUsage() {
         return bufferUsage;
+    }
+
+    public boolean isNormalized() {
+        return normalized;
     }
 }

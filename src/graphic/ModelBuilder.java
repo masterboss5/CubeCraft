@@ -1,7 +1,7 @@
 package graphic;
 
 import gl.VertexBuffer;
-import gl.glUsage;
+import gl.glBufferUsage;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import shader.ShaderProgram;
@@ -24,11 +24,11 @@ public class ModelBuilder {
     }*/
 
     public static BlockModel buildBlockModel(ShaderProgram shaderProgram, float[] vertices, int[] indices, float[] uvCoordinates, BlockTextureMap blockTextureMap) {
-        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW).vertexes(vertices).indices(indices);
+        VertexBuffer vertexBuffer = new VertexBuffer(glBufferUsage.GL_STATIC_DRAW).vertexes(vertices).indices(indices);
         vertexBuffer.build();
 
-        vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
-        vertexBuffer.createNewVertexBufferObject(blockTextureMap.toVertexBuffer(), (byte) 1, false, glUsage.GL_STATIC_DRAW);
+        vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glBufferUsage.GL_STATIC_DRAW);
+        vertexBuffer.createNewVertexBufferObject(blockTextureMap.toVertexBuffer(), (byte) 1, false, glBufferUsage.GL_STATIC_DRAW);
 
         return new BlockModel(shaderProgram, vertexBuffer, blockTextureMap, BlockFaceMap.create(vertices), BlockUVMap.fromPacked(uvCoordinates));
     }

@@ -3,7 +3,7 @@ package world;
 import block.Block;
 import block.BlockPosition;
 import gl.VertexBuffer;
-import gl.glUsage;
+import gl.glBufferUsage;
 import graphic.BlockModel;
 
 import java.util.ArrayList;
@@ -114,13 +114,13 @@ public class IntegratedChunkMesher implements ChunkMesher {
         int[] indexArray = new int[indices.size()];
         for (int i = 0; i < indices.size(); i++) indexArray[i] = indices.get(i);
 
-        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW)
+        VertexBuffer vertexBuffer = new VertexBuffer(glBufferUsage.GL_STATIC_DRAW)
                 .vertexes(vertexArray)
                 .indices(indexArray);
         vertexBuffer.build();
 
-        vertexBuffer.createNewVertexBufferObject(toFloatArray(uvCoordinates), (byte) 2, false, glUsage.GL_STATIC_DRAW);
-        vertexBuffer.createNewVertexBufferObject(toIntArray(faceIndexes), (byte) 1, false, glUsage.GL_STATIC_DRAW);
+        vertexBuffer.createNewVertexBufferObject(toFloatArray(uvCoordinates), (byte) 2, false, glBufferUsage.GL_STATIC_DRAW);
+        vertexBuffer.createNewVertexBufferObject(toIntArray(faceIndexes), (byte) 1, false, glBufferUsage.GL_STATIC_DRAW);
 
 
         return new ChunkMesh(vertexBuffer);

@@ -11,19 +11,19 @@ import java.util.Map;
 public class VertexBuffer {
     private int attributeCount = 0;
     private final int vertexArrayID;
-    private final glUsage bufferUsage;
+    private final glBufferUsage bufferUsage;
     private VertexBufferObject positionBufferObject;
     private IndexBufferObject indexBufferObject;
     private final Map<Integer, VertexBufferObject> vertexBufferObjects = new HashMap<>();
     ArrayList<Float> vertices = new ArrayList<>();
 
-    public VertexBuffer(glUsage bufferUsage) {
+    public VertexBuffer(glBufferUsage bufferUsage) {
         this.bufferUsage = bufferUsage;
         this.vertexArrayID = GL46.glGenVertexArrays();
     }
 
     public VertexBuffer indices(int[] indices) {
-        this.indexBufferObject = new IndexBufferObject(this, indices, this.bufferUsage);
+        this.indexBufferObject = new IndexBufferObject(this, indices, this.getBufferUsage());
 
         return this;
     }
@@ -49,13 +49,13 @@ public class VertexBuffer {
         return this;
     }
 
-    public void createNewVertexBufferObject(Object data, byte size, boolean normalized, glUsage bufferUsage) {
+    public void createNewVertexBufferObject(Object data, byte size, boolean normalized, glBufferUsage bufferUsage) {
         this.vertexBufferObjects.put(this.attributeCount, new VertexBufferObject(this, this.attributeCount, data, size, normalized, bufferUsage));
         this.incrementAttributeCount();
     }
 
     public void build() {
-        this.positionBufferObject = new VertexBufferObject(this, 0, ArrayUtils.convertWrapperFloatToPrimitiveFloat(this.vertices.toArray(new Float[0])), (byte) 3, false, glUsage.GL_STATIC_DRAW);
+        this.positionBufferObject = new VertexBufferObject(this, 0, ArrayUtils.convertWrapperFloatToPrimitiveFloat(this.vertices.toArray(new Float[0])), (byte) 3, false, glBufferUsage.GL_STATIC_DRAW);
         this.vertexBufferObjects.put(0, positionBufferObject);
         this.incrementAttributeCount();
     }
@@ -122,7 +122,7 @@ public class VertexBuffer {
         return this.indexBufferObject.getIndices();
     }
 
-    public glUsage getBufferUsage() {
+    public glBufferUsage getBufferUsage() {
         return bufferUsage;
     }
 }

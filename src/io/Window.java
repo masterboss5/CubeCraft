@@ -15,6 +15,7 @@ public class Window {
     private long pointer;
     private boolean viewportNeedsAdjusting;
     private boolean fullscreen = false;
+    private boolean cursorEnabled = true;
 
     public Window(String title, int height, int width, int y, int x) {
         this.title = title;
@@ -28,10 +29,10 @@ public class Window {
         if (this.isViewportNeedsAdjusting()) {
             this.setViewportNeedsAdjusting(false);
 
-            if (this.fullscreen) {
-                GLFW.glfwSetWindowMonitor(this.pointer, GLFW.glfwGetPrimaryMonitor(), 0, 0, this.width, this.height, 180);
+            if (this.isFullscreen()) {
+                GLFW.glfwSetWindowMonitor(this.getPointer(), GLFW.glfwGetPrimaryMonitor(), 0, 0, this.getWidth(), this.getHeight(), 180);
             } else {
-                GLFW.glfwSetWindowMonitor(this.pointer, 0, this.x, this.y, this.width, this.height, 180);
+                GLFW.glfwSetWindowMonitor(this.getPointer(), 0, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 180);
             }
 
             GL11.glViewport(0, 0, this.getWidth(), this.getHeight());
@@ -43,30 +44,23 @@ public class Window {
             throw new WindowInitializationException();
         }
 
-        this.pointer = GLFW.glfwCreateWindow(this.width, this.height, this.title, 0, 0);
+        this.setPointer(GLFW.glfwCreateWindow(this.getWidth(), this.getHeight(), this.getTitle(), 0, 0));
 
-        if (this.pointer == 0) {
+        if (this.getPointer() == 0) {
             throw new WindowNotCreatedException();
         }
 
-        GLFW.glfwMakeContextCurrent(this.pointer);
-        GLFW.glfwShowWindow(this.pointer);
+        GLFW.glfwMakeContextCurrent(this.getPointer());
+        GLFW.glfwShowWindow(this.getPointer());
+        GLFW.glfwSetInputMode(this.getPointer(), GLFW.GLFW_RAW_MOUSE_MOTION, GLFW.GLFW_TRUE);
     }
 
     public boolean shouldClose() {
-        return GLFW.glfwWindowShouldClose(this.pointer);
+        return GLFW.glfwWindowShouldClose(this.getPointer());
     }
 
+    //TODO add cleanup method
     public void cleanUp() {
-
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
     }
 
     public long getPointer() {
@@ -93,6 +87,17 @@ public class Window {
         this.fullscreen = fullscreen;
         this.setViewportNeedsAdjusting(true);
     }
+
+    public void disableCursor() {
+        this.setCursorEnabled(false);
+        GLFW.glfwSetInputMode(this.getPointer(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
+    }
+
+    public void enableCursor() {
+        this.setCursorEnabled(true);
+        GLFW.glfwSetInputMode(this.getPointer(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+    }
+
 
     public String getTitle() {
         return title;
@@ -123,11 +128,27 @@ public class Window {
         GL11.glViewport(0, 0, this.getWidth(), this.getHeight());
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public int getY() {
         return y;
     }
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean isCursorEnabled() {
+        return cursorEnabled;
+    }
+
+    private void setCursorEnabled(boolean cursorEnabled) {
+        this.cursorEnabled = cursorEnabled;
     }
 }

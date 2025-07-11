@@ -60,4 +60,10 @@ public class MousePosition {
         this.setDeltaX(0);
         this.setDeltaY(0);
     }
+
+    public void reset() {
+        this.resetDelta();
+        this.setPrevX(0);
+        this.setPrevY(0);
+    }
 }

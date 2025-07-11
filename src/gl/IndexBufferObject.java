@@ -6,11 +6,11 @@ import org.lwjgl.opengl.GL46;
 public final class IndexBufferObject {
     private final int[] indices;
     public final int indexBufferID;
-    private final glUsage bufferUsage;
+    private final glBufferUsage bufferUsage;
     private final int count;
     private final VertexBuffer parent;
 
-    protected IndexBufferObject(VertexBuffer parent, int[] indices, glUsage bufferUsage) {
+    protected IndexBufferObject(VertexBuffer parent, int[] indices, glBufferUsage bufferUsage) {
         this.parent = parent;
         this.indices = indices;
         this.bufferUsage = bufferUsage;
@@ -19,7 +19,7 @@ public final class IndexBufferObject {
         this.parent.bind();
         this.indexBufferID = GL46.glGenBuffers();
         this.bind();
-        GL46.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, this.indices, this.bufferUsage.getID());
+        GL46.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, this.indices, this.bufferUsage.getConstant());
         this.unbind();
         this.parent.unbind();
     }
@@ -48,7 +48,7 @@ public final class IndexBufferObject {
         return count;
     }
 
-    public glUsage getBufferUsage() {
+    public glBufferUsage getBufferUsage() {
         return bufferUsage;
     }
 }
