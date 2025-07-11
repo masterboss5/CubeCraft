@@ -3,7 +3,6 @@ package graphic;
 import io.InputManager;
 import io.Window;
 import org.joml.Math;
-import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 
@@ -16,7 +15,6 @@ public class Camera {
     private static final float NEAR_PLANE = 0.1F;
     private static final float FAR_PLANE = 360F;
     private static final float SENSITIVITY = 0.15F;
-    private Matrix4f viewMatrix;
 
     public Camera(Window window) {
         this.window = window;
@@ -77,10 +75,6 @@ public class Camera {
 
     public void setRotation(Vector3f rotation) {
         this.rotation = rotation;
-    }
-
-    public Matrix4f getViewMatrix() {
-        return viewMatrix;
     }
 
     public float getFOV() {
