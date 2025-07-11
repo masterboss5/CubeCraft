@@ -4,20 +4,19 @@ import gl.VertexBuffer;
 import shader.ShaderProgram;
 import shader.TexturedShaderProgram;
 import texture.BlockTextureMap;
+import texture.BlockUVMap;
 
 public class BlockModel extends Model {
     private final BlockTextureMap textures;
     private final BlockFaceMap faces;
-    private final float[] uvCoordinates;
+    private final BlockUVMap uvBlockMap;
 
-    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, BlockTextureMap textures, BlockFaceMap faces, float[] uvCoordinates) {
+    public BlockModel(ShaderProgram shaderProgram, VertexBuffer vertexBuffer, BlockTextureMap textures, BlockFaceMap faces, BlockUVMap uvBlockMap) {
         super(shaderProgram, vertexBuffer);
 
         this.textures = textures;
         this.faces = faces;
-        this.uvCoordinates = uvCoordinates;
-
-//        System.out.println(textures);
+        this.uvBlockMap = uvBlockMap;
     }
 
     public BlockTextureMap getTextures() {
@@ -33,7 +32,7 @@ public class BlockModel extends Model {
         return faces;
     }
 
-    public float[] getUvCoordinates() {
-        return uvCoordinates;
+    public BlockUVMap getUvBlockMap() {
+        return uvBlockMap;
     }
 }

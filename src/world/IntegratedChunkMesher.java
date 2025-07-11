@@ -7,7 +7,6 @@ import gl.glUsage;
 import graphic.BlockModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class IntegratedChunkMesher implements ChunkMesher {
@@ -58,8 +57,6 @@ public class IntegratedChunkMesher implements ChunkMesher {
 
     @Override
     public ChunkMesh meshChunk(Chunk chunk) {
-        long startTime = System.nanoTime(); // Start timing
-
         List<Float> vertices = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
         List<Integer> faceIndexes = new ArrayList<>();
@@ -71,39 +68,41 @@ public class IntegratedChunkMesher implements ChunkMesher {
                     BlockPosition pos = new BlockPosition(x, y, z);
                     Block block = chunk.safeGetBlock(pos);
 
-                    if (block.isAirBlock()) continue;
+                    if (block.isAirBlock()) {
+                        continue;
+                    }
 
                     BlockModel blockModel = block.getModel();
 
                     if (chunk.safeGetBlock(pos.offset(0, 1, 0)).isAirBlock()) {
-                        insertFace(vertices, indices, pos, TOP_FACE);
+                        insertFace(vertices, indices, pos,  blockModel.getFaces().getTopFaceCenteredTo0());
                         insertTextureIndex(faceIndexes, blockModel.getTextures().getTopIndexes());
-                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
+                        unpackArray(uvCoordinates, blockModel.getUvBlockMap().topUV());
                     }
                     if (chunk.safeGetBlock(pos.offset(0, -1, 0)).isAirBlock()) {
                         insertFace(vertices, indices, pos, blockModel.getFaces().getBottomFaceCenteredTo0());
                         insertTextureIndex(faceIndexes, blockModel.getTextures().getBottomIndexes());
-                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
+                        unpackArray(uvCoordinates, blockModel.getUvBlockMap().bottomUV());
                     }
                     if (chunk.safeGetBlock(pos.offset(0, 0, 1)).isAirBlock()) {
                         insertFace(vertices, indices, pos, blockModel.getFaces().getFrontFaceCenteredTo0());
                         insertTextureIndex(faceIndexes, blockModel.getTextures().getFrontIndexes());
-                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
+                        unpackArray(uvCoordinates, blockModel.getUvBlockMap().frontUV());
                     }
                     if (chunk.safeGetBlock(pos.offset(0, 0, -1)).isAirBlock()) {
                         insertFace(vertices, indices, pos, blockModel.getFaces().getBackFaceCenteredTo0());
                         insertTextureIndex(faceIndexes, blockModel.getTextures().getBackIndexes());
-                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
+                        unpackArray(uvCoordinates, blockModel.getUvBlockMap().backUV());
                     }
                     if (chunk.safeGetBlock(pos.offset(-1, 0, 0)).isAirBlock()) {
                         insertFace(vertices, indices, pos, blockModel.getFaces().getLeftFaceCenteredTo0());
                         insertTextureIndex(faceIndexes, blockModel.getTextures().getLeftIndexes());
-                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
+                        unpackArray(uvCoordinates, blockModel.getUvBlockMap().leftUV());
                     }
                     if (chunk.safeGetBlock(pos.offset(1, 0, 0)).isAirBlock()) {
                         insertFace(vertices, indices, pos, blockModel.getFaces().getRightFaceCenteredTo0());
                         insertTextureIndex(faceIndexes, blockModel.getTextures().getRightIndexes());
-                        unpackArray(uvCoordinates, new float[] {0, 0,  0, 1,  1, 1,  1, 0});
+                        unpackArray(uvCoordinates, blockModel.getUvBlockMap().rightUV());
                     }
                 }
             }

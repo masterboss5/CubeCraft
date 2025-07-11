@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 import shader.ShaderProgram;
 import texture.BlockTextureMap;
+import texture.BlockUVMap;
 
 public class ModelBuilder {
 
@@ -29,7 +30,7 @@ public class ModelBuilder {
         vertexBuffer.createNewVertexBufferObject(uvCoordinates, (byte) 2, false, glUsage.GL_STATIC_DRAW);
         vertexBuffer.createNewVertexBufferObject(blockTextureMap.toVertexBuffer(), (byte) 1, false, glUsage.GL_STATIC_DRAW);
 
-        return new BlockModel(shaderProgram, vertexBuffer, blockTextureMap, BlockFaceMap.create(vertices), uvCoordinates);
+        return new BlockModel(shaderProgram, vertexBuffer, blockTextureMap, BlockFaceMap.create(vertices), BlockUVMap.fromPacked(uvCoordinates));
     }
 
     private static void storeDataInIndicesBuffer(int[] indices) {

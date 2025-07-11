@@ -13,6 +13,5 @@ layout(binding = 0) uniform sampler2DArray textureSampler;
 
 void main() {
     outputColor = texture(textureSampler, vec3(pass_uv, pass_textureIndex));
-
 //    outputColor = vec4(pass_uv, 0, 0);
 }

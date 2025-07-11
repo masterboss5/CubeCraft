@@ -19,7 +19,7 @@ public record BlockFaceMap(
         }
 
         if (points.length == 0) {
-            return new BlockFaceMap(new float[]{}, new float[]{}, new float[]{}, new float[]{}, new float[]{}, new float[]{});
+            return new BlockFaceMap(new float[] {}, new float[] {}, new float[] {}, new float[] {}, new float[] {}, new float[] {});
         }
 
         int stride = 12;
@@ -41,17 +41,9 @@ public record BlockFaceMap(
         this.back = back;
         this.left = left;
         this.right = right;
-
-/*        System.out.println(this.top.length);
-        System.out.println(this.bottom.length);
-        System.out.println(this.front.length)
-        ;
-        System.out.println(this.back.length);
-        System.out.println(this.left.length);
-        System.out.println(this.right.length);*/
     }
 
-    private static float[] centerPointsTo0(float[] points, String axisExclude) {
+    private static float[] centerPointsTo0(float[] points) {
         float[] copy = Arrays.copyOf(points, points.length);
 
         for (int i = 0; i < copy.length; i += 3) {
@@ -64,26 +56,26 @@ public record BlockFaceMap(
     }
 
     public float[] getTopFaceCenteredTo0() {
-        return centerPointsTo0(this.top(), "y");
+        return centerPointsTo0(this.top());
     }
 
     public float[] getBottomFaceCenteredTo0() {
-        return centerPointsTo0(this.bottom(), "y");
+        return centerPointsTo0(this.bottom());
     }
 
     public float[] getFrontFaceCenteredTo0() {
-        return centerPointsTo0(this.front(), "z");
+        return centerPointsTo0(this.front());
     }
 
     public float[] getBackFaceCenteredTo0() {
-        return centerPointsTo0(this.back(), "z");
+        return centerPointsTo0(this.back());
     }
 
     public float[] getLeftFaceCenteredTo0() {
-        return centerPointsTo0(this.left(), "x");
+        return centerPointsTo0(this.left());
     }
 
     public float[] getRightFaceCenteredTo0() {
-        return centerPointsTo0(this.right(), "x");
+        return centerPointsTo0(this.right());
     }
 }

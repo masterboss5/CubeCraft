@@ -30,22 +30,4 @@ public class JsonLoader {
                 readBlockModel.uv(),
                 new BlockTextureMap(readBlockModel));
     }
-
-//    public static BlockModel readSimpleBlockModelJson(String fileName) {
-//        ReadTexturedBlockModel readBlockModel;
-//
-//        try (FileReader fileReader = new FileReader(ROOT_MODEL_PATH + fileName)) {
-//            readBlockModel = INSTANCE.fromJson(fileReader, ReadTexturedBlockModel.class);
-//        } catch (IOException exception) {
-//            throw new JsonParsingException(JsonParsingException.LoadingContext.MODEL, fileName);
-//        }
-//
-//        VertexBuffer vertexBuffer = new VertexBuffer(glUsage.GL_STATIC_DRAW)
-//                .vertexes(new float[] {1})
-//                .indices(new int[] {1});
-//
-//
-//
-//        vertexBuffer.build();
-//    }
 }
