@@ -5,7 +5,7 @@ import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
 public class Mouse implements InputHandler {
-    private static boolean[] mouseButtons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
+    private static final boolean[] mouseButtons = new boolean[GLFW.GLFW_MOUSE_BUTTON_LAST];
     private final MousePosition mousePosition = new MousePosition();
     private GLFWCursorPosCallback mouseMove;
     private GLFWMouseButtonCallback mouseClick;
@@ -65,5 +65,17 @@ public class Mouse implements InputHandler {
 
     public boolean isMouseButtonDown(int button) {
         return mouseButtons[button];
+    }
+
+    public boolean isRightMouseButtonDown() {
+        return this.isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
+    }
+
+    public boolean isMiddleMouseButtonDown() {
+        return this.isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_MIDDLE);
+    }
+
+    public boolean isLeftMouseButtonDown() {
+        return this.isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT);
     }
 }

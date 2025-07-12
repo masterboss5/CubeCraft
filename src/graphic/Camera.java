@@ -18,6 +18,7 @@ public class Camera {
     private static final float MOUSE_SENSITIVITY = 0.5F;
     private static final float MOVE_SPEED = 0.1f;
     private static final float ROTATION_SPEED = 0.02f;
+    private static boolean isYAxisInverted = false;
 
     public Camera(Window window) {
         this.window = window;
@@ -25,60 +26,57 @@ public class Camera {
 
     public void tick() {
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT)) {
-            rotation.y -= ROTATION_SPEED;
+            this.setRotationY(this.getRotationY() - ROTATION_SPEED);
         }
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_RIGHT)) {
-            rotation.y += ROTATION_SPEED;
+            this.setRotationY(this.getRotationY() + ROTATION_SPEED);
         }
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_UP)) {
-            rotation.x -= ROTATION_SPEED;
+            this.setRotationX(this.getRotationX() - ROTATION_SPEED);
         }
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_DOWN)) {
-            rotation.x += ROTATION_SPEED;
+            this.setRotationX(this.getRotationX() + ROTATION_SPEED);
         }
 
-        float yaw = rotation.y;
-        float pitch = rotation.x;
-
         Vector3f forward = new Vector3f(
-                Math.cos(pitch) * Math.sin(yaw),
-                -Math.sin(pitch),
-                -(Math.cos(pitch) * Math.cos(yaw))
+                Math.cos(this.getRotationX()) * Math.sin(this.getRotationY()),
+                -Math.sin(this.getRotationX()),
+                -(Math.cos(this.getRotationX()) * Math.cos(this.getRotationY()))
         ).normalize();
 
         Vector3f right = new Vector3f(
-                Math.cos(yaw),
+                Math.cos(this.getRotationY()),
                 0,
-                Math.sin(yaw)
+                Math.sin(this.getRotationY())
         ).normalize();
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_W)) {
-            position.add(forward.mul(MOVE_SPEED, new Vector3f()));
+            this.getPosition().add(forward.mul(MOVE_SPEED, new Vector3f()));
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_S)) {
-            position.sub(forward.mul(MOVE_SPEED, new Vector3f()));
+            this.getPosition().sub(forward.mul(MOVE_SPEED, new Vector3f()));
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_D)) {
-            position.add(right.mul(MOVE_SPEED, new Vector3f()));
+            this.getPosition().add(right.mul(MOVE_SPEED, new Vector3f()));
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_A)) {
-            position.sub(right.mul(MOVE_SPEED, new Vector3f()));
+            this.getPosition().sub(right.mul(MOVE_SPEED, new Vector3f()));
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_SPACE)) {
-            position.y += MOVE_SPEED;
+            this.setPositionY(this.getPositionY() + MOVE_SPEED);
         }
 
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
-            position.y -= MOVE_SPEED;
+            this.setPositionY(this.getPositionY() - MOVE_SPEED);
         }
 
-        boolean mouseDown = InputManager.getMouse().isMouseButtonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT);
+        boolean IsMouseDown = InputManager.getMouse().isRightMouseButtonDown();
 
-        if (mouseDown) {
+        if (IsMouseDown) {
             this.getWindow().disableCursor();
 
             if (!this.mouseLockedLastFrame) {
@@ -90,22 +88,26 @@ public class Camera {
                 float deltaX = (float) InputManager.getMouse().getMousePos().getDeltaX();
                 float deltaY = (float) InputManager.getMouse().getMousePos().getDeltaY();
 
-                this.rotation.y += deltaX * MOUSE_SENSITIVITY * 0.01f;
-                this.rotation.x += deltaY * MOUSE_SENSITIVITY * 0.01f;
+                if (isYAxisInverted == true) {
+                    deltaY = -1 * deltaY;
+                }
+
+                this.setRotationY(this.getRotationY() + deltaX * MOUSE_SENSITIVITY * 0.01f);
+                this.setRotationX(this.getRotationX() + deltaY * MOUSE_SENSITIVITY * 0.01f);
             }
         } else {
             this.getWindow().enableCursor();
         }
 
-        if (Math.toDegrees(this.rotation.x) < -89) {
-            this.rotation.x = Math.toRadians(-89);
+        if (Math.toDegrees(this.getRotationX()) < -89) {
+            this.setRotationX(Math.toRadians(-89));
         }
 
-        if (Math.toDegrees(this.rotation.x) > 89) {
-            this.rotation.x = Math.toRadians(89);
+        if (Math.toDegrees(this.getRotationX()) > 89) {
+            this.setRotationX(Math.toRadians(89));
         }
 
-        this.mouseLockedLastFrame = mouseDown;
+        this.mouseLockedLastFrame = IsMouseDown;
         this.skipRotationFrame = false;
         InputManager.getMouse().getMousePos().resetDelta();
     }
@@ -118,15 +120,27 @@ public class Camera {
         this.position = position;
     }
 
-    public void setPositionX(int x) {
+    public float getPositionX() {
+        return this.getPosition().x;
+    }
+
+    public void setPositionX(float x) {
         this.getPosition().x = x;
     }
 
-    public void setPositionY(int y) {
+    public float getPositionY() {
+        return this.getPosition().y;
+    }
+
+    public void setPositionY(float y) {
         this.getPosition().y = y;
     }
 
-    public void setPositionZ(int z) {
+    public float getPositionZ() {
+        return this.getPosition().z;
+    }
+
+    public void setPositionZ(float z) {
         this.getPosition().z = z;
     }
 
@@ -138,15 +152,27 @@ public class Camera {
         this.rotation = rotation;
     }
 
-    public void setRotationX(int x) {
+    public float getRotationX() {
+        return this.getRotation().x;
+    }
+
+    public void setRotationX(float x) {
         this.getRotation().x = x;
     }
 
-    public void setRotationY(int y) {
+    public float getRotationY() {
+        return this.getRotation().y;
+    }
+
+    public void setRotationY(float y) {
         this.getRotation().y = y;
     }
 
-    public void setRotationZ(int z) {
+    public float getRotationZ() {
+        return this.getRotation().z;
+    }
+
+    public void setRotationZ(float z) {
         this.getRotation().z = z;
     }
 
