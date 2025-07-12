@@ -17,7 +17,7 @@ public class glDebugger {
         GL46.glEnable(GL46.GL_DEBUG_OUTPUT);
         GLFW.glfwWindowHint(GLFW.GLFW_OPENGL_DEBUG_CONTEXT, 1);
         GL46.glDebugMessageCallback(((source, type, id, severity, length, message, userParam) -> {
-            System.err.println("GL DEBUG: " + GLDebugMessageCallback.getMessage(length, message));
+//            System.err.println("GL DEBUG: " + GLDebugMessageCallback.getMessage(length, message));
         }), 0);
     }
 

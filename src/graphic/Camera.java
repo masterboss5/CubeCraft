@@ -15,7 +15,7 @@ public class Camera {
     private static final float FOV = 70;
     private static final float NEAR_PLANE = 0.1F;
     private static final float FAR_PLANE = 360F;
-    private static final float MOUSE_SENSITIVITY = 0.1F;
+    private static final float MOUSE_SENSITIVITY = 0.5F;
     private static final float MOVE_SPEED = 0.1f;
     private static final float ROTATION_SPEED = 0.02f;
 
@@ -36,8 +36,6 @@ public class Camera {
         if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_DOWN)) {
             rotation.x += ROTATION_SPEED;
         }
-
-        rotation.x = Math.clamp(rotation.x, -Math.toRadians(89), Math.toRadians(89));
 
         float yaw = rotation.y;
         float pitch = rotation.x;
@@ -94,10 +92,17 @@ public class Camera {
 
                 this.rotation.y += deltaX * MOUSE_SENSITIVITY * 0.01f;
                 this.rotation.x += deltaY * MOUSE_SENSITIVITY * 0.01f;
-                this.rotation.x = Math.clamp(this.rotation.x, -Math.toRadians(89), Math.toRadians(89));
             }
         } else {
             this.getWindow().enableCursor();
+        }
+
+        if (Math.toDegrees(this.rotation.x) < -89) {
+            this.rotation.x = Math.toRadians(-89);
+        }
+
+        if (Math.toDegrees(this.rotation.x) > 89) {
+            this.rotation.x = Math.toRadians(89);
         }
 
         this.mouseLockedLastFrame = mouseDown;
