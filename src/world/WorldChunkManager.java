@@ -6,6 +6,7 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
@@ -41,8 +42,7 @@ public class WorldChunkManager {
                 }
             }
         }
-/*
-        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
+/*        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
             for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
                 for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
                     int worldX = chunkPosition.getX() * ChunkPosition.CHUNK_WIDTH + x;
