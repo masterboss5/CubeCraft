@@ -45,7 +45,13 @@ public class ArrayPalette<T> implements Palette<T> {
 
     @Override
     public boolean isEmpty() {
-        return false; //TODO
+        for (T element : this.array) {
+            if (element != null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override

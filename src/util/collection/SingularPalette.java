@@ -54,4 +54,9 @@ public class SingularPalette<T> implements Palette<T> {
         //TODO resize
         return 0;
     }
+
+    @Override
+    public int resize(int bits, T object) {
+        return 0; //TODO
+    }
 }
