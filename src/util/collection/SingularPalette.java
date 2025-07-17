@@ -3,10 +3,15 @@ package util.collection;
 import exception.PaletteOutOfBoundsException;
 
 public class SingularPalette<T> implements Palette<T> {
+    private final int bits;
     private T entry;
+    private int size = 0;
 
-    public SingularPalette() {
+
+    public SingularPalette(int bits) {
+        this.bits = bits;
         this.entry = null;
+        this.size = 0;
     }
 
     @Override
@@ -51,7 +56,16 @@ public class SingularPalette<T> implements Palette<T> {
 
     @Override
     public int add(T object) {
-        //TODO resize
+
+        if (this.entry == null) {
+            this.entry = object;
+            this.size = 1;
+
+            return 0;
+        } else {
+            //TODO add resize logic later
+        }
+
         return 0;
     }
 

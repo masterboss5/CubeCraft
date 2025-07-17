@@ -56,7 +56,18 @@ public class ArrayPalette<T> implements Palette<T> {
 
     @Override
     public int add(T object) {
-        return 0; //TODO
+        if (!this.contains(object)) {
+            for (int i = 0; i < this.array.length; i++) {
+                if (this.array[i] == null) {
+                    this.size = this.size + 1;
+                    this.array[i] = object;
+
+                    return i;
+                }
+            }
+        }
+
+        return this.index(object);
     }
 
     @Override
