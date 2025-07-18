@@ -7,14 +7,17 @@ public class SingularPalette<T> implements Palette<T> {
     private T entry;
     private int size = 0;
 
-
-    public SingularPalette(int bits) {
+    private SingularPalette(int bits) {
         this.bits = bits;
         this.entry = null;
         this.size = 0;
     }
 
-    @Override
+    public static <T> SingularPalette<T> create(int bits) {
+        return new SingularPalette<>(bits);
+    }
+
+    @Override  //TODO add resize
     public int index(T block) {
         if (entry == null) {
             this.entry = block;
@@ -25,7 +28,7 @@ public class SingularPalette<T> implements Palette<T> {
         if (this.entry.equals(block)) {
             return 0;
         } else {
-            return -1; //TODO add resize
+            return -1;
         }
     }
 
@@ -54,7 +57,7 @@ public class SingularPalette<T> implements Palette<T> {
         return entry == null;
     }
 
-    @Override
+    @Override //TODO add resize
     public int add(T object) {
 
         if (this.entry == null) {
@@ -72,5 +75,10 @@ public class SingularPalette<T> implements Palette<T> {
     @Override
     public int resize(int bits, T object) {
         return 0; //TODO
+    }
+
+    @Override
+    public T[] getIndices() {
+        return (T[]) new Object[] {this.entry};
     }
 }

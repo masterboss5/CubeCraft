@@ -12,7 +12,11 @@ public class ArrayPalette<T> implements Palette<T> {
         this.size = 0;
     }
 
-    @Override
+    public static <T> ArrayPalette<T> create(int bits) {
+        return new ArrayPalette<>(bits);
+    }
+
+    @Override //TODO add auto resizing
     public int index(T object) {
         if (this.contains(object)) {
             for (int i = 0; i < this.array.length; i++) {
@@ -54,7 +58,7 @@ public class ArrayPalette<T> implements Palette<T> {
         return true;
     }
 
-    @Override
+    @Override //TODO add auto resizing
     public int add(T object) {
         if (!this.contains(object)) {
             for (int i = 0; i < this.array.length; i++) {
@@ -73,5 +77,10 @@ public class ArrayPalette<T> implements Palette<T> {
     @Override
     public int resize(int bits, T object) {
         return 0; //TODO
+    }
+
+    @Override
+    public T[] getIndices() {
+        return this.array;
     }
 }
