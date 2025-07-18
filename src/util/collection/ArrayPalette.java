@@ -6,13 +6,19 @@ public class ArrayPalette<T> implements Palette<T> {
     private int size;
 
     @SuppressWarnings("unchecked")
-    private ArrayPalette(int bits) {
+    private ArrayPalette(int bits, T[] data) {
         this.bits = bits;
         this.array = (T[]) new Object[1 << bits];
         this.size = 0;
+
+        System.arraycopy(data, 0, this.array, 0, this.array.length);
     }
 
-    @Override
+    public static <T> ArrayPalette<T> create(int bits, T[] data) {
+        return new ArrayPalette<>(bits, data);
+    }
+
+    @Override //TODO add auto resizing
     public int index(T object) {
         if (this.contains(object)) {
             for (int i = 0; i < this.array.length; i++) {
@@ -54,7 +60,7 @@ public class ArrayPalette<T> implements Palette<T> {
         return true;
     }
 
-    @Override
+    @Override //TODO add auto resizing
     public int add(T object) {
         if (!this.contains(object)) {
             for (int i = 0; i < this.array.length; i++) {
@@ -73,5 +79,10 @@ public class ArrayPalette<T> implements Palette<T> {
     @Override
     public int resize(int bits, T object) {
         return 0; //TODO
+    }
+
+    @Override
+    public T[] getIndices() {
+        return this.array;
     }
 }
