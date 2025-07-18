@@ -11,9 +11,6 @@ public record BlockFaceMap(
         float[] right
 ) {
     public static BlockFaceMap create(float[] points) {
-
-        System.out.println(points.length);
-
         if (points.length != 72 && points.length != 0) {
             throw new IllegalArgumentException("Expected 6 faces × 4 vertices × 3 floats = 72 floats");
         }

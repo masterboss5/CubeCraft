@@ -4,18 +4,20 @@ public class ArrayPalette<T> implements Palette<T> {
     private final int bits;
     private final T[] array;
     private int size;
+    private final PaletteContainer<T> paletteContainer;
 
     @SuppressWarnings("unchecked")
-    private ArrayPalette(int bits, T[] data) {
+    private ArrayPalette(int bits, T[] data, PaletteContainer<T> paletteContainer) {
         this.bits = bits;
         this.array = (T[]) new Object[1 << bits];
         this.size = 0;
+        this.paletteContainer = paletteContainer;
 
         System.arraycopy(data, 0, this.array, 0, this.array.length);
     }
 
-    public static <T> ArrayPalette<T> create(int bits, T[] data) {
-        return new ArrayPalette<>(bits, data);
+    public static <T> ArrayPalette<T> create(int bits, T[] data, PaletteContainer<T> paletteContainer) {
+        return new ArrayPalette<>(bits, data, paletteContainer);
     }
 
     @Override //TODO add auto resizing

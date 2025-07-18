@@ -1,5 +1,9 @@
 package main;
 
+import block.Block;
+import block.BlockPosition;
+import block.DirtBlock;
+import block.GrassBlock;
 import gl.glDebugger;
 import graphic.Camera;
 import graphic.Models;
@@ -12,6 +16,7 @@ import render.RenderSystem;
 import shader.ShaderPrograms;
 import texture.TextureArray;
 import texture.Textures;
+import util.collection.PaletteContainer;
 import world.World;
 
 public class Main {
@@ -24,6 +29,10 @@ public class Main {
     public static void main(String[] args) {
         INSTANCE = new Main();
         INSTANCE.start();
+
+        PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>();
+        blockPaletteContainer.palette.add(new GrassBlock(new BlockPosition()));
+        blockPaletteContainer.palette.add(new DirtBlock(new BlockPosition()));
     }
 
     private void render() {

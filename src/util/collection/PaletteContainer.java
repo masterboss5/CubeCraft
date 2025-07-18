@@ -3,17 +3,23 @@ package util.collection;
 public class PaletteContainer<T> {
     private static final PaletteFactory SINGULAR_PALETTE = SingularPalette::create;
     private static final PaletteFactory ARRAY_PALETTE = ArrayPalette::create;
-
-    private Palette<T> palette;
+    public Palette<T> palette;
 
     public PaletteContainer() {
+        this.palette = this.getCompatiblePalette(null, 0);
 
+        System.out.println(this.palette);
     }
 
     private Palette<T> getCompatiblePalette(T[] array, int bits) {
+
+        if (array == null) {
+            array = (T[]) new Object[1];
+        }
+
         return switch (bits) {
-            case 0 -> SingularPalette.create(0, array);
-            default -> ArrayPalette.create(bits, array);
+            case 0 -> SINGULAR_PALETTE.create(0, array, this);
+            default -> ARRAY_PALETTE.create(bits, array, this);
         };
     }
 }

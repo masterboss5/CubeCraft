@@ -6,15 +6,17 @@ public class SingularPalette<T> implements Palette<T> {
     private final int bits;
     private T entry;
     private int size;
+    private final PaletteContainer<T> paletteContainer;
 
-    private SingularPalette(int bits, T[] data) {
+    private SingularPalette(int bits, T[] data, PaletteContainer<T> paletteContainer) {
         this.bits = bits;
         this.entry = data[0];
         this.size = 0;
+        this.paletteContainer = paletteContainer;
     }
 
-    public static <T> SingularPalette<T> create(int bits, T[] data) {
-        return new SingularPalette<>(bits, data);
+    public static <T> SingularPalette<T> create(int bits, T[] data, PaletteContainer<T> paletteContainer) {
+        return new SingularPalette<>(bits, data, paletteContainer);
     }
 
     @Override  //TODO add resize
@@ -66,6 +68,7 @@ public class SingularPalette<T> implements Palette<T> {
 
             return 0;
         } else {
+            System.out.println("singular palette needs resize");
             //TODO add resize logic later
         }
 
