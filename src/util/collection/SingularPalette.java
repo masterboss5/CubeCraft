@@ -19,18 +19,18 @@ public class SingularPalette<T> implements Palette<T> {
         return new SingularPalette<>(bits, data, paletteContainer);
     }
 
-    @Override  //TODO add resize
-    public int index(T block) {
+    @Override
+    public int index(T object) {
         if (entry == null) {
-            this.entry = block;
+            this.entry = object;
 
             return 0;
         }
 
-        if (this.entry.equals(block)) {
+        if (this.entry.equals(object)) {
             return 0;
         } else {
-            return -1;
+            return this.resize(this.bits + 1, object);
         }
     }
 
@@ -59,25 +59,9 @@ public class SingularPalette<T> implements Palette<T> {
         return entry == null;
     }
 
-    @Override //TODO add resize
-    public int add(T object) {
-
-        if (this.entry == null) {
-            this.entry = object;
-            this.size = 1;
-
-            return 0;
-        } else {
-            System.out.println("singular palette needs resize");
-            //TODO add resize logic later
-        }
-
-        return 0;
-    }
-
     @Override
     public int resize(int bits, T object) {
-        return 0; //TODO
+        return this.paletteContainer.resize(bits, object, this.getIndices());
     }
 
     @Override

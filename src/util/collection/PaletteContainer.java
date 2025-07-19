@@ -8,11 +8,10 @@ public class PaletteContainer<T> {
     public PaletteContainer() {
         this.palette = this.getCompatiblePalette(null, 0);
 
-        System.out.println(this.palette);
+//        System.out.println(this.palette);
     }
 
     private Palette<T> getCompatiblePalette(T[] array, int bits) {
-
         if (array == null) {
             array = (T[]) new Object[1];
         }
@@ -21,5 +20,11 @@ public class PaletteContainer<T> {
             case 0 -> SINGULAR_PALETTE.create(0, array, this);
             default -> ARRAY_PALETTE.create(bits, array, this);
         };
+    }
+
+    int resize(int bits, T object, T[] oldData) {
+        System.out.println("resize");
+        Palette<T> newPalette = this.getCompatiblePalette(oldData, bits);
+        return newPalette.index(object);
     }
 }

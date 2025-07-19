@@ -3,6 +3,8 @@ package block;
 import graphic.BlockModel;
 import render.Renderable;
 
+import java.util.Objects;
+
 public abstract class Block implements Renderable {
     final BlockModel model;
     private BlockPosition position;
@@ -51,5 +53,17 @@ public abstract class Block implements Renderable {
 
     public boolean isAirBlock() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Block block = (Block) o;
+        return Objects.equals(getModel(), block.getModel());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getModel());
     }
 }

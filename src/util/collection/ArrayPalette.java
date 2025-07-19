@@ -3,24 +3,24 @@ package util.collection;
 public class ArrayPalette<T> implements Palette<T> {
     private final int bits;
     private final T[] array;
-    private int size;
     private final PaletteContainer<T> paletteContainer;
 
     @SuppressWarnings("unchecked")
     private ArrayPalette(int bits, T[] data, PaletteContainer<T> paletteContainer) {
         this.bits = bits;
         this.array = (T[]) new Object[1 << bits];
-        this.size = 0;
         this.paletteContainer = paletteContainer;
 
-        System.arraycopy(data, 0, this.array, 0, this.array.length);
+        for (int i = 0; i < data.length; i++) {
+            this.array[i] = data[i];
+        }
     }
 
     public static <T> ArrayPalette<T> create(int bits, T[] data, PaletteContainer<T> paletteContainer) {
         return new ArrayPalette<>(bits, data, paletteContainer);
     }
 
-    @Override //TODO add auto resizing
+    @Override
     public int index(T object) {
         if (this.contains(object)) {
             for (int i = 0; i < this.array.length; i++) {
@@ -28,9 +28,17 @@ public class ArrayPalette<T> implements Palette<T> {
                     return i;
                 }
             }
+        } else {
+            for (int i = 0; i < this.array.length; i++) {
+                if (this.array[i] == null) {
+                    this.array[i] = object;
+
+                    return i;
+                }
+            }
         }
-        //resize or register here
-        return -1;
+
+        return this.resize(this.bits + 1, object);
     }
 
     @Override
@@ -40,9 +48,9 @@ public class ArrayPalette<T> implements Palette<T> {
 
     @Override
     public boolean contains(T object) {
-        for (T element : this.array) {
-            if (element != null) {
-                if (object.equals(element)) {
+        for (T t : this.array) {
+            if (t != null) {
+                if (t.equals(object)) {
                     return true;
                 }
             }
@@ -62,25 +70,9 @@ public class ArrayPalette<T> implements Palette<T> {
         return true;
     }
 
-    @Override //TODO add auto resizing
-    public int add(T object) {
-        if (!this.contains(object)) {
-            for (int i = 0; i < this.array.length; i++) {
-                if (this.array[i] == null) {
-                    this.size = this.size + 1;
-                    this.array[i] = object;
-
-                    return i;
-                }
-            }
-        }
-
-        return this.index(object);
-    }
-
     @Override
     public int resize(int bits, T object) {
-        return 0; //TODO
+        return this.paletteContainer.resize(bits, object, this.getIndices());
     }
 
     @Override

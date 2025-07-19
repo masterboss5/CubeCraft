@@ -31,8 +31,12 @@ public class Main {
         INSTANCE.start();
 
         PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>();
-        blockPaletteContainer.palette.add(new GrassBlock(new BlockPosition()));
-        blockPaletteContainer.palette.add(new DirtBlock(new BlockPosition()));
+        int x = blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition()));
+        int y = blockPaletteContainer.palette.index(new DirtBlock(new BlockPosition(1, 1, 1)));
+        int z = blockPaletteContainer.palette.index(new DirtBlock(new BlockPosition(1, 1, 1)));
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println(z);
     }
 
     private void render() {

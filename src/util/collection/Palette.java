@@ -29,7 +29,7 @@ public interface Palette<T> {
     /**
      * Adds an object to the palette
      */
-    int add(T object);
+//    int add(T object);
 
     /**
      * Requests a new bigger palette, returns
