@@ -23,8 +23,9 @@ public class PaletteContainer<T> {
     }
 
     int resize(int bits, T object, T[] oldData) {
-        System.out.println("resize");
+        System.out.println("resize_bits{" + (bits) + "}");
         Palette<T> newPalette = this.getCompatiblePalette(oldData, bits);
+        this.palette = newPalette;
         return newPalette.index(object);
     }
 }
