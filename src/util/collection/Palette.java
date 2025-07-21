@@ -27,11 +27,6 @@ public interface Palette<T> {
     boolean isEmpty();
 
     /**
-     * Adds an object to the palette
-     */
-//    int add(T object);
-
-    /**
      * Requests a new bigger palette, returns
      * the new index of the newly indexed object
      */

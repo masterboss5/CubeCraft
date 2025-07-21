@@ -5,11 +5,7 @@ flat in int pass_textureIndex;
 
 out vec4 outputColor;
 
-
-//uniform sampler2D textureSampler;
-
 layout(binding = 0) uniform sampler2DArray textureSampler;
-
 
 void main() {
     outputColor = texture(textureSampler, vec3(pass_uv, pass_textureIndex));

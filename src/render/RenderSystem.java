@@ -9,13 +9,12 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
-import util.Math;
+import util.MathUtils;
 import world.Chunk;
 import world.ChunkMesh;
 import world.ChunkPosition;
 
 import java.util.List;
-import java.util.Random;
 
 public class RenderSystem {
     private static Matrix4f projectionMatrix;
@@ -29,7 +28,7 @@ public class RenderSystem {
     }
 
     public static void createProjectionMatrix() {
-        projectionMatrix = Math.createProjectionMatrix(window, camera.getFOV(), camera.getNearPlane(), camera.getFarPlane());
+        projectionMatrix = MathUtils.createProjectionMatrix(window, camera.getFOV(), camera.getNearPlane(), camera.getFarPlane());
     }
 
 /*    @Deprecated
@@ -75,8 +74,8 @@ public class RenderSystem {
 
         model.getVertexBuffer().bindAll();
 
-        model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
-        model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
+        model.getShaderProgram().setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
+        model.getShaderProgram().setTransformationMatrix4fUniform(MathUtils.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
 /*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -96,7 +95,7 @@ public class RenderSystem {
 
         model.getVertexBuffer().bindAll();
 
-        model.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
+        model.getShaderProgram().setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
 /*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
@@ -109,7 +108,7 @@ public class RenderSystem {
 
             if (block.isAirBlock()) continue;
 
-            model.getShaderProgram().setTransformationMatrix4fUniform(Math.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
+            model.getShaderProgram().setTransformationMatrix4fUniform(MathUtils.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
             GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
         }
 
@@ -123,7 +122,7 @@ public class RenderSystem {
 
         chunkMesh.getVertexBuffer().bindAll();
 
-        chunkMesh.getShaderProgram().setViewMatrix4fUniform(Math.createViewMatrix(camera));
+        chunkMesh.getShaderProgram().setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
         chunkMesh.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
         Vector3f chunkGridPos = chunk.getChunkPosition().toVector3f(); // e.g., (2, 0, 3)
@@ -133,7 +132,7 @@ public class RenderSystem {
                 chunkGridPos.z * ChunkPosition.CHUNK_WIDTH
         );
 
-        Matrix4f transform = Math.createTransformationMatrix(
+        Matrix4f transform = MathUtils.createTransformationMatrix(
                 chunkWorldPos,
                 new Vector3f(0, 0, 0),          // No rotation
                 new Vector3f(1, 1, 1)           // Uniform scale

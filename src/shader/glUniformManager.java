@@ -3,7 +3,7 @@ package shader;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL46;
-import util.Math;
+import util.MathUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -94,6 +94,6 @@ public interface glUniformManager {
     }
 
     default void setUniformMatrix4f(String location, Matrix4f m1) {
-        GL46.glUniformMatrix4fv(getLocation(location), false, Math.matrix4fToFloatArray(m1));
+        GL46.glUniformMatrix4fv(getLocation(location), false, MathUtils.matrix4fToFloatArray(m1));
     }
 }

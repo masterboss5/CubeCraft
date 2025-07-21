@@ -5,7 +5,7 @@ import io.Window;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-public class Math {
+public class MathUtils {
     public static float[] matrix4fToFloatArray(Matrix4f matrix4f) {
         return matrix4f.get(new float[16]);
     }

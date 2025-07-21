@@ -1,9 +1,6 @@
 package main;
 
-import block.Block;
-import block.BlockPosition;
-import block.DirtBlock;
-import block.GrassBlock;
+import block.*;
 import gl.glDebugger;
 import graphic.Camera;
 import graphic.Models;
@@ -30,13 +27,15 @@ public class Main {
         INSTANCE = new Main();
         INSTANCE.start();
 
+        //Testing
         PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>();
-        int x = blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition()));
-        int y = blockPaletteContainer.palette.index(new DirtBlock(new BlockPosition(1, 1, 1)));
-        int z = blockPaletteContainer.palette.index(new DirtBlock(new BlockPosition(1, 1, 1)));
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println(z);
+//        int x = blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition()));
+        System.out.println(blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition())));
+        System.out.println(blockPaletteContainer.palette.index(new DirtBlock(new BlockPosition())));
+        System.out.println(blockPaletteContainer.palette.getClass());
+        System.out.println(blockPaletteContainer.palette.index(new OakPlanksBlock(new BlockPosition())));
+        System.out.println(blockPaletteContainer.palette.index(new CobblestoneBlock(new BlockPosition())));
+//        System.out.println(blockPaletteContainer.palette.index(new AirBlock(new BlockPosition())));
     }
 
     private void render() {

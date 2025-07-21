@@ -38,7 +38,6 @@ public class Chunk {
     }
 
     public void render() {
-
         if (this.isNeedsMeshing()) {
             for (int x = 0; x < 4; x++) {
                 for (int z = 0; z < 4; z++) {
