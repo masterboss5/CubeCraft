@@ -14,6 +14,7 @@ import shader.ShaderPrograms;
 import texture.TextureArray;
 import texture.Textures;
 import util.collection.PaletteContainer;
+import world.ChunkPosition;
 import world.World;
 
 public class Main {
@@ -27,15 +28,13 @@ public class Main {
         INSTANCE = new Main();
         INSTANCE.start();
 
-        //Testing
-        PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>();
-//        int x = blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition()));
-        System.out.println(blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition())));
-        System.out.println(blockPaletteContainer.palette.index(new DirtBlock(new BlockPosition())));
-        System.out.println(blockPaletteContainer.palette.getClass());
-        System.out.println(blockPaletteContainer.palette.index(new OakPlanksBlock(new BlockPosition())));
-        System.out.println(blockPaletteContainer.palette.index(new CobblestoneBlock(new BlockPosition())));
+        PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>(ChunkPosition.CHUNK_WIDTH * ChunkPosition.CHUNK_WIDTH * ChunkPosition.CHUNK_HEIGHT);
+        blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition()));
+        blockPaletteContainer.palette.index(new OakPlanksBlock(new BlockPosition()));
+//        System.out.println(blockPaletteContainer.palette.getClass());
+//        System.out.println(blockPaletteContainer.palette.index(new CobblestoneBlock(new BlockPosition())));
 //        System.out.println(blockPaletteContainer.palette.index(new AirBlock(new BlockPosition())));
+//        System.out.println(blockPaletteContainer.palette.index(new DirtBlock(new BlockPosition())));
     }
 
     private void render() {

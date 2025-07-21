@@ -19,6 +19,8 @@ public class PaletteContainer<T> {
             array = (T[]) new Object[1];
         }
 
+        System.out.println(this.createPaletteStorage(bits));
+
         this.bits = bits;
         return switch (bits) {
             case 0 -> SINGULAR_PALETTE.create(0, array, this);
@@ -27,7 +29,7 @@ public class PaletteContainer<T> {
     }
 
     protected int resize(int bits, T object, T[] oldData) {
-        System.out.println("resize_bits{" + (bits) + "}");
+//        System.out.println("resize_bits{" + (bits) + "}");
         Palette<T> newPalette = this.getCompatiblePalette(oldData, bits);
         this.palette = newPalette;
 

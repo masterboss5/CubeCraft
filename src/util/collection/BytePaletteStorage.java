@@ -6,6 +6,7 @@ public class BytePaletteStorage implements PaletteStorage {
     private byte[] internalData;
     private final int bits;
     private final int valuesPerByte;
+    private final int bufferSize;
 
     private void assertSize(int number) {
         if (number > 255) {
@@ -15,14 +16,16 @@ public class BytePaletteStorage implements PaletteStorage {
 
     public BytePaletteStorage(int bits, int rawSize) {
         this.bits = bits;
+        this.valuesPerByte = (int) Math.floor((double) this.getMaxBitsPerValue() / bits);
+        this.bufferSize = this.getBufferSize(rawSize);
 
-        this.valuesPerByte = (int) Math.floor((double) this.getBitsPerValue() / bits);
+        System.out.println(valuesPerByte);
 
-        int size = this.getBufferSize(rawSize);
-
-        if (valuesPerByte < 1) {
+        if (valuesPerByte < 1 || bits > this.getMaxBitsPerValue()) {
             throw new IllegalArgumentException("bits must be 8 or less");
         }
+
+        this.internalData = new byte[this.bufferSize];
     }
 
     @Override
@@ -34,12 +37,15 @@ public class BytePaletteStorage implements PaletteStorage {
     @Override
     public int swap(int index, int value) {
         this.assertSize(value);
-        return 0;
+        int temp = this.get(index);
+        this.set(index, value);
+
+        return temp;
     }
 
     @Override
     public int get(int index) {
-        return -31;
+        return this.internalData[index];
     }
 
     @Override
@@ -48,7 +54,7 @@ public class BytePaletteStorage implements PaletteStorage {
     }
 
     @Override
-    public int getBitsPerValue() {
+    public int getMaxBitsPerValue() {
         return 8;
     }
 }
