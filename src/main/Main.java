@@ -29,8 +29,17 @@ public class Main {
         INSTANCE.start();
 
         PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>(ChunkPosition.CHUNK_WIDTH * ChunkPosition.CHUNK_WIDTH * ChunkPosition.CHUNK_HEIGHT);
-        blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition()));
-        blockPaletteContainer.palette.index(new OakPlanksBlock(new BlockPosition()));
+//        System.out.println("indexed: " + blockPaletteContainer.palette.index(new GrassBlock(new BlockPosition())));
+
+        blockPaletteContainer.set(0, new GrassBlock(new BlockPosition()));
+
+        System.out.println(blockPaletteContainer.get(0));
+
+        blockPaletteContainer.set(0, new DirtBlock(new BlockPosition()));
+        System.out.println(blockPaletteContainer.get(0));
+
+//        System.out.println(blockPaletteContainer.getStorage().getData().length);
+//        blockPaletteContainer.palette.index(new OakPlanksBlock(new BlockPosition()));
 //        System.out.println(blockPaletteContainer.palette.getClass());
 //        System.out.println(blockPaletteContainer.palette.index(new CobblestoneBlock(new BlockPosition())));
 //        System.out.println(blockPaletteContainer.palette.index(new AirBlock(new BlockPosition())));

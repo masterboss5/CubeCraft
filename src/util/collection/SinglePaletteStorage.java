@@ -1,32 +1,47 @@
 package util.collection;
 
-public class SinglePaletteStorage implements PaletteStorage {
-    private final int constantValue = 0;
+import java.util.Arrays;
 
-    public SinglePaletteStorage() {
+public class SinglePaletteStorage implements PaletteStorage {
+    private int constantValue;
+    private final int bits;
+    private final int size;
+    private final int internalSize;
+
+    public SinglePaletteStorage(int bits, int size) {
+        this.bits = bits;
+        this.size = size;
+        this.internalSize = size;
     }
 
     @Override
     public void set(int index, int value) {
+        this.constantValue = value;
     }
 
     @Override
     public int swap(int index, int value) {
-        return 0;
+        int temp = this.constantValue;
+        this.set(0, value);
+
+        return temp;
     }
 
     @Override
     public int get(int index) {
-        return 0;
+        return this.constantValue;
     }
 
     @Override
-    public byte[] getData() {
-        return new byte[0];
+    public int[] getData() {
+        int[] buffer = new int[this.size];
+        Arrays.fill(buffer, this.constantValue);
+
+        return buffer;
     }
 
     @Override
-    public int getMaxBitsPerValue() {
+    public int getMaxBitWidth() {
         return 0;
     }
 }
