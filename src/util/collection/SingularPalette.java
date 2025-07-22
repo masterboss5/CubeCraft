@@ -68,4 +68,14 @@ public class SingularPalette<T> implements Palette<T> {
     public T[] getIndices() {
         return (T[]) new Object[] {this.entry};
     }
+
+    @Override
+    public String toString() {
+        return "SingularPalette{" +
+                "bits=" + this.bits +
+                ", entry=" + this.entry +
+                ", size=" + this.size +
+                ", paletteContainer=" + this.paletteContainer +
+                '}';
+    }
 }

@@ -7,11 +7,7 @@ public interface PaletteStorage {
 
     int get(int index);
 
-    byte[] getData();
+    int[] getUnpackedData();
 
-    int getMaxBitsPerValue();
-
-    default int getBufferSize(int totalBits) {
-        return (int) Math.ceil((double) totalBits / this.getMaxBitsPerValue());
-    }
+    int getMaxBitWidth();
 }

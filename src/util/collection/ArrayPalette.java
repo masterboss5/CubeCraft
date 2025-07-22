@@ -1,5 +1,7 @@
 package util.collection;
 
+import java.util.Arrays;
+
 public class ArrayPalette<T> implements Palette<T> {
     private final int bits;
     private final T[] array;
@@ -78,5 +80,14 @@ public class ArrayPalette<T> implements Palette<T> {
     @Override
     public T[] getIndices() {
         return this.array;
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayPalette{" +
+                "bits=" + this.bits +
+                ", array=" + Arrays.toString(this.array) +
+                ", paletteContainer=" + this.paletteContainer +
+                '}';
     }
 }

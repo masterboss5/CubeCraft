@@ -5,13 +5,21 @@ public class PaletteContainer<T> {
     private static final PaletteFactory ARRAY_PALETTE = ArrayPalette::create;
     public Palette<T> palette;
     private PaletteStorage storage;
-    private int bits;
     private final int storageSize;
+    private int bits;
 
     public PaletteContainer(int storageSize) {
+        this.storageSize = storageSize;
         this.palette = this.getCompatiblePalette(null, 0);
         this.bits = 0;
-        this.storageSize = storageSize;
+    }
+
+    public T get(int index) {
+        return this.palette.get(this.storage.get(index));
+    }
+
+    public void set(int index, T value) {
+        this.storage.set(index, this.palette.index(value));
     }
 
     private Palette<T> getCompatiblePalette(T[] array, int bits) {
@@ -19,9 +27,9 @@ public class PaletteContainer<T> {
             array = (T[]) new Object[1];
         }
 
-        System.out.println(this.createPaletteStorage(bits));
-
+        this.storage = this.createPaletteStorage(bits);
         this.bits = bits;
+
         return switch (bits) {
             case 0 -> SINGULAR_PALETTE.create(0, array, this);
             default -> ARRAY_PALETTE.create(bits, array, this);
@@ -37,15 +45,18 @@ public class PaletteContainer<T> {
     }
 
     private PaletteStorage createPaletteStorage(int bits) {
-        if (bits >= 0 && bits <= 8) {
-            return new BytePaletteStorage(bits, this.storageSize);
+        if (bits == 0) {
+            return new SinglePaletteStorage(bits, this.storageSize);
         }
 
-        if (bits > 8  && bits <= 16) {
-            return new BytePaletteStorage(bits, this.storageSize);
+        if (bits > 0 && bits <= Long.SIZE) {
+            return new PackedIntegerArray(bits, this.storage.getUnpackedData());
         }
 
-        //temp
-        return new BytePaletteStorage(bits, this.storageSize);
+        throw new IllegalArgumentException("bits exceeded 64");
+    }
+
+    public PaletteStorage getStorage() {
+        return storage;
     }
 }
