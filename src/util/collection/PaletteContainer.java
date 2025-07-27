@@ -4,7 +4,7 @@ public class PaletteContainer<T> {
     private static final PaletteFactory SINGULAR_PALETTE = SingularPalette::create;
     private static final PaletteFactory ARRAY_PALETTE = ArrayPalette::create;
     public Palette<T> palette;
-    private PaletteStorage storage;
+    public PaletteStorage storage;
     private final int storageSize;
     private int bits;
 
@@ -19,7 +19,8 @@ public class PaletteContainer<T> {
     }
 
     public void set(int index, T value) {
-        this.storage.set(index, this.palette.index(value));
+        int indexed = this.palette.index(value);
+        this.storage.set(index, indexed);
     }
 
     private Palette<T> getCompatiblePalette(T[] array, int bits) {
@@ -37,7 +38,7 @@ public class PaletteContainer<T> {
     }
 
     protected int resize(int bits, T object, T[] oldData) {
-//        System.out.println("resize_bits{" + (bits) + "}");
+        System.out.println("resize_bits{" + (bits) + "}");
         Palette<T> newPalette = this.getCompatiblePalette(oldData, bits);
         this.palette = newPalette;
 
@@ -46,7 +47,7 @@ public class PaletteContainer<T> {
 
     private PaletteStorage createPaletteStorage(int bits) {
         if (bits == 0) {
-            return new SinglePaletteStorage(bits, this.storageSize);
+            return new ConstantIntegerArray(bits, this.storageSize);
         }
 
         if (bits > 0 && bits <= Long.SIZE) {

@@ -75,7 +75,6 @@ public class SingularPalette<T> implements Palette<T> {
                 "bits=" + this.bits +
                 ", entry=" + this.entry +
                 ", size=" + this.size +
-                ", paletteContainer=" + this.paletteContainer +
                 '}';
     }
 }

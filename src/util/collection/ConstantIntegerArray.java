@@ -2,13 +2,13 @@ package util.collection;
 
 import java.util.Arrays;
 
-public class SinglePaletteStorage implements PaletteStorage {
+public class ConstantIntegerArray implements PaletteStorage {
     private int constantValue;
     private final int bits;
     private final int size;
     private final int internalSize;
 
-    public SinglePaletteStorage(int bits, int size) {
+    public ConstantIntegerArray(int bits, int size) {
         this.bits = bits;
         this.size = size;
         this.internalSize = size;
