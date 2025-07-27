@@ -4,15 +4,15 @@ import block.AirBlock;
 import block.Block;
 import block.BlockPosition;
 import render.RenderSystem;
+import util.collection.PaletteContainer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 public class Chunk {
+    public static final int CHUNK_HEIGHT = 128;
+    public static final int CHUNK_WIDTH = 16;
     private final WorldChunkManager chunkManager;
-    private Block[][][] blockGrid = new Block[ChunkPosition.CHUNK_WIDTH][ChunkPosition.CHUNK_HEIGHT][ChunkPosition.CHUNK_WIDTH];
+    private final PaletteContainer<Block> blockStorage = new PaletteContainer<>(CHUNK_WIDTH * CHUNK_WIDTH * CHUNK_HEIGHT);
     private final ChunkPosition position;
     private ChunkMesh mesh;
     private boolean needsSaving = true;
@@ -21,10 +21,10 @@ public class Chunk {
     private final UUID ID = UUID.randomUUID();
 
     {
-        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
-            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
-                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
-                    blockGrid[x][y][z] = new AirBlock(new BlockPosition(x, y, z));
+        for (int x = 0; x < CHUNK_WIDTH; x++) {
+            for (int y = 0; y < CHUNK_HEIGHT; y++) {
+                for (int z = 0; z < CHUNK_WIDTH; z++) {
+                    this.blockStorage.set(this.computePositionIndex(new BlockPosition(x, y, z)), new AirBlock());
                 }
             }
         }
@@ -41,11 +41,11 @@ public class Chunk {
         if (this.isNeedsMeshing()) {
             for (int x = 0; x < 4; x++) {
                 for (int z = 0; z < 4; z++) {
-                    this.setBlock(new AirBlock(new BlockPosition(4 + x, 4, 4 + z)), new BlockPosition(4 + x, 4, 4 + z));
+                    this.setBlock(new AirBlock(), new BlockPosition(4 + x, 4, 4 + z));
                 }
             }
 
-            this.setBlock(new AirBlock(new BlockPosition(0, 4, 0)), new BlockPosition(0, 4, 0));
+            this.setBlock(new AirBlock(), new BlockPosition(0, 4, 0));
 
 
             this.mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
@@ -53,23 +53,6 @@ public class Chunk {
         }
 
         RenderSystem.renderChunk(this.mesh, this);
-//        this.render2();
-    }
-
-    public void render2() {
-        List<Block> blocks = new ArrayList<>();
-
-        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
-            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
-                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
-                    Block block = blockGrid[x][y][z];
-
-                    blocks.add(block);
-                }
-            }
-        }
-
-        RenderSystem.renderBatched(blocks);
     }
 
     public ChunkPosition getChunkPosition() {
@@ -77,7 +60,7 @@ public class Chunk {
     }
 
     public Block getBlock(BlockPosition position) {
-        return this.blockGrid[position.getX()][position.getY()][position.getZ()];
+        return this.blockStorage.get(this.computePositionIndex(position));
     }
 
     public Block safeGetBlock(BlockPosition position) {
@@ -85,26 +68,31 @@ public class Chunk {
         int y = position.getY();
         int z = position.getZ();
 
-        if (x < 0 || x >= ChunkPosition.CHUNK_WIDTH ||
-                y < 0 || y >= ChunkPosition.CHUNK_HEIGHT ||
-                z < 0 || z >= ChunkPosition.CHUNK_WIDTH) {
-            return new AirBlock(position);
+        if (x < 0 || x >= CHUNK_WIDTH || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_WIDTH) {
+            return new AirBlock();
         }
 
-        return blockGrid[x][y][z];
+        return this.getBlock(position);
     }
 
-    //TODO fix method
+    public void setBlock(Block newBlock, BlockPosition position) {
+        this.blockStorage.set(this.computePositionIndex(position), newBlock);
+        this.setNeedsMeshing();
+        this.setNeedsSaving();
+    }
+
     public int getBlockCount() {
         int count = 0;
 
-        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
-            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
-                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
-                    Block block = blockGrid[x][y][z];
+        for (int x = 0; x < CHUNK_WIDTH; x++) {
+            for (int y = 0; y < CHUNK_HEIGHT; y++) {
+                for (int z = 0; z < CHUNK_WIDTH; z++) {
+                    Block block = this.getBlock(new BlockPosition(x, y, z));
 
                     if (block != null) {
-                        count = count + 1;
+                        if (!block.isAirBlock()) {
+                            count = count + 1;
+                        }
                     }
                 }
             }
@@ -113,10 +101,8 @@ public class Chunk {
         return count;
     }
 
-    public void setBlock(Block newBlock, BlockPosition blockPosition) {
-        this.blockGrid[blockPosition.getX()][blockPosition.getY()][blockPosition.getZ()] = newBlock;
-        this.setNeedsMeshing();
-        this.setNeedsSaving();
+    public int computePositionIndex(BlockPosition position) {
+        return position.getX() + CHUNK_WIDTH * (position.getY() + CHUNK_HEIGHT * position.getZ());
     }
 
     public boolean isNeedsMeshing() {

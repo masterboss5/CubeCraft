@@ -1,6 +1,7 @@
 package block;
 
 import org.joml.Vector3f;
+import world.Chunk;
 import world.ChunkPosition;
 
 import java.util.Objects;
@@ -97,14 +98,14 @@ public class BlockPosition {
     }
 
     public ChunkPosition toChunkPosition() {
-        int chunkX = this.getX() / ChunkPosition.CHUNK_WIDTH;
-        int chunkZ = this.getZ() / ChunkPosition.CHUNK_WIDTH;
+        int chunkX = this.getX() / Chunk.CHUNK_WIDTH;
+        int chunkZ = this.getZ() / Chunk.CHUNK_WIDTH;
 
-        if (this.getX() < 0 && this.getX() % ChunkPosition.CHUNK_WIDTH != 0) {
+        if (this.getX() < 0 && this.getX() % Chunk.CHUNK_WIDTH != 0) {
             chunkX = chunkX - 1;
         }
 
-        if (this.getZ() < 0 && this.getZ() % ChunkPosition.CHUNK_WIDTH != 0) {
+        if (this.getZ() < 0 && this.getZ() % Chunk.CHUNK_WIDTH != 0) {
             chunkZ = chunkZ - 1;
         }
 
@@ -112,15 +113,15 @@ public class BlockPosition {
     }
 
     public static BlockPosition fromChunkPosition(ChunkPosition chunkPos) {
-        return new BlockPosition(chunkPos.getX() * ChunkPosition.CHUNK_WIDTH, 0, chunkPos.getZ() * ChunkPosition.CHUNK_WIDTH);
+        return new BlockPosition(chunkPos.getX() * Chunk.CHUNK_WIDTH, 0, chunkPos.getZ() * Chunk.CHUNK_WIDTH);
     }
 
     public BlockPosition toLocalChunkPosition() {
-        int localX = this.getX() % ChunkPosition.CHUNK_WIDTH;
-        int localZ = this.getZ() % ChunkPosition.CHUNK_WIDTH;
+        int localX = this.getX() % Chunk.CHUNK_WIDTH;
+        int localZ = this.getZ() % Chunk.CHUNK_WIDTH;
 
-        if (localX < 0) localX += ChunkPosition.CHUNK_WIDTH;
-        if (localZ < 0) localZ += ChunkPosition.CHUNK_WIDTH;
+        if (localX < 0) localX += Chunk.CHUNK_WIDTH;
+        if (localZ < 0) localZ += Chunk.CHUNK_WIDTH;
 
         return new BlockPosition(localX, this.getY(), localZ);
     }

@@ -15,6 +15,7 @@ import texture.TextureArray;
 import texture.Textures;
 import util.collection.PackedIntegerArray;
 import util.collection.PaletteContainer;
+import world.Chunk;
 import world.ChunkPosition;
 import world.World;
 
@@ -31,20 +32,20 @@ public class Main {
         INSTANCE = new Main();
         INSTANCE.start();
 
-        PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>(ChunkPosition.CHUNK_WIDTH * ChunkPosition.CHUNK_WIDTH * ChunkPosition.CHUNK_HEIGHT);
+        PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>(Chunk.CHUNK_WIDTH * Chunk.CHUNK_WIDTH * Chunk.CHUNK_HEIGHT);
 
 
-        blockPaletteContainer.set(0, new CobblestoneBlock(new BlockPosition()));
+        blockPaletteContainer.set(0, new CobblestoneBlock());
 /*        System.out.println(blockPaletteContainer.storage.toString());
         System.out.println(blockPaletteContainer.palette.toString());*/
         System.out.println(blockPaletteContainer.get(0));
 
-        blockPaletteContainer.set(1, new OakPlanksBlock(new BlockPosition()));
+        blockPaletteContainer.set(1, new OakPlanksBlock());
         System.out.println(blockPaletteContainer.get(1));
 
-        blockPaletteContainer.set(2, new GrassBlock(new BlockPosition()));
-        blockPaletteContainer.set(3, new GrassBlock(new BlockPosition()));
-        blockPaletteContainer.set(4, new GrassBlock(new BlockPosition()));
+        blockPaletteContainer.set(2, new GrassBlock());
+        blockPaletteContainer.set(3, new GrassBlock());
+        blockPaletteContainer.set(4, new GrassBlock());
 
         System.out.println(Arrays.toString(blockPaletteContainer.storage.getUnpackedData()));
 

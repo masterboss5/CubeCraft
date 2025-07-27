@@ -7,8 +7,6 @@ import java.util.Objects;
 
 public final class ChunkPosition {
     public static final ChunkPosition ORIGIN = new ChunkPosition();
-    public static final int CHUNK_HEIGHT = 128;
-    public static final int CHUNK_WIDTH = 16;
     private final int x;
     private final int z;
 
@@ -83,18 +81,18 @@ public final class ChunkPosition {
     }
 
     public BlockPosition toBlockPosition() {
-        return new BlockPosition(this.x * CHUNK_WIDTH, 0, this.z * CHUNK_WIDTH);
+        return new BlockPosition(this.x * Chunk.CHUNK_WIDTH, 0, this.z * Chunk.CHUNK_WIDTH);
     }
 
     public static ChunkPosition fromBlockPosition(BlockPosition blockPos) {
-        int chunkX = blockPos.getX() / CHUNK_WIDTH;
-        int chunkZ = blockPos.getZ() / CHUNK_WIDTH;
+        int chunkX = blockPos.getX() / Chunk.CHUNK_WIDTH;
+        int chunkZ = blockPos.getZ() / Chunk.CHUNK_WIDTH;
 
-        if (blockPos.getX() < 0 && blockPos.getX() % CHUNK_WIDTH != 0) {
+        if (blockPos.getX() < 0 && blockPos.getX() % Chunk.CHUNK_WIDTH != 0) {
             chunkX = chunkX - 1;
         }
 
-        if (blockPos.getZ() < 0 && blockPos.getZ() % CHUNK_WIDTH != 0) {
+        if (blockPos.getZ() < 0 && blockPos.getZ() % Chunk.CHUNK_WIDTH != 0) {
             chunkZ = chunkZ - 1;
         }
 

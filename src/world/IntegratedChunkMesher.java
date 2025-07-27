@@ -12,7 +12,6 @@ import java.util.List;
 public class IntegratedChunkMesher implements ChunkMesher {
     private static final int[] INDICES = {0, 1, 2, 2, 3, 0}; // Assumes quad in CCW order
 
-    // Face definitions match your JSON cube exactly
     private static final float[] TOP_FACE = {
             0f, 1f, 0f,
             0f, 1f, 1f,
@@ -62,9 +61,9 @@ public class IntegratedChunkMesher implements ChunkMesher {
         List<Integer> faceIndexes = new ArrayList<>();
         List<Float> uvCoordinates = new ArrayList<>();
 
-        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
-            for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
-                for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
+        for (int x = 0; x < Chunk.CHUNK_WIDTH; x++) {
+            for (int y = 0; y < Chunk.CHUNK_HEIGHT; y++) {
+                for (int z = 0; z < Chunk.CHUNK_WIDTH; z++) {
                     BlockPosition pos = new BlockPosition(x, y, z);
                     Block block = chunk.safeGetBlock(pos);
 

@@ -66,7 +66,7 @@ public class RenderSystem {
         model.stopShader();
     }*/
 
-    public static void render(Block block) {
+/*    public static void render(Block block) {
         BlockModel model = block.getModel();
 
         model.startShaderProgram();
@@ -78,16 +78,16 @@ public class RenderSystem {
         model.getShaderProgram().setTransformationMatrix4fUniform(MathUtils.createTransformationMatrix(block.getPosition().toVector3f(), model.getRotation(), model.getScale()));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
-/*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
+        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
 
         GL46.glDrawElements(GL46.GL_TRIANGLES, model.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
 
         model.getVertexBuffer().unbindAll();
         model.stopShader();
-    }
+    }*/
     
-    public static void renderBatched(List<Block> blocks) {
+/*    public static void renderBatched(List<Block> blocks) {
         BlockModel model = blocks.getFirst().getModel();
 
         model.startShaderProgram();
@@ -98,8 +98,8 @@ public class RenderSystem {
         model.getShaderProgram().setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
         model.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
 
-/*        GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());*/
+        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL13.glBindTexture(GL13.GL_TEXTURE_2D, model.getTextureID());
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL13.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, TextureArrays.BLOCK_TEXTURE_ARRAY.getArrayID());
@@ -114,7 +114,7 @@ public class RenderSystem {
 
         model.getVertexBuffer().unbindAll();
         model.stopShader();
-    }
+    }*/
 
     public static void renderChunk(ChunkMesh chunkMesh, Chunk chunk) {
         chunkMesh.startShaderProgram();
@@ -127,9 +127,9 @@ public class RenderSystem {
 
         Vector3f chunkGridPos = chunk.getChunkPosition().toVector3f(); // e.g., (2, 0, 3)
         Vector3f chunkWorldPos = new Vector3f(
-                chunkGridPos.x * ChunkPosition.CHUNK_WIDTH,
-                chunkGridPos.y * ChunkPosition.CHUNK_HEIGHT,
-                chunkGridPos.z * ChunkPosition.CHUNK_WIDTH
+                chunkGridPos.x * Chunk.CHUNK_WIDTH,
+                chunkGridPos.y * Chunk.CHUNK_HEIGHT,
+                chunkGridPos.z * Chunk.CHUNK_WIDTH
         );
 
         Matrix4f transform = MathUtils.createTransformationMatrix(
