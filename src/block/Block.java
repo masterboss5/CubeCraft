@@ -21,15 +21,19 @@ public abstract class Block implements Renderable {
         return false;
     }
 
+    public int getIlluminance() {
+        return 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Block block = (Block) o;
-        return Objects.equals(getModel(), block.getModel());
+        return Objects.equals(this.getModel(), block.getModel());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getModel());
+        return Objects.hash(this.getModel());
     }
 }

@@ -1,5 +1,6 @@
 package registry;
 
+import block.Block;
 import exception.RegistriesFrozenException;
 import graphic.Model;
 import graphic.Models;
@@ -12,6 +13,7 @@ import java.util.function.Supplier;
 public class Registries {
     private static boolean FROZEN = false;
     public static final RootRegistry ROOT = new RootRegistry();
+    public static final SimpleRegistry<Block> BLOCK = createSimple("block");
     public static final DefaultedRegistry<Model> MODEL = createDefaulted("model", () -> Models.AIR_BLOCK_MODEL);
     public static final DefaultedRegistry<ShaderProgram> SHADER_PROGRAM = createDefaulted("shader_program", EmptyShaderProgram::new);
     public static final SimpleRegistry<Texture> TEXTURES = createSimple("textures");

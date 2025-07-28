@@ -6,7 +6,6 @@ import world.ChunkPosition;
 
 import java.util.Objects;
 
-//TODO make immutable
 public class BlockPosition {
     public static final BlockPosition ORIGIN = new BlockPosition();
     private final int x;

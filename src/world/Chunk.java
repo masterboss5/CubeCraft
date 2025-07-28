@@ -3,6 +3,7 @@ package world;
 import block.AirBlock;
 import block.Block;
 import block.BlockPosition;
+import block.Blocks;
 import render.RenderSystem;
 import util.collection.PaletteContainer;
 
@@ -24,7 +25,7 @@ public class Chunk {
         for (int x = 0; x < CHUNK_WIDTH; x++) {
             for (int y = 0; y < CHUNK_HEIGHT; y++) {
                 for (int z = 0; z < CHUNK_WIDTH; z++) {
-                    this.blockStorage.set(this.computePositionIndex(new BlockPosition(x, y, z)), new AirBlock());
+                    this.blockStorage.set(this.computePositionIndex(new BlockPosition(x, y, z)), Blocks.AIR_BLOCK);
                 }
             }
         }
@@ -41,11 +42,11 @@ public class Chunk {
         if (this.isNeedsMeshing()) {
             for (int x = 0; x < 4; x++) {
                 for (int z = 0; z < 4; z++) {
-                    this.setBlock(new AirBlock(), new BlockPosition(4 + x, 4, 4 + z));
+                    this.setBlock(Blocks.AIR_BLOCK, new BlockPosition(4 + x, 4, 4 + z));
                 }
             }
 
-            this.setBlock(new AirBlock(), new BlockPosition(0, 4, 0));
+            this.setBlock(Blocks.AIR_BLOCK, new BlockPosition(0, 4, 0));
 
 
             this.mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
@@ -69,7 +70,7 @@ public class Chunk {
         int z = position.getZ();
 
         if (x < 0 || x >= CHUNK_WIDTH || y < 0 || y >= CHUNK_HEIGHT || z < 0 || z >= CHUNK_WIDTH) {
-            return new AirBlock();
+            return Blocks.AIR_BLOCK;
         }
 
         return this.getBlock(position);

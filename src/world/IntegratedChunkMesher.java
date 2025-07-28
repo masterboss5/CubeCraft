@@ -122,7 +122,7 @@ public class IntegratedChunkMesher implements ChunkMesher {
         vertexBuffer.createNewVertexBufferObject(toIntArray(faceIndexes), (byte) 1, false, glBufferUsage.GL_STATIC_DRAW);
 
 
-        return new ChunkMesh(vertexBuffer);
+        return new ChunkMesh(chunk, vertexBuffer);
     }
 
     private int[] toIntArray(List<Integer> list) {
@@ -161,7 +161,7 @@ public class IntegratedChunkMesher implements ChunkMesher {
         int vertexCount = vertices.size() / 3;
 
         for (int i = 0; i < face.length; i += 3) {
-            float x = face[i]     + pos.getX();
+            float x = face[i] + pos.getX();
             float y = face[i + 1] + pos.getY();
             float z = face[i + 2] + pos.getZ();
             vertices.add(x);

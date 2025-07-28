@@ -32,17 +32,17 @@ public class Main {
         PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>(Chunk.CHUNK_WIDTH * Chunk.CHUNK_WIDTH * Chunk.CHUNK_HEIGHT);
 
 
-        blockPaletteContainer.set(0, new CobblestoneBlock());
+        blockPaletteContainer.set(0, Blocks.COBBLESTONE_BLOCK);
 /*        System.out.println(blockPaletteContainer.storage.toString());
         System.out.println(blockPaletteContainer.palette.toString());*/
         System.out.println(blockPaletteContainer.get(0));
 
-        blockPaletteContainer.set(1, new OakPlanksBlock());
+        blockPaletteContainer.set(1, Blocks.OAK_PLANKS_BLOCK);
         System.out.println(blockPaletteContainer.get(1));
 
-        blockPaletteContainer.set(2, new GrassBlock());
-        blockPaletteContainer.set(3, new GrassBlock());
-        blockPaletteContainer.set(4, new GrassBlock());
+        blockPaletteContainer.set(2, Blocks.GRASS_BLOCK);
+        blockPaletteContainer.set(3, Blocks.GRASS_BLOCK);
+        blockPaletteContainer.set(4, Blocks.GRASS_BLOCK);
 
         System.out.println(Arrays.toString(blockPaletteContainer.storage.getUnpackedData()));
 
@@ -61,7 +61,7 @@ public class Main {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glClearColor(0.53f, 0.81f, 0.92f, 1.0f);
         GLFW.glfwPollEvents();
-        this.world.setBlock(new BlockPosition(-1, 7, 0), new DirtBlock());
+        this.world.setBlock(new BlockPosition(-1, 7, 0), Blocks.DIRT_BLOCK);
     }
 
     private void initInputs() {
@@ -83,6 +83,7 @@ public class Main {
         ShaderPrograms.loadShaderPrograms();
         Textures.loadTextures();
         Models.loadModels();
+        Blocks.loadBlocks();
         TextureArrays.loadTextureArrays();
         this.world = new World();
         this.world.loadWorld();

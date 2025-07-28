@@ -35,9 +35,8 @@ public class WorldChunkManager {
                 for (int y = 0; y < 5; y++) {
                     int worldX = chunkPosition.getX() * Chunk.CHUNK_WIDTH + x;
                     int worldZ = chunkPosition.getZ() * Chunk.CHUNK_WIDTH + z;
-                    BlockPosition blockPos = new BlockPosition(worldX, y, worldZ);
 
-                    chunk.setBlock(new GrassBlock(), new BlockPosition(x, y, z));
+                    chunk.setBlock(Blocks.GRASS_BLOCK, new BlockPosition(x, y, z));
                 }
             }
         }
