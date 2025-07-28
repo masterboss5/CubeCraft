@@ -6,7 +6,6 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
@@ -28,7 +27,7 @@ public class WorldChunkManager {
         return dx * dx + dz * dz <= getRenderDistance() * getRenderDistance();
     }
 
-    public void solidChunk(ChunkPosition chunkPosition) {
+    public void generateSolidChunk(ChunkPosition chunkPosition) {
         Chunk chunk = new Chunk(chunkPosition, this);
 
         for (int x = 0; x < Chunk.CHUNK_WIDTH; x++) {
@@ -42,19 +41,6 @@ public class WorldChunkManager {
                 }
             }
         }
-/*        for (int x = 0; x < ChunkPosition.CHUNK_WIDTH; x++) {
-            for (int z = 0; z < ChunkPosition.CHUNK_WIDTH; z++) {
-                for (int y = 0; y < ChunkPosition.CHUNK_HEIGHT; y++) {
-                    int worldX = chunkPosition.getX() * ChunkPosition.CHUNK_WIDTH + x;
-                    int worldZ = chunkPosition.getZ() * ChunkPosition.CHUNK_WIDTH + z;
-                    BlockPosition blockPos = new BlockPosition(worldX, y, worldZ);
-
-                    if (new Random().nextInt(0, 3) == 2) {
-                        chunk.setBlock(new GrassBlock(blockPos), new BlockPosition(x, y, z));
-                    }
-                }
-            }
-        }*/
 
         this.cache(chunk);
     }
@@ -62,7 +48,7 @@ public class WorldChunkManager {
     public void generateChunks(int size) {
         for (int x = -size; x <= size; x++) {
             for (int z = -size; z <= size; z++) {
-                this.solidChunk(new ChunkPosition(x, z));
+                this.generateSolidChunk(new ChunkPosition(x, z));
             }
         }
     }

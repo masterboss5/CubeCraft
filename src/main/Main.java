@@ -11,12 +11,9 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
 import shader.ShaderPrograms;
-import texture.TextureArray;
 import texture.Textures;
-import util.collection.PackedIntegerArray;
 import util.collection.PaletteContainer;
 import world.Chunk;
-import world.ChunkPosition;
 import world.World;
 
 import java.util.Arrays;
@@ -60,10 +57,11 @@ public class Main {
 
     private void update() {
         this.window.updateWindow();
-        this.camera.tick();
+        camera.tick();
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         GL11.glClearColor(0.53f, 0.81f, 0.92f, 1.0f);
         GLFW.glfwPollEvents();
+        this.world.setBlock(new BlockPosition(-1, 7, 0), new DirtBlock());
     }
 
     private void initInputs() {
@@ -88,11 +86,8 @@ public class Main {
         TextureArrays.loadTextureArrays();
         this.world = new World();
         this.world.loadWorld();
-        this.camera = new Camera(this.window);
-        RenderSystem.init(this.window, this.camera);
-
-        /*TextureManager.createTextureArrays(1920, 1920, 4);
-        TextureManager.upload(new TextureData("C:\\Users\\Armen\\Desktop\\CubeCraft\\resources\\textures\\grass.png"), 0);*/
+        camera = new Camera(this.window);
+        RenderSystem.init(this.window, camera);
 
         glDebugger.init();
     }
@@ -107,7 +102,7 @@ public class Main {
             if (InputManager.getKeyboard().isKeyDown(GLFW.GLFW_KEY_F11)) {
                 this.window.setFullscreen(!this.window.isFullscreen());
                 System.out.println("F11");
-            };
+            }
         }
 
         this.cleanUp();
