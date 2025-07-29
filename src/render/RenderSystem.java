@@ -6,6 +6,7 @@ import json.TextureArrays;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
+import registry.Registries;
 import util.MathUtils;
 import world.Chunk;
 import world.ChunkMesh;
@@ -23,6 +24,12 @@ public class RenderSystem {
 
     public static void createProjectionMatrix() {
         projectionMatrix = MathUtils.createProjectionMatrix(window, camera.getFOV(), camera.getNearPlane(), camera.getFarPlane());
+        Registries.SHADER_PROGRAM.values().forEach((shaderProgram -> {
+            GL46.glUseProgram(shaderProgram.getProgramID());
+            shaderProgram.setProjectionMatrix4fUniform(projectionMatrix);
+        }));
+
+        GL46.glUseProgram(0);
     }
 
     public static void renderChunk(ChunkMesh chunkMesh, Chunk chunk) {
@@ -31,7 +38,7 @@ public class RenderSystem {
         chunkMesh.getVertexBuffer().bindAll();
 
         chunkMesh.getShaderProgram().setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
-        chunkMesh.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
+//        chunkMesh.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
         chunkMesh.getShaderProgram().setTransformationMatrix4fUniform(chunkMesh.getTransformationMatrix());
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0);

@@ -12,6 +12,10 @@ public class BlockPosition {
     private final int y;
     private final int z;
 
+    public BlockPosition(double x, double y, double z) {
+        this((int) x, (int) y, (int) z);
+    }
+
     public BlockPosition(int x, int y, int z) {
         this.x = x;
         this.y = y;

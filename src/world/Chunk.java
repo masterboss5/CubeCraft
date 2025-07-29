@@ -48,7 +48,6 @@ public class Chunk {
 
             this.setBlock(Blocks.AIR_BLOCK, new BlockPosition(0, 4, 0));
 
-
             this.mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
             this.needsMeshing = false;
         }

@@ -2,11 +2,12 @@ package world;
 
 import block.Block;
 import block.BlockPosition;
+import entity.Entity;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class World {
-    ArrayList<Block> blocks = new ArrayList<>();
     WorldChunkManager chunkManager = new WorldChunkManager(this);
 
     public World() {
@@ -26,6 +27,14 @@ public class World {
                 .filter(chunk -> chunk.getChunkPosition().equals(chunkPosition))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void addEntity(Entity entity) {
+
+    }
+
+    public void getEntity(UUID uuid) {
+
     }
 
     public void loadWorld() {

@@ -75,4 +75,8 @@ public class WorldChunkManager {
     public static int getRenderDistance() {
         return RENDER_DISTANCE;
     }
+
+    public World getWorld() {
+        return world;
+    }
 }
