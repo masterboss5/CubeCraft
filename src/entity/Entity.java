@@ -19,7 +19,7 @@ public abstract class Entity {
     private double velocityY;
     private double velocityZ;
     boolean isFalling;
-    UUID ID = new UUID(0L, 0L);
+    private final UUID ID = new UUID(0L, 0L);
     private Box hitbox;
 
     public Entity(double x, double y, double z, World world) {
@@ -28,11 +28,19 @@ public abstract class Entity {
         this.z = z;
     }
 
-    public void remove() {
+    public void tick() {
+    }
+
+
+    public void destroy() {
 
     }
 
     public void unload() {
 
+    }
+
+    public UUID getID() {
+        return ID;
     }
 }
