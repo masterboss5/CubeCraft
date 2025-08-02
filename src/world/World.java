@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class World {
-    WorldChunkManager chunkManager = new WorldChunkManager(this);
+    final WorldChunkManager chunkManager = new WorldChunkManager(this);
+    private final WorldEntityManager entityManager = new WorldEntityManager(this);
 
     public World() {
     }
@@ -22,19 +23,19 @@ public class World {
         return this.getChunk(position.toChunkPosition()).getBlock(position);
     }
 
+    public void addEntity(Entity entity) {
+        this.entityManager.addEntity(entity);
+    }
+
+    public Entity getEntity(UUID uuid) {
+        return this.entityManager.getEntity(uuid);
+    }
+
     public Chunk getChunk(ChunkPosition chunkPosition) {
         return this.chunkManager.getCache().stream()
                 .filter(chunk -> chunk.getChunkPosition().equals(chunkPosition))
                 .findFirst()
                 .orElse(null);
-    }
-
-    public void addEntity(Entity entity) {
-
-    }
-
-    public void getEntity(UUID uuid) {
-
     }
 
     public void loadWorld() {
@@ -43,9 +44,14 @@ public class World {
 
     public void generateWorld() {
         this.chunkManager.generateChunks(50);
+        this.generateEntities();
+    }
+
+    public void generateEntities() {
     }
 
     public void tickWorld() {
+        this.entityManager.tickEntities();
     }
 
     public void renderWorld() {

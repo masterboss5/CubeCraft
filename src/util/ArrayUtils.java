@@ -25,4 +25,16 @@ public class ArrayUtils {
 
         return result;
     }
+
+    public static float[] convertListFloatToPrimitiveFloatArray(java.util.List<Float> floatList) {
+        if (floatList == null) return null;
+
+        float[] result = new float[floatList.size()];
+        for (int i = 0; i < floatList.size(); i++) {
+            Float value = floatList.get(i);
+            result[i] = (value != null) ? value : 0.0f;
+        }
+
+        return result;
+    }
 }

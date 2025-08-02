@@ -38,6 +38,10 @@ public class Chunk {
         chunkManager.cache(this);
     }
 
+    public void unload() {
+
+    }
+
     public void render() {
         if (this.isNeedsMeshing()) {
             for (int x = 0; x < 4; x++) {

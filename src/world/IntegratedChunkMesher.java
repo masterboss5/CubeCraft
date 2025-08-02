@@ -12,48 +12,6 @@ import java.util.List;
 public class IntegratedChunkMesher implements ChunkMesher {
     private static final int[] INDICES = {0, 1, 2, 2, 3, 0}; // Assumes quad in CCW order
 
-    private static final float[] TOP_FACE = {
-            0f, 1f, 0f,
-            0f, 1f, 1f,
-            1f, 1f, 1f,
-            1f, 1f, 0f
-    };
-
-    private static final float[] BOTTOM_FACE = {
-            0f, 0f, 1f,
-            0f, 0f, 0f,
-            1f, 0f, 0f,
-            1f, 0f, 1f
-    };
-
-    private static final float[] FRONT_FACE = {
-            0f, 1f, 1f,
-            0f, 0f, 1f,
-            1f, 0f, 1f,
-            1f, 1f, 1f
-    };
-
-    private static final float[] BACK_FACE = {
-            1f, 1f, 0f,
-            1f, 0f, 0f,
-            0f, 0f, 0f,
-            0f, 1f, 0f
-    };
-
-    private static final float[] LEFT_FACE = {
-            0f, 1f, 0f,
-            0f, 0f, 0f,
-            0f, 0f, 1f,
-            0f, 1f, 1f
-    };
-
-    private static final float[] RIGHT_FACE = {
-            1f, 1f, 1f,
-            1f, 0f, 1f,
-            1f, 0f, 0f,
-            1f, 1f, 0f
-    };
-
     @Override
     public ChunkMesh meshChunk(Chunk chunk) {
         List<Float> vertices = new ArrayList<>();
