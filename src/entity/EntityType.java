@@ -2,6 +2,8 @@ package entity;
 
 import world.World;
 
+import java.util.Objects;
+
 public class EntityType<T extends Entity> {
     private final String name;
     private final EntityFactory<T> factory;
@@ -15,6 +17,18 @@ public class EntityType<T extends Entity> {
 
     public T create(double x, double y, double z, World world) {
         return this.factory.create(x, y, z, world);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) return false;
+        EntityType<?> that = (EntityType<?>) o;
+        return Objects.equals(this.name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(name);
     }
 
     private static class Builder<T extends Entity> {

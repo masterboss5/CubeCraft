@@ -34,15 +34,15 @@ public abstract class Entity {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (other == null || this.getClass() != other.getClass()) return false;
-        Entity entity = (Entity) other;
-        return Objects.equals(this.getID(), entity.getID());
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return Objects.equals(this.getID(), entity.getID()) && Objects.equals(this.type, entity.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.getID());
+        return Objects.hash(this.getID(), this.type);
     }
 
     public void tick() {
