@@ -3,6 +3,8 @@ package world;
 import block.Block;
 import block.BlockPosition;
 import entity.Entity;
+import entity.EntityType;
+import entity.render.EntityRenderDispatch;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -10,6 +12,7 @@ import java.util.UUID;
 public class World {
     final WorldChunkManager chunkManager = new WorldChunkManager(this);
     private final WorldEntityManager entityManager = new WorldEntityManager(this);
+    private final EntityRenderDispatch entityRenderDispatch = new EntityRenderDispatch();
 
     public World() {
     }
@@ -48,6 +51,7 @@ public class World {
     }
 
     public void generateEntities() {
+        this.entityManager.addEntity(EntityType.CUBE_ENTITY.create(0, 15, 0, this));
     }
 
     public void tickWorld() {
@@ -57,6 +61,10 @@ public class World {
     public void renderWorld() {
         for (Chunk visibleChunk : this.chunkManager.getVisibleChunks()) {
             visibleChunk.render();
+        }
+
+        for (Entity entity : this.entityManager.getEntities()) {
+            this.entityRenderDispatch.render(entity);
         }
     }
 }

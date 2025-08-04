@@ -2,10 +2,7 @@ package world;
 
 import entity.Entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class WorldEntityManager {
     private final Map<UUID, Entity> tickingEntities = new HashMap<>();
@@ -27,6 +24,10 @@ public class WorldEntityManager {
     protected void removeEntity(Entity entity) {
         this.entityMap.remove(entity.getID());
         this.tickingEntities.remove(entity.getID());
+    }
+
+    protected List<Entity> getEntities() {
+        return this.entityMap.values().stream().toList();
     }
 
     protected Entity getEntity(UUID uuid) {

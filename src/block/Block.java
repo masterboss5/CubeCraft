@@ -27,7 +27,7 @@ public abstract class Block implements Renderable {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         Block block = (Block) o;
         return Objects.equals(this.getModel(), block.getModel());
     }

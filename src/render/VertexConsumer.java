@@ -5,10 +5,10 @@ import gl.VertexBuffer;
 public interface VertexConsumer {
     void vertex(float x, float y, float z);
 
-    void quad(float x1, float y1, float z1,
-              float x2, float y2, float z2,
-              float x3, float y3, float z3,
-              float x4, float y4, float z4);
+    void quad(double x1, double y1, double z1,
+              double x2, double y2, double z2,
+              double x3, double y3, double z3,
+              double x4, double y4, double z4);
 
     void texture(float u, float v);
 

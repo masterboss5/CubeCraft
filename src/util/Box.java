@@ -100,7 +100,7 @@ public class Box {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || this.getClass() != o.getClass()) return false;
         Box box = (Box) o;
         return Double.compare(this.minX, box.minX) == 0 && Double.compare(this.minY, box.minY) == 0 && Double.compare(this.minZ, box.minZ) == 0 && Double.compare(this.maxX, box.maxX) == 0 && Double.compare(this.maxY, box.maxY) == 0 && Double.compare(this.maxZ, box.maxZ) == 0;
     }

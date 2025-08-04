@@ -89,7 +89,7 @@ public class BlockPosition {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
         BlockPosition other = (BlockPosition) obj;
 
         return this.getX() == other.getX() && this.getY() == other.getY() && this.getZ() == other.getZ();

@@ -2,5 +2,6 @@ package entity.render;
 
 import entity.Entity;
 
-public class EntityRenderer<T extends Entity> {
+public abstract class EntityRenderer<T extends Entity> {
+
 }

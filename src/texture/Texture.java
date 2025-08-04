@@ -58,7 +58,7 @@ public class Texture {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Texture that)) return false;
-        return getWidth() == that.getWidth() && getHeight() == that.getHeight() && Objects.deepEquals(getPixels(), that.getPixels());
+        return this.getWidth() == that.getWidth() && this.getHeight() == that.getHeight() && Objects.deepEquals(this.getPixels(), that.getPixels());
     }
 
     @Override

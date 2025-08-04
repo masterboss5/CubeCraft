@@ -21,12 +21,16 @@ public abstract class Entity {
     private double velocityZ;
     boolean isFalling;
     private final UUID ID = UUID.randomUUID();
+    private final EntityType<? extends Entity> type;
     private Box hitbox;
+    private final World world;
 
-    public Entity(double x, double y, double z, World world) {
+    public Entity(double x, double y, double z, EntityType<?> type, World world) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.type = type;
+        this.world = world;
     }
 
     @Override
@@ -43,7 +47,6 @@ public abstract class Entity {
 
     public void tick() {
     }
-
 
     public void destroy() {
     }
