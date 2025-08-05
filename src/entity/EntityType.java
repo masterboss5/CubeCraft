@@ -50,7 +50,7 @@ public class EntityType<T extends Entity> {
         }
 
         private EntityType<T> build() {
-            return new EntityType<T>(this.name, this.factory);
+            return new EntityType<>(this.name, this.factory);
         }
     }
 }

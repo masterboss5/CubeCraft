@@ -58,5 +58,9 @@ public abstract class Entity {
         return ID;
     }
 
+    public EntityType<? extends Entity> getType() {
+        return type;
+    }
+
     public abstract boolean hasTicks();
 }

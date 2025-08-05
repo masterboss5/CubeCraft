@@ -51,7 +51,8 @@ public class World {
     }
 
     public void generateEntities() {
-        this.entityManager.addEntity(EntityType.CUBE_ENTITY.create(0, 15, 0, this));
+        this.addEntity(EntityType.CUBE_ENTITY.create(0, 15, 0, this));
+        this.entityRenderDispatch.reload();
     }
 
     public void tickWorld() {

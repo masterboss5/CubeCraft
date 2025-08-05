@@ -63,6 +63,6 @@ public class Texture {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getWidth(), getHeight(), Arrays.hashCode(getPixels()));
+        return Objects.hash(this.getWidth(), this.getHeight(), Arrays.hashCode(this.getPixels()));
     }
 }

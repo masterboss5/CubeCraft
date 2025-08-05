@@ -6,6 +6,7 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 public class Box {
+    public static final Box NULL_BOX = new Box(0, 0, 0, 0, 0, 0);
     private final double minX;
     private final double minY;
     private final double minZ;

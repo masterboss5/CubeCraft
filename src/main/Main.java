@@ -1,6 +1,7 @@
 package main;
 
 import block.*;
+import entity.render.EntityRenderers;
 import gl.glDebugger;
 import graphic.Camera;
 import graphic.Models;
@@ -84,6 +85,7 @@ public class Main {
         Textures.loadTextures();
         Models.loadModels();
         Blocks.loadBlocks();
+        EntityRenderers.loadEntityRenderers();
         TextureArrays.loadTextureArrays();
         this.world = new World();
         this.world.loadWorld();

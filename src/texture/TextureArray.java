@@ -101,7 +101,7 @@ public class TextureArray {
     }
 
     public void bind() {
-        GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, this.arrayID);
+        GL46.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, this.getArrayID());
     }
 
     public void unbind() {
