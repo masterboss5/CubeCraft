@@ -33,9 +33,9 @@ public class Main {
         PaletteContainer<Block> blockPaletteContainer = new PaletteContainer<>(Chunk.CHUNK_WIDTH * Chunk.CHUNK_WIDTH * Chunk.CHUNK_HEIGHT);
 
 
-        blockPaletteContainer.set(0, Blocks.COBBLESTONE_BLOCK);
-/*        System.out.println(blockPaletteContainer.storage.toString());
-        System.out.println(blockPaletteContainer.palette.toString());*/
+        /*blockPaletteContainer.set(0, Blocks.COBBLESTONE_BLOCK);
+        System.out.println(blockPaletteContainer.storage.toString());
+        System.out.println(blockPaletteContainer.palette.toString());
         System.out.println(blockPaletteContainer.get(0));
 
         blockPaletteContainer.set(1, Blocks.OAK_PLANKS_BLOCK);
@@ -45,7 +45,7 @@ public class Main {
         blockPaletteContainer.set(3, Blocks.GRASS_BLOCK);
         blockPaletteContainer.set(4, Blocks.GRASS_BLOCK);
 
-        System.out.println(Arrays.toString(blockPaletteContainer.storage.getUnpackedData()));
+        System.out.println(Arrays.toString(blockPaletteContainer.storage.getUnpackedData()));*/
 
 
     }

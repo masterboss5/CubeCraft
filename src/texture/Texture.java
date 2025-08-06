@@ -39,7 +39,7 @@ public class Texture {
             int g = (argb >> 8) & 0xFF;
             int b = argb & 0xFF;
 
-            pixels[i] = (a << 24) | (b << 16) | (g << 8) | r;
+            this.pixels[i] = (a << 24) | (b << 16) | (g << 8) | r;
         }
     }
 

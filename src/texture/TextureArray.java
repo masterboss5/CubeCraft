@@ -49,14 +49,14 @@ public class TextureArray {
 
     public int registerOrGet(Texture texture) {
         return this.textures.computeIfAbsent(texture, (absentTexture -> {
-            this.upload(texture, this.registeredIndex);
+            this.upload(absentTexture, this.registeredIndex);
             this.registeredIndex = this.registeredIndex + 1;
 
             return this.registeredIndex - 1;
         }));
     }
 
-    public void upload(Texture texture, int index) {
+    private void upload(Texture texture, int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Texture layer " + index + " out of bounds (0–" + (size - 1) + ")");
         }

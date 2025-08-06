@@ -14,12 +14,15 @@ public final class EntityRenderDispatch {
     }
 
     public <T extends Entity> void render(T entity) {
-        getRenderer(entity.getType());
+        EntityRenderer<T> renderer = getRenderer(entity.getType());
+        renderer.render(entity);
     }
 
     public void reload() {
         EntityRenderers.ENTITY_RENDER_FACTORIES.forEach(((entityType, entityRendererSupplier) -> {
             ENTITY_RENDERERS.put(entityType, entityRendererSupplier.create());
         }));
+
+        System.out.println(ENTITY_RENDERERS.values());
     }
 }
