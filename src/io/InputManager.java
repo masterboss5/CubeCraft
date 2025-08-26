@@ -3,7 +3,7 @@ package io;
 import exception.InputAlreadyInitializedException;
 
 public class InputManager {
-    private static boolean[] registered = {false, false, false};
+    private static final boolean[] registered = {false, false, false};
     private static Mouse mouse;
     private static Keyboard keyboard;
     private static WindowInput windowInput;

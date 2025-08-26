@@ -21,8 +21,8 @@ public class PackedIntegerArray implements PaletteStorage {
         this.valuesPerLong = (int) Math.floor((double) this.getMaxBitWidth() / bits);
         this.internalSize = (size + this.valuesPerLong - 1) / this.valuesPerLong;
 
-        System.out.println("values per long" + this.valuesPerLong);
-        System.out.println("total size" + this.internalSize);
+/*        System.out.println("values per long" + this.valuesPerLong);
+        System.out.println("total size" + this.internalSize);*/
 
         if (valuesPerLong < 1 || bits > this.getMaxBitWidth()) {
             throw new IllegalArgumentException("bits must be 64 or less");

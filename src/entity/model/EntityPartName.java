@@ -1,6 +1,6 @@
 package entity.model;
 
-public enum EntityPartNames {
+public enum EntityPartName {
     ROOT("root"),
     HEAD("head"),
     BODY("body"),
@@ -11,7 +11,7 @@ public enum EntityPartNames {
 
     private final String name;
 
-    EntityPartNames(String name) {
+    EntityPartName(String name) {
         this.name = name;
     }
 

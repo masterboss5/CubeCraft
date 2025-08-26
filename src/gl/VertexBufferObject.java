@@ -1,5 +1,6 @@
 package gl;
 
+import org.lwjgl.opengl.ARBBindlessTexture;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL46;
 
@@ -42,6 +43,11 @@ public final class VertexBufferObject {
         if (data instanceof double[] bufferData) {
             GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.getBufferUsage().getConstant());
             GL46.glVertexAttribPointer(attribute, size, GL46.GL_DOUBLE, normalized, 0, 0);
+        }
+
+        if (data instanceof long[] bufferData) {
+            GL46.glBufferData(GL15.GL_ARRAY_BUFFER, bufferData, this.getBufferUsage().getConstant());
+            GL46.glVertexAttribLPointer(attribute, size, ARBBindlessTexture.GL_UNSIGNED_INT64_ARB, 0, 0);
         }
 
         this.unbind();

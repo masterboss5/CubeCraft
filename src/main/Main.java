@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import render.RenderSystem;
 import shader.ShaderPrograms;
+import texture.BindlessTextureManager;
 import texture.Textures;
 import util.collection.PaletteContainer;
 import world.Chunk;
@@ -20,6 +21,7 @@ import world.World;
 import java.util.Arrays;
 
 public class Main {
+    public static BindlessTextureManager TEXTURE_MANAGER;
     public static Main INSTANCE;
     private Mouse mouse;
     public Window window;
@@ -87,6 +89,7 @@ public class Main {
         Blocks.loadBlocks();
         EntityRenderers.loadEntityRenderers();
         TextureArrays.loadTextureArrays();
+        TEXTURE_MANAGER = new BindlessTextureManager("Main Texture Manager");
         this.world = new World();
         this.world.loadWorld();
         camera = new Camera(this.window);

@@ -11,7 +11,7 @@ import java.util.Map;
 public abstract class EntityModel<T extends Entity> {
     private ModelPart root;
     private final List<ModelPart> parts = new ArrayList<>();
-    private final Map<EntityPartNames, ModelPart> partMap = new EnumMap<>(EntityPartNames.class);
+    private final Map<EntityPartName, ModelPart> partMap = new EnumMap<>(EntityPartName.class);
 
     public EntityModel() {
         this.appendRootPart();
@@ -22,7 +22,7 @@ public abstract class EntityModel<T extends Entity> {
         this.parts.add(part);
         this.partMap.put(part.getName(), part);
 
-        if (part.getName() == EntityPartNames.ROOT) {
+        if (part.getName() == EntityPartName.ROOT) {
             this.root = part;
         }
     }
@@ -38,6 +38,10 @@ public abstract class EntityModel<T extends Entity> {
 
     public ModelPart getRoot() {
         return root;
+    }
+
+    public List<ModelPart> getParts() {
+        return parts;
     }
 
     public abstract void appendRootPart();

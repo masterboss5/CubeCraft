@@ -9,7 +9,7 @@ import java.util.List;
 
 public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
-    private static final int RENDER_DISTANCE = 5;
+    private static final int RENDER_DISTANCE = 15;
     private final World world;
     public static final ChunkMesher CHUNK_MESHER = new IntegratedChunkMesher();
 
@@ -40,6 +40,7 @@ public class WorldChunkManager {
                 }
             }
         }
+        chunk.setBlock(Blocks.COBBLESTONE_BLOCK, new BlockPosition(0, 0, 0));
 
         this.cache(chunk);
     }

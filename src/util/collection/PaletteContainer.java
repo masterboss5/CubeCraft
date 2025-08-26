@@ -38,7 +38,7 @@ public class PaletteContainer<T> {
     }
 
     protected int resize(int bits, T object, T[] oldData) {
-        System.out.println("resize_bits{" + (bits) + "}");
+//        System.out.println("resize_bits{" + (bits) + "}");
         Palette<T> newPalette = this.getCompatiblePalette(oldData, bits);
         this.palette = newPalette;
 

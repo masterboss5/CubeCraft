@@ -1,15 +1,23 @@
 package render;
 
+import entity.Entity;
+import gl.VertexBuffer;
 import graphic.Camera;
+import graphic.ModelPart;
 import io.Window;
 import json.TextureArrays;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
 import registry.Registries;
+import shader.ShaderPrograms;
 import util.MathUtils;
 import world.Chunk;
 import world.ChunkMesh;
+
+import java.util.List;
+import java.util.Map;
 
 public class RenderSystem {
     private static Matrix4f projectionMatrix;
@@ -48,5 +56,28 @@ public class RenderSystem {
 
         chunkMesh.getVertexBuffer().unbindAll();
         GL46.glUseProgram(0);
+    }
+
+    public static void renderEntity(VertexBuffer vertexBuffer, Entity entity) {
+        GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
+        ShaderPrograms.ENTITY_SHADER_PROGRAM.tickShaderProgram();
+        vertexBuffer.bindAll();
+
+        ShaderPrograms.ENTITY_SHADER_PROGRAM.setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
+        ShaderPrograms.ENTITY_SHADER_PROGRAM.setTransformationMatrix4fUniform(MathUtils.createTransformationMatrix(
+                new Vector3f((float) entity.getX(), (float) entity.getY(), (float) entity.getZ()),
+                new Vector3f(0, 0, 0),
+                new Vector3f(1)
+        ));
+
+        GL46.glDrawElements(GL46.GL_TRIANGLES, vertexBuffer.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+
+        vertexBuffer.unbindAll();
+        GL46.glUseProgram(0);
+    }
+
+    public static void renderEntityInstanced(Map<ModelPart, List<Matrix4f>> instances) {
+        GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
+        ShaderPrograms.ENTITY_SHADER_PROGRAM.tickShaderProgram();
     }
 }

@@ -21,7 +21,7 @@ public abstract class Entity {
     private double velocityZ;
     boolean isFalling;
     private final UUID ID = UUID.randomUUID();
-    private final EntityType<? extends Entity> type;
+    private final EntityType<?> type;
     private Box hitbox;
     private final World world;
 
@@ -58,9 +58,39 @@ public abstract class Entity {
         return ID;
     }
 
-    public EntityType<? extends Entity> getType() {
+    public EntityType<?> getType() {
         return type;
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    public double getRotZ() {
+        return rotZ;
+    }
+
+    public double getRotY() {
+        return rotY;
+    }
+
+    public double getRotX() {
+        return rotX;
+    }
+
     public abstract boolean hasTicks();
+
+    public void setPosition(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 }

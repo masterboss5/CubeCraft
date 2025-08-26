@@ -52,6 +52,7 @@ public class Window {
 
         GLFW.glfwMakeContextCurrent(this.getPointer());
         GLFW.glfwShowWindow(this.getPointer());
+        GLFW.glfwSwapInterval(0);
         GLFW.glfwSetInputMode(this.getPointer(), GLFW.GLFW_RAW_MOUSE_MOTION, GLFW.GLFW_TRUE);
     }
 
