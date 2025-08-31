@@ -1,8 +1,10 @@
 package graphic;
 
+import entity.Entity;
 import entity.model.EntityPartName;
+import gl.VertexBuffer;
+import gl.glBufferUsage;
 import org.joml.Matrix4f;
-import util.MathUtils;
 
 import java.util.Objects;
 
@@ -14,11 +16,79 @@ public class ModelPart {
     private float rotX;
     private float rotY;
     private float rotZ;
-    private float scale;
+    private float scaleX = 1f;
+    private float scaleY = 1f;
+    private float scaleZ = 1f;
     private final Cuboid cuboid = new Cuboid(1f);
-    private final ModelPartTextureData textureData;
+    private final ModelPartTexture textureData;
+    public static final VertexBuffer UNIFORM_CUBE_VERTEX_BUFFER;
 
-    public ModelPart(EntityPartName name, ModelPartTextureData textureData) {
+    static {
+        UNIFORM_CUBE_VERTEX_BUFFER = new VertexBuffer(glBufferUsage.GL_STATIC_DRAW)
+                .vertexes(new float[]
+                        {
+                                // TOP (+Y)
+                                -0.5f, 0.5f, -0.5f,
+                                -0.5f, 0.5f, 0.5f,
+                                0.5f, 0.5f, 0.5f,
+                                0.5f, 0.5f, -0.5f,
+
+                                // BOTTOM (−Y)
+                                -0.5f, -0.5f, 0.5f,
+                                -0.5f, -0.5f, -0.5f,
+                                0.5f, -0.5f, -0.5f,
+                                0.5f, -0.5f, 0.5f,
+
+                                // FRONT (+Z)
+                                -0.5f, 0.5f, 0.5f,
+                                -0.5f, -0.5f, 0.5f,
+                                0.5f, -0.5f, 0.5f,
+                                0.5f, 0.5f, 0.5f,
+
+                                // BACK (−Z)
+                                0.5f, 0.5f, -0.5f,
+                                0.5f, -0.5f, -0.5f,
+                                -0.5f, -0.5f, -0.5f,
+                                -0.5f, 0.5f, -0.5f,
+
+                                // LEFT (−X)
+                                -0.5f, 0.5f, -0.5f,
+                                -0.5f, -0.5f, -0.5f,
+                                -0.5f, -0.5f, 0.5f,
+                                -0.5f, 0.5f, 0.5f,
+
+                                // RIGHT (+X)
+                                0.5f, 0.5f, 0.5f,
+                                0.5f, -0.5f, 0.5f,
+                                0.5f, -0.5f, -0.5f,
+                                0.5f, 0.5f, -0.5f
+                        }).indices(new int[]{
+                        0, 1, 2, 2, 3, 0,
+                        4, 5, 6, 6, 7, 4,
+                        8, 9, 10, 10, 11, 8,
+                        12, 13, 14, 14, 15, 12,
+                        16, 17, 18, 18, 19, 16,
+                        20, 21, 22, 22, 23, 20
+                });
+
+        UNIFORM_CUBE_VERTEX_BUFFER.build();
+        UNIFORM_CUBE_VERTEX_BUFFER.createNewVertexBufferObject(new float[] {
+                // Top
+                0f, 0f,  0f, 1f,  1f, 1f,  1f, 0f,
+                // Bottom
+                0f, 0f,  0f, 1f,  1f, 1f,  1f, 0f,
+                // Front
+                0f, 0f,  0f, 1f,  1f, 1f,  1f, 0f,
+                // Back
+                0f, 0f,  0f, 1f,  1f, 1f,  1f, 0f,
+                // Left
+                0f, 0f,  0f, 1f,  1f, 1f,  1f, 0f,
+                // Right
+                0f, 0f,  0f, 1f,  1f, 1f,  1f, 0f
+        }, (byte) 2, false, glBufferUsage.GL_STATIC_DRAW);
+    }
+
+    public ModelPart(EntityPartName name, ModelPartTexture textureData) {
         this.name = name;
         this.textureData = textureData;
     }
@@ -31,29 +101,21 @@ public class ModelPart {
         return this;
     }
 
-    public ModelPart size(float sizeX, float sizeY, float sizeZ) {
-        this.cuboid.sizeX = sizeX;
-        this.cuboid.sizeY = sizeY;
-        this.cuboid.sizeZ = sizeZ;
+    public ModelPart scale(float scaleX, float scaleY, float scaleZ) {
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+        this.scaleZ = scaleZ;
 
         return this;
     }
 
-    public ModelPart size(float size) {
-        this.cuboid.sizeX = size;
-        this.cuboid.sizeY = size;
-        this.cuboid.sizeZ = size;
-
-        return this;
-    }
-
-/*    public ModelPart rotate(double x, double y, double z) {
+    public ModelPart rotate(float x, float y, float z) {
         this.rotX += x;
         this.rotY += y;
         this.rotZ += z;
 
         return this;
-    }*/
+    }
 
     public double getPivotX() {
         return pivotX;
@@ -87,17 +149,29 @@ public class ModelPart {
         return cuboid;
     }
 
-    public ModelPartTextureData getTextureData() {
+    public ModelPartTexture getTextureData() {
         return textureData;
     }
 
-    public Matrix4f getModelTransformationMatrix4f() {
+    public Matrix4f getModelTransformationMatrix4f(Entity entity) {
         return new Matrix4f().identity()
+
+                // 1. Translate to entity center
+                .translate((float) entity.getX(), (float) entity.getY(), (float) entity.getZ())
+
+                // 2. Rotate around entity center (orbit effect)
+                .rotateY((float) -entity.getRotY())
+
+                // 3. Offset part outward from center (e.g. arm to the side)
                 .translate(this.pivotX, this.pivotY, this.pivotZ)
-                .rotate((float) Math.toRadians(this.rotX), 1, 0, 0)
-                .rotate((float) Math.toRadians(this.rotY), 0, 1, 0)
-                .rotate((float) Math.toRadians(this.rotZ), 0, 0, 1)
-                .scale(this.scale);
+
+                // 4. Apply part-local rotation
+                .rotateX((float) Math.toRadians(this.rotX))
+                .rotateY((float) Math.toRadians(this.rotY))
+                .rotateZ((float) Math.toRadians(this.rotZ))
+
+                // 5. Apply part-local scale
+                .scale(this.scaleX, this.scaleY, this.scaleZ);
     }
 
     @Override

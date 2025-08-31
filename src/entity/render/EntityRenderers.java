@@ -3,6 +3,7 @@ package entity.render;
 import entity.CubeEntity;
 import entity.Entity;
 import entity.EntityType;
+import entity.PlayerEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class EntityRenderers {
 
     public static void loadEntityRenderers() {
         register(EntityType.CUBE_ENTITY, CubeEntityRenderer::new);
+        register(EntityType.PLAYER_ENTITY, PlayerEntityRenderer::new);
     }
 
     private static <T extends Entity> void register(EntityType<T> entityType, EntityRenderFactory<T> entityRendererFactory) {

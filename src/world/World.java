@@ -2,13 +2,12 @@ package world;
 
 import block.Block;
 import block.BlockPosition;
-import block.Blocks;
 import entity.Entity;
 import entity.EntityType;
 import entity.model.EntityModel;
 import entity.render.EntityRenderDispatch;
 import graphic.ModelPart;
-import org.joml.Matrix4f;
+import graphic.ModelPartInstance;
 import render.RenderSystem;
 
 import java.util.*;
@@ -18,6 +17,7 @@ public class World {
     private final WorldEntityManager entityManager = new WorldEntityManager(this);
     private final EntityRenderDispatch entityRenderDispatch = new EntityRenderDispatch();
     private Entity entity = EntityType.CUBE_ENTITY.create(0, 0, 0, this);
+    private Entity player = EntityType.PLAYER_ENTITY.create(0, 0, 0, this);
 
     public World() {
     }
@@ -57,6 +57,7 @@ public class World {
 
     public void generateEntities() {
         this.addEntity(entity);
+        this.addEntity(player);
         this.entityRenderDispatch.reload();
     }
 
@@ -70,17 +71,13 @@ public class World {
             visibleChunk.render();
         }
 
-        Map<ModelPart, List<Matrix4f>> instances = new HashMap<>();
+        List<ModelPartInstance> parts = new ArrayList<>();
 
         for (Entity entity : this.entityManager.getEntities()) {
             EntityModel<?> model = EntityRenderDispatch.getRenderer(entity.getType()).getModel();
-
-            for (ModelPart part : model.getParts()) {
-                instances.putIfAbsent(part, new ArrayList<>());
-                instances.get(part).add(part.getModelTransformationMatrix4f());
-            }
+            parts.addAll(model.getPartInstances(entity));
         }
 
-        RenderSystem.renderEntityInstanced(instances);
+        RenderSystem.renderEntityInstanced(parts);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class WorldChunkManager {
     private static final ArrayList<Chunk> CHUNK_CACHE = new ArrayList<>();
-    private static final int RENDER_DISTANCE = 15;
+    private static final int RENDER_DISTANCE = 16;
     private final World world;
     public static final ChunkMesher CHUNK_MESHER = new IntegratedChunkMesher();
 
@@ -32,7 +32,7 @@ public class WorldChunkManager {
 
         for (int x = 0; x < Chunk.CHUNK_WIDTH; x++) {
             for (int z = 0; z < Chunk.CHUNK_WIDTH; z++) {
-                for (int y = 0; y < 5; y++) {
+                for (int y = 0; y < 2; y++) {
                     int worldX = chunkPosition.getX() * Chunk.CHUNK_WIDTH + x;
                     int worldZ = chunkPosition.getZ() * Chunk.CHUNK_WIDTH + z;
 

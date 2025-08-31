@@ -1,5 +1,6 @@
 package util;
 
+import entity.Entity;
 import graphic.Camera;
 import io.Window;
 import org.joml.Matrix4f;
@@ -43,13 +44,25 @@ public class MathUtils {
         Matrix4f viewMatrix = new Matrix4f().identity();
 
         // Apply pitch (rotation.x) first, then yaw (rotation.y)
-        viewMatrix.rotate(camera.getRotation().x, new Vector3f(1, 0, 0)); // Pitch (X axis)
-        viewMatrix.rotate(camera.getRotation().y, new Vector3f(0, 1, 0)); // Yaw (Y axis)
-
-        // Translate to the negative camera position
+        viewMatrix.rotate(camera.getRotation().x, new Vector3f(1, 0, 0));
+        viewMatrix.rotate(camera.getRotation().y, new Vector3f(0, 1, 0));
         Vector3f cameraPos = camera.getPosition();
         viewMatrix.translate(new Vector3f(-cameraPos.x, -cameraPos.y, -cameraPos.z));
 
         return viewMatrix;
+    }
+
+    public static Matrix4f createThirdPersonView(Entity entity) {
+        float distance = 3.5f;
+        float height = 1.5f;
+        float yawRad = (float) Math.toRadians(entity.getRotY());
+        float camX = (float) entity.getX() - (float) Math.sin(yawRad) * distance;
+        float camY = (float) entity.getY() + height;
+        float camZ = (float) entity.getZ() - (float) Math.cos(yawRad) * distance;
+        Vector3f cameraPos = new Vector3f(camX, camY, camZ);
+        Vector3f targetPos = new Vector3f((float) entity.getX(), (float) entity.getY() + 1.0f, (float) entity.getZ());
+        Vector3f up = new Vector3f(0, 1, 0);
+
+        return new Matrix4f().lookAt(cameraPos, targetPos, up);
     }
 }

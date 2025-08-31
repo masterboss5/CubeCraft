@@ -43,10 +43,8 @@ public record BlockFaceMap(
     private static float[] centerPointsTo0(float[] points) {
         float[] copy = Arrays.copyOf(points, points.length);
 
-        for (int i = 0; i < copy.length; i += 3) {
+        for (int i = 0; i < copy.length; i = i + 1) {
             copy[i] = copy[i] + 0.5f;
-            copy[i + 1] = copy[i + 1] + 0.5f;
-            copy[i + 2] = copy[i + 2] + 0.5f;
         }
 
         return copy;

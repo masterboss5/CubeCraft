@@ -125,4 +125,10 @@ public class VertexBuffer {
     public glBufferUsage getBufferUsage() {
         return bufferUsage;
     }
+
+    public void free() {
+        this.indexBufferObject.delete();
+        this.vertexBufferObjects.forEach((integer, vertexBufferObject) -> vertexBufferObject.delete());
+        GL46.glDeleteVertexArrays(this.getID());
+    }
 }

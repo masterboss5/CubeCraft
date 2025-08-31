@@ -133,6 +133,10 @@ public class Chunk {
         isLoaded = loaded;
     }
 
+    public ChunkMesh getMesh() {
+        return mesh;
+    }
+
     public UUID getID() {
         return ID;
     }

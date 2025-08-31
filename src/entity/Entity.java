@@ -86,11 +86,19 @@ public abstract class Entity {
         return rotX;
     }
 
-    public abstract boolean hasTicks();
+    public boolean hasTicks() {
+        return false;
+    };
 
     public void setPosition(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    public void setRotation(double rotX, double rotY, double rotZ) {
+        this.rotX = rotX;
+        this.rotY = rotY;
+        this.rotZ = rotZ;
     }
 }

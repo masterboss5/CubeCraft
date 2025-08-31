@@ -24,10 +24,6 @@ public abstract class Model {
         GL46.glUseProgram(0);
     }
 
-    public void tickShaderProgram() {
-        this.shaderProgram.tickShaderProgram();
-    }
-
     public Vector3f getRotation() {
         return rotation;
     }

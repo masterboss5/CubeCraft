@@ -9,6 +9,7 @@ public class EntityType<T extends Entity> {
     private final EntityFactory<T> factory;
 
     public static final EntityType<CubeEntity> CUBE_ENTITY = Builder.builder(CubeEntity::new).name("cube").build();
+    public static final EntityType<PlayerEntity> PLAYER_ENTITY = Builder.builder(PlayerEntity::new).name("player").build();
 
     public EntityType(String name, EntityFactory<T> factory) {
         this.name = name;

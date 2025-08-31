@@ -2,6 +2,7 @@ package entity.model;
 
 import entity.Entity;
 import graphic.ModelPart;
+import graphic.ModelPartInstance;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -42,6 +43,15 @@ public abstract class EntityModel<T extends Entity> {
 
     public List<ModelPart> getParts() {
         return parts;
+    }
+
+    public List<ModelPartInstance> getPartInstances(Entity entity) {
+        List<ModelPartInstance> instances = new ArrayList<>();
+        parts.forEach((part) -> {
+            instances.add(new ModelPartInstance(part, entity));
+        });
+
+        return instances;
     }
 
     public abstract void appendRootPart();

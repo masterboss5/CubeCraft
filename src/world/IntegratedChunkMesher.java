@@ -19,6 +19,10 @@ public class IntegratedChunkMesher implements ChunkMesher {
         List<Integer> faceIndexes = new ArrayList<>();
         List<Float> uvCoordinates = new ArrayList<>();
 
+        if (chunk.getMesh() != null) {
+            chunk.getMesh().getVertexBuffer().free();
+        }
+
         for (int x = 0; x < Chunk.CHUNK_WIDTH; x++) {
             for (int y = 0; y < Chunk.CHUNK_HEIGHT; y++) {
                 for (int z = 0; z < Chunk.CHUNK_WIDTH; z++) {

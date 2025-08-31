@@ -4,10 +4,12 @@ import entity.Entity;
 import gl.VertexBuffer;
 import graphic.Camera;
 import graphic.ModelPart;
+import graphic.ModelPartInstance;
 import io.Window;
 import json.TextureArrays;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.ARBBindlessTexture;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
 import registry.Registries;
@@ -17,7 +19,6 @@ import world.Chunk;
 import world.ChunkMesh;
 
 import java.util.List;
-import java.util.Map;
 
 public class RenderSystem {
     private static Matrix4f projectionMatrix;
@@ -42,7 +43,6 @@ public class RenderSystem {
 
     public static void renderChunk(ChunkMesh chunkMesh, Chunk chunk) {
         chunkMesh.startShaderProgram();
-        chunkMesh.getShaderProgram().tickShaderProgram();
         chunkMesh.getVertexBuffer().bindAll();
 
         chunkMesh.getShaderProgram().setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
@@ -60,7 +60,6 @@ public class RenderSystem {
 
     public static void renderEntity(VertexBuffer vertexBuffer, Entity entity) {
         GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
-        ShaderPrograms.ENTITY_SHADER_PROGRAM.tickShaderProgram();
         vertexBuffer.bindAll();
 
         ShaderPrograms.ENTITY_SHADER_PROGRAM.setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
@@ -76,8 +75,87 @@ public class RenderSystem {
         GL46.glUseProgram(0);
     }
 
-    public static void renderEntityInstanced(Map<ModelPart, List<Matrix4f>> instances) {
+/*    public static void renderEntityInstanced(List<ModelPart> parts) {
         GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
         ShaderPrograms.ENTITY_SHADER_PROGRAM.tickShaderProgram();
+
+        // Bind shared unit cube VAO
+        GL46.glBindVertexArray(unitCubeVAO);
+
+        ShaderPrograms.ENTITY_SHADER_PROGRAM.setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
+
+        // Prepare transform matrix array
+        float[] matrices = new float[16 * parts.size()];
+        for (int i = 0; i < parts.size(); i++) {
+            parts.get(i).getModelTransformationMatrix4f().get(matrices, i * 16);
+        }
+
+        // Upload transform data to GPU
+        GL46.glBindBuffer(GL46.GL_ARRAY_BUFFER, instanceTransformVBO);
+        GL46.glBufferData(GL46.GL_ARRAY_BUFFER, matrices, GL46.GL_DYNAMIC_DRAW);
+
+        // Bind transform attributes (mat4 = 4 vec4s)
+        int baseLocation = 3;
+        int stride = 64;
+
+        for (int i = 0; i < 4; i++) {
+            GL46.glEnableVertexAttribArray(baseLocation + i);
+            GL46.glVertexAttribPointer(baseLocation + i, 4, GL46.GL_FLOAT, false, stride, i * 16);
+            GL46.glVertexAttribDivisor(baseLocation + i, 1);
+        }
+
+        // Draw all instances using shared cube geometry
+        GL46.glDrawElementsInstanced(
+                GL46.GL_TRIANGLES,
+                indexCount, // ← use the correct index count from unit cube setup
+                GL46.GL_UNSIGNED_INT,
+                0,
+                parts.size()
+        );
+
+        GL46.glBindVertexArray(0);
+        GL46.glUseProgram(0);
+    }*/
+
+    public static void renderEntityInstanced(List<ModelPartInstance> parts) {
+        GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
+        ModelPart.UNIFORM_CUBE_VERTEX_BUFFER.bindAll();
+        ShaderPrograms.ENTITY_SHADER_PROGRAM.setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
+
+        long[] texturePointers = new long[parts.size() * 24];
+        for (int i = 0; i < parts.size(); i++) {
+            System.arraycopy(parts.get(i).modelPart().getTextureData().toLongArray(), 0, texturePointers, i * 24, 24);
+        }
+
+        GL46.glBindBuffer(GL46.GL_ARRAY_BUFFER, GL46.glGenBuffers());
+        GL46.glBufferData(GL46.GL_ARRAY_BUFFER, texturePointers, GL46.GL_DYNAMIC_DRAW);
+        GL46.glVertexAttribLPointer(2, 1, ARBBindlessTexture.GL_UNSIGNED_INT64_ARB, 0, 0);
+        GL46.glEnableVertexAttribArray(2);
+
+        float[] matrices = new float[16 * parts.size()];
+        for (int i = 0; i < parts.size(); i++) {
+            parts.get(i).modelPart().getModelTransformationMatrix4f(parts.get(i).entity()).get(matrices, i * 16);
+        }
+
+        GL46.glBindBuffer(GL46.GL_ARRAY_BUFFER, GL46.glGenBuffers());
+        GL46.glBufferData(GL46.GL_ARRAY_BUFFER, matrices, GL46.GL_DYNAMIC_DRAW);
+
+        int baseLocation = 3;
+        for (int i = 0; i < 4; i++) {
+            GL46.glEnableVertexAttribArray(baseLocation + i);
+            GL46.glVertexAttribPointer(baseLocation + i, 4, GL46.GL_FLOAT, false, 64, i * 16);
+            GL46.glVertexAttribDivisor(baseLocation + i, 1);
+        }
+
+        GL46.glDrawElementsInstanced(
+                GL46.GL_TRIANGLES,
+                36,
+                GL46.GL_UNSIGNED_INT,
+                0,
+                parts.size()
+        );
+
+        GL46.glBindVertexArray(0);
+        GL46.glUseProgram(0);
     }
 }
