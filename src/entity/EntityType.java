@@ -1,5 +1,7 @@
 package entity;
 
+import entity.model.EntityModel;
+import entity.model.EntityModels;
 import world.World;
 
 import java.util.Objects;
@@ -7,13 +9,15 @@ import java.util.Objects;
 public class EntityType<T extends Entity> {
     private final String name;
     private final EntityFactory<T> factory;
+    private final EntityModel<?> model;
 
-    public static final EntityType<CubeEntity> CUBE_ENTITY = Builder.builder(CubeEntity::new).name("cube").build();
-    public static final EntityType<PlayerEntity> PLAYER_ENTITY = Builder.builder(PlayerEntity::new).name("player").build();
+    public static final EntityType<CubeEntity> CUBE_ENTITY = Builder.builder(CubeEntity::new).name("cube").model(EntityModels.CUBE_ENTITY_MODEL).build();
+    public static final EntityType<PlayerEntity> PLAYER_ENTITY = Builder.builder(PlayerEntity::new).name("player").model(EntityModels.PLAYER_ENTITY_MODEL).build();
 
-    public EntityType(String name, EntityFactory<T> factory) {
+    public EntityType(String name, EntityFactory<T> factory, EntityModel<?> model) {
         this.name = name;
         this.factory = factory;
+        this.model = model;
     }
 
     public T create(double x, double y, double z, World world) {
@@ -32,9 +36,22 @@ public class EntityType<T extends Entity> {
         return Objects.hashCode(name);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public EntityFactory<T> getFactory() {
+        return factory;
+    }
+
+    public EntityModel<?> getModel() {
+        return model;
+    }
+
     private static class Builder<T extends Entity> {
         private String name;
         private final EntityFactory<T> factory;
+        private EntityModel<?> model;
 
         private Builder(EntityFactory<T> factory) {
             this.factory = factory;
@@ -44,14 +61,20 @@ public class EntityType<T extends Entity> {
             return new Builder<>(factory);
         }
 
-        private Builder<T> name(String name) {
+        public Builder<T> name(String name) {
             this.name = name;
 
             return this;
         }
 
+        public Builder<T> model(EntityModel<T> model) {
+            this.model = model;
+
+            return this;
+        }
+
         private EntityType<T> build() {
-            return new EntityType<>(this.name, this.factory);
+            return new EntityType<>(this.name, this.factory, this.model);
         }
     }
 }

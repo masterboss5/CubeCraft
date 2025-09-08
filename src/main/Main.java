@@ -1,6 +1,7 @@
 package main;
 
 import block.*;
+import entity.model.EntityModels;
 import entity.render.EntityRenderers;
 import gl.glDebugger;
 import graphic.Camera;
@@ -87,13 +88,14 @@ public class Main {
         Textures.loadTextures();
         Models.loadModels();
         Blocks.loadBlocks();
-        EntityRenderers.loadEntityRenderers();
         TextureArrays.loadTextureArrays();
         TEXTURE_MANAGER = new BindlessTextureManager("Main Texture Manager");
+        EntityRenderers.loadEntityRenderers();
         this.world = new World();
         this.world.loadWorld();
         camera = new Camera(this.window);
         RenderSystem.init(this.window, camera);
+        EntityModels.loadEntityModels();
 
         glDebugger.init();
     }

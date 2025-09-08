@@ -74,7 +74,7 @@ public class World {
         List<ModelPartInstance> parts = new ArrayList<>();
 
         for (Entity entity : this.entityManager.getEntities()) {
-            EntityModel<?> model = EntityRenderDispatch.getRenderer(entity.getType()).getModel();
+            EntityModel<?> model = entity.getType().getModel();
             parts.addAll(model.getPartInstances(entity));
         }
 

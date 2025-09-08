@@ -4,25 +4,24 @@ import org.joml.Vector3d;
 import org.joml.Vector3f;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 public class Box {
-    public static final Box NULL_BOX = new Box(0, 0, 0, 0, 0, 0);
-    private final double minX;
-    private final double minY;
-    private final double minZ;
-    private final double maxX;
-    private final double maxY;
-    private final double maxZ;
+    public static final Supplier<Box> NULL_BOX = () -> new Box(0, 0, 0, 0, 0, 0);
+    private double minX;
+    private double minY;
+    private double minZ;
+    private double maxX;
+    private double maxY;
+    private double maxZ;
 
     private static boolean validatePoints(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         if (minX >= maxX) {
             return false;
         }
-
         if (minY >= maxY) {
             return false;
         }
-
         if (minZ >= maxZ) {
             return false;
         }
@@ -52,15 +51,13 @@ public class Box {
         return width * height * length;
     }
 
-    public Box offset(Vector3f vector3f) {
-        return new Box(
-                this.minX + vector3f.x,
-                this.minY + vector3f.y,
-                this.minZ + vector3f.z,
-                this.maxX + vector3f.x,
-                this.maxY + vector3f.y,
-                this.maxZ + vector3f.z
-        );
+    public void offset(Vector3f vector3f) {
+        this.minX += vector3f.x;
+        this.minY += vector3f.y;
+        this.minZ += vector3f.z;
+        this.maxX += vector3f.x;
+        this.maxY += vector3f.y;
+        this.maxZ += vector3f.z;
     }
 
     public Vector3d getCenter() {
@@ -100,15 +97,51 @@ public class Box {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || this.getClass() != o.getClass()) return false;
-        Box box = (Box) o;
+    public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) return false;
+        Box box = (Box) other;
         return Double.compare(this.minX, box.minX) == 0 && Double.compare(this.minY, box.minY) == 0 && Double.compare(this.minZ, box.minZ) == 0 && Double.compare(this.maxX, box.maxX) == 0 && Double.compare(this.maxY, box.maxY) == 0 && Double.compare(this.maxZ, box.maxZ) == 0;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(this.minX, this.minY, this.minZ, this.maxX, this.maxY, this.maxZ);
+    }
+
+    public Box copy() {
+        return new Box(this.minX, this.minY, this.minZ, this.maxX, this.maxY, this.maxZ);
+    }
+
+    public void reset() {
+        this.minX = 0;
+        this.minY = 0;
+        this.minZ = 0;
+        this.maxX = 0;
+        this.maxY = 0;
+        this.maxZ = 0;
+    }
+
+    public Box union(Box other) {
+        return new Box(
+                Math.min(this.minX, other.minX),
+                Math.min(this.minY, other.minY),
+                Math.min(this.minZ, other.minZ),
+                Math.max(this.maxX, other.maxX),
+                Math.max(this.maxY, other.maxY),
+                Math.max(this.maxZ, other.maxZ)
+        );
+    }
+
+    public double getWidthX() {
+        return maxX - minX;
+    }
+
+    public double getHeightY() {
+        return maxY - minY;
+    }
+
+    public double getDepthZ() {
+        return maxZ - minZ;
     }
 
     public double getMinX() {

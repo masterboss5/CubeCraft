@@ -40,12 +40,12 @@ public record ModelPartTexture(
 
     public long[] toLongArray() {
         return new long[] {
-                topPointer, topPointer, topPointer, topPointer,
-                bottomPointer, bottomPointer, bottomPointer, bottomPointer,
-                frontPointer, frontPointer, frontPointer, frontPointer,
-                backPointer, backPointer, backPointer, backPointer,
-                leftPointer, leftPointer, leftPointer, leftPointer,
-                rightPointer, rightPointer, rightPointer, rightPointer
+                topPointer,
+                bottomPointer,
+                frontPointer,
+                backPointer,
+                leftPointer,
+                rightPointer
         };
     }
 }

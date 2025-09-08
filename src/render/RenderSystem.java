@@ -117,20 +117,19 @@ public class RenderSystem {
         GL46.glUseProgram(0);
     }*/
 
+    private static int textureShaderStorageBufferObjectID = GL46.glGenBuffers();
     public static void renderEntityInstanced(List<ModelPartInstance> parts) {
         GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
         ModelPart.UNIFORM_CUBE_VERTEX_BUFFER.bindAll();
         ShaderPrograms.ENTITY_SHADER_PROGRAM.setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
 
-        long[] texturePointers = new long[parts.size() * 24];
+        long[] texturePointers = new long[parts.size() * 6];
         for (int i = 0; i < parts.size(); i++) {
-            System.arraycopy(parts.get(i).modelPart().getTextureData().toLongArray(), 0, texturePointers, i * 24, 24);
+            System.arraycopy(parts.get(i).modelPart().getTextureData().toLongArray(), 0, texturePointers, i * 6, 6);
         }
 
-        GL46.glBindBuffer(GL46.GL_ARRAY_BUFFER, GL46.glGenBuffers());
-        GL46.glBufferData(GL46.GL_ARRAY_BUFFER, texturePointers, GL46.GL_DYNAMIC_DRAW);
-        GL46.glVertexAttribLPointer(2, 1, ARBBindlessTexture.GL_UNSIGNED_INT64_ARB, 0, 0);
-        GL46.glEnableVertexAttribArray(2);
+        GL46.glBindBuffer(GL46.GL_SHADER_STORAGE_BUFFER, textureShaderStorageBufferObjectID);
+        GL46.glBufferData(GL46.GL_SHADER_STORAGE_BUFFER, texturePointers, GL46.GL_DYNAMIC_DRAW);
 
         float[] matrices = new float[16 * parts.size()];
         for (int i = 0; i < parts.size(); i++) {
@@ -139,6 +138,7 @@ public class RenderSystem {
 
         GL46.glBindBuffer(GL46.GL_ARRAY_BUFFER, GL46.glGenBuffers());
         GL46.glBufferData(GL46.GL_ARRAY_BUFFER, matrices, GL46.GL_DYNAMIC_DRAW);
+        GL46.glBindBufferBase(GL46.GL_SHADER_STORAGE_BUFFER, 0, textureShaderStorageBufferObjectID);
 
         int baseLocation = 3;
         for (int i = 0; i < 4; i++) {
