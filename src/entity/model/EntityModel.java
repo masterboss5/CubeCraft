@@ -3,6 +3,7 @@ package entity.model;
 import entity.Entity;
 import graphic.ModelPart;
 import graphic.ModelPartInstance;
+import util.Box;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -41,7 +42,7 @@ public abstract class EntityModel<T extends Entity> {
         return root;
     }
 
-    public List<ModelPart> getParts() {
+    public List<ModelPart> getModelParts() {
         return parts;
     }
 
@@ -52,6 +53,29 @@ public abstract class EntityModel<T extends Entity> {
         });
 
         return instances;
+    }
+
+    public Box getEntityBoundingBox() {
+        double minX = Float.POSITIVE_INFINITY, minY = Float.POSITIVE_INFINITY, minZ = Float.POSITIVE_INFINITY;
+        double maxX = Float.NEGATIVE_INFINITY, maxY = Float.NEGATIVE_INFINITY, maxZ = Float.NEGATIVE_INFINITY;
+
+        for (ModelPart part : this.getModelParts()) {
+            double localMinX = part.getPivotX();
+            double localMinY = part.getPivotY();
+            double localMinZ = part.getPivotZ();
+            double localMaxX = part.getPivotX() + part.getScaleX();
+            double localMaxY = part.getPivotY() + part.getScaleY();
+            double localMaxZ = part.getPivotZ() + part.getScaleZ();
+
+            minX = Math.min(minX, localMinX);
+            minY = Math.min(minY, localMinY);
+            minZ = Math.min(minZ, localMinZ);
+            maxX = Math.max(maxX, localMaxX);
+            maxY = Math.max(maxY, localMaxY);
+            maxZ = Math.max(maxZ, localMaxZ);
+        }
+
+        return new Box(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
     public abstract void appendRootPart();

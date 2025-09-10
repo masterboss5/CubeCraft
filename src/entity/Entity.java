@@ -46,6 +46,7 @@ public abstract class Entity {
     }
 
     public void tick() {
+//        this.hitbox.setPosition();
     }
 
     public void destroy() {

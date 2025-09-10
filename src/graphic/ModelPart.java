@@ -145,6 +145,18 @@ public class ModelPart {
         return name;
     }
 
+    public float getScaleX() {
+        return scaleX;
+    }
+
+    public float getScaleY() {
+        return scaleY;
+    }
+
+    public float getScaleZ() {
+        return scaleZ;
+    }
+
     public Cuboid getCuboid() {
         return cuboid;
     }

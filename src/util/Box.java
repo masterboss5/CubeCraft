@@ -51,6 +51,19 @@ public class Box {
         return width * height * length;
     }
 
+    public void setPosition(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+        if (!validatePoints(minX, minY, minZ, maxX, maxY, maxZ)) {
+            throw new IllegalArgumentException("box points are incorrect");
+        }
+
+        this.minX = minX;
+        this.minY = minY;
+        this.minZ = minZ;
+        this.maxX = maxX;
+        this.maxY = maxY;
+        this.maxZ = maxZ;
+    }
+
     public void offset(Vector3f vector3f) {
         this.minX += vector3f.x;
         this.minY += vector3f.y;

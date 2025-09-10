@@ -4,6 +4,7 @@ import entity.PlayerEntity;
 import graphic.ModelPart;
 import graphic.ModelPartTexture;
 import texture.Texture;
+import util.Box;
 
 public class PlayerEntityModel extends EntityModel<PlayerEntity> {
     @Override
@@ -41,7 +42,7 @@ public class PlayerEntityModel extends EntityModel<PlayerEntity> {
                         new Texture("resources\\textures\\entity\\player\\player_head_left.png"),
                         new Texture("resources\\textures\\entity\\player\\player_head_right.png")
                 )
-        ).pivot(0, 0.65f, 0).scale(0.55f, 0.55f, 0.55f).rotate(0, 0, 0));
+        ).pivot(0, 0.65f, 0).scale(0.55f, 0.55f, 0.55f));
 
         this.appendModelPart(new ModelPart(
                 EntityPartName.LEFT_ARM,
