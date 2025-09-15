@@ -2,11 +2,14 @@ package block;
 
 import graphic.BlockModel;
 import render.Renderable;
+import util.Box;
+import util.Hitbox;
 
 import java.util.Objects;
 
 public abstract class Block implements Renderable {
-    final BlockModel model;
+    private final Hitbox hitbox = new Hitbox(new Box(1, 1, 1));
+    private final BlockModel model;
 
     protected Block(BlockModel model) {
         this.model = model;

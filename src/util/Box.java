@@ -15,14 +15,21 @@ public class Box {
     private double maxY;
     private double maxZ;
 
+    public Box(double maxX, double maxY, double mazZ) {
+        this(
+                0, 0, 0,
+                maxX, maxY, mazZ
+        );
+    }
+
     private static boolean validatePoints(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
-        if (minX >= maxX) {
+        if (minX > maxX) {
             return false;
         }
-        if (minY >= maxY) {
+        if (minY > maxY) {
             return false;
         }
-        if (minZ >= maxZ) {
+        if (minZ > maxZ) {
             return false;
         }
 
@@ -40,7 +47,6 @@ public class Box {
         this.maxX = maxX;
         this.maxY = maxY;
         this.maxZ = maxZ;
-
     }
 
     public double getArea() {
@@ -85,7 +91,7 @@ public class Box {
         );
     }
 
-    public boolean collides(Box otherBox) {
+    public boolean intersects(Box otherBox) {
         return this.maxX > otherBox.minX && this.minX < otherBox.maxX &&
                 this.maxY > otherBox.minY && this.minY < otherBox.maxY &&
                 this.maxZ > otherBox.minZ && this.minZ < otherBox.maxZ;
@@ -97,10 +103,10 @@ public class Box {
                 point.z >= minZ && point.z <= maxZ;
     }
 
-    public static boolean collidesWith(Box[] otherBoxes) {
+    public static boolean intersectsWith(Box[] otherBoxes) {
         for (int i = 0; i < otherBoxes.length; i++) {
             for (int j = i + 1; j < otherBoxes.length; j++) {
-                if (otherBoxes[i].collides(otherBoxes[j])) {
+                if (otherBoxes[i].intersects(otherBoxes[j])) {
                     return true;
                 }
             }

@@ -15,7 +15,6 @@ public class PlayerEntity extends Entity {
 
     @Override
     public void tick() {
-        super.tick();
         this.setPosition(
                 0,
                 25,
@@ -26,5 +25,6 @@ public class PlayerEntity extends Entity {
                 Main.camera.getRotationY(),
                 Main.camera.getRotationZ()
         );*/
+        super.tick();
     }
 }

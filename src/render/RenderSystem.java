@@ -2,6 +2,7 @@ package render;
 
 import entity.Entity;
 import gl.VertexBuffer;
+import gl.glBufferUsage;
 import graphic.Camera;
 import graphic.ModelPart;
 import graphic.ModelPartInstance;
@@ -14,6 +15,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46;
 import registry.Registries;
 import shader.ShaderPrograms;
+import util.Box;
 import util.MathUtils;
 import world.Chunk;
 import world.ChunkMesh;
@@ -117,7 +119,8 @@ public class RenderSystem {
         GL46.glUseProgram(0);
     }*/
 
-    private static int textureShaderStorageBufferObjectID = GL46.glGenBuffers();
+    private static final int textureShaderStorageBufferObjectID = GL46.glGenBuffers();
+
     public static void renderEntityInstanced(List<ModelPartInstance> parts) {
         GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
         ModelPart.UNIFORM_CUBE_VERTEX_BUFFER.bindAll();
@@ -157,5 +160,85 @@ public class RenderSystem {
 
         GL46.glBindVertexArray(0);
         GL46.glUseProgram(0);
+    }
+
+    public static void renderHitbox(Box box, Entity entity) {
+        float minX = (float) box.getMinX();
+        float minY = (float) box.getMinY();
+        float minZ = (float) box.getMinZ();
+        float maxX = (float) box.getMaxX();
+        float maxY = (float) box.getMaxY();
+        float maxZ = (float) box.getMaxZ();
+
+        float[] vertices = new float[] {
+                // TOP (+Y)
+                minX, maxY, minZ, // -X +Y -Z
+                minX, maxY, maxZ, // -X +Y +Z
+                maxX, maxY, maxZ, // +X +Y +Z
+                maxX, maxY, minZ, // +X +Y -Z
+
+                // BOTTOM (−Y)
+                minX, minY, maxZ, // -X -Y +Z
+                minX, minY, minZ, // -X -Y -Z
+                maxX, minY, minZ, // +X -Y -Z
+                maxX, minY, maxZ, // +X -Y +Z
+
+                // FRONT (+Z)
+                minX, maxY, maxZ, // -X +Y +Z
+                minX, minY, maxZ, // -X -Y +Z
+                maxX, minY, maxZ, // +X -Y +Z
+                maxX, maxY, maxZ, // +X +Y +Z
+
+                // BACK (−Z)
+                maxX, maxY, minZ, // +X +Y -Z
+                maxX, minY, minZ, // +X -Y -Z
+                minX, minY, minZ, // -X -Y -Z
+                minX, maxY, minZ, // -X +Y -Z
+
+                // LEFT (−X)
+                minX, maxY, minZ, // -X +Y -Z
+                minX, minY, minZ, // -X -Y -Z
+                minX, minY, maxZ, // -X -Y +Z
+                minX, maxY, maxZ, // -X +Y +Z
+
+                // RIGHT (+X)
+                maxX, maxY, maxZ, // +X +Y +Z
+                maxX, minY, maxZ, // +X -Y +Z
+                maxX, minY, minZ, // +X -Y -Z
+                maxX, maxY, minZ  // +X +Y -Z
+        };
+        int[] indices = new int[] {
+                0, 1, 2, 2, 3, 0,       // top
+                4, 5, 6, 6, 7, 4,       // bottom
+                8, 9,10,10,11, 8,       // front
+                12,13,14,14,15,12,      // back
+                16,17,18,18,19,16,      // left
+                20,21,22,22,23,20       // right
+        };
+
+        VertexBuffer buffer = new VertexBuffer(glBufferUsage.GL_STATIC_DRAW)
+                .vertexes(vertices)
+                .indices(indices);
+        buffer.build();
+        buffer.bindAll();
+        GL46.glUseProgram(ShaderPrograms.STANDARD_SHADER_PROGRAM.getProgramID());
+
+        ShaderPrograms.STANDARD_SHADER_PROGRAM.setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
+        ShaderPrograms.STANDARD_SHADER_PROGRAM.setTransformationMatrix4fUniform(
+                MathUtils.createTransformationMatrix(
+                        new Vector3f(
+                                (float) entity.getX(),
+                                (float) entity.getY(),
+                                (float) entity.getZ()
+                        ),
+                        new Vector3f(0),
+                        new Vector3f(1)
+                )
+        );
+        GL46.glDrawElements(GL46.GL_TRIANGLES, buffer.getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+
+
+        buffer.free();
+        buffer.unbind();
     }
 }

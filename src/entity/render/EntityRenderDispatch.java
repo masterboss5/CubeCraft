@@ -3,6 +3,7 @@ package entity.render;
 import entity.CubeEntity;
 import entity.Entity;
 import entity.EntityType;
+import entity.model.EntityRenderQueue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +15,9 @@ public final class EntityRenderDispatch {
         return (EntityRenderer<T>) ENTITY_RENDERERS.get(type);
     }
 
-    public <T extends Entity> void render(T entity) {
+    public <T extends Entity> void render(T entity, EntityRenderQueue queue) {
         EntityRenderer<T> renderer = (EntityRenderer<T>) getRenderer(entity.getType());
-        renderer.render(entity);
+        renderer.render(entity, queue);
     }
 
     public void reload() {

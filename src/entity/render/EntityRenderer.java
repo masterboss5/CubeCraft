@@ -2,6 +2,8 @@ package entity.render;
 
 import entity.Entity;
 import entity.model.EntityModel;
+import entity.model.EntityRenderQueue;
+import world.World;
 
 public abstract class EntityRenderer<T extends Entity> {
     protected final EntityModel<T> model;
@@ -14,6 +16,7 @@ public abstract class EntityRenderer<T extends Entity> {
         return model;
     }
 
-    public void render(T entity) {
+    public void render(T entity, EntityRenderQueue queue) {
+        queue.submit(entity);
     }
 }

@@ -5,6 +5,8 @@ import block.BlockPosition;
 import entity.Entity;
 import entity.EntityType;
 import entity.model.EntityModel;
+import entity.model.EntityRenderQueue;
+import entity.render.ChunkRenderQueue;
 import entity.render.EntityRenderDispatch;
 import graphic.ModelPart;
 import graphic.ModelPartInstance;
@@ -16,7 +18,9 @@ public class World {
     final WorldChunkManager chunkManager = new WorldChunkManager(this);
     private final WorldEntityManager entityManager = new WorldEntityManager(this);
     private final EntityRenderDispatch entityRenderDispatch = new EntityRenderDispatch();
-    private Entity entity = EntityType.CUBE_ENTITY.create(0, 0, 0, this);
+    private final EntityRenderQueue entityRenderQueue = new EntityRenderQueue();
+    private final ChunkRenderQueue chunkRenderQueue = new ChunkRenderQueue();
+//    private Entity entity = EntityType.CUBE_ENTITY.create(0, 0, 0, this);
     private Entity player = EntityType.PLAYER_ENTITY.create(0, 0, 0, this);
 
     public World() {
@@ -56,28 +60,26 @@ public class World {
     }
 
     public void generateEntities() {
-        this.addEntity(entity);
+//        this.addEntity(entity);
         this.addEntity(player);
         this.entityRenderDispatch.reload();
     }
 
     public void tickWorld() {
         this.entityManager.tickEntities();
-        entity.setPosition(0, 0, 0);
+//        entity.setPosition(0, 0, 0);
     }
 
     public void renderWorld() {
         for (Chunk visibleChunk : this.chunkManager.getVisibleChunks()) {
-            visibleChunk.render();
+            visibleChunk.render(this.chunkRenderQueue);
         }
-
-        List<ModelPartInstance> parts = new ArrayList<>();
 
         for (Entity entity : this.entityManager.getEntities()) {
-            EntityModel<?> model = entity.getType().getModel();
-            parts.addAll(model.getPartInstances(entity));
+            this.entityRenderDispatch.render(entity, this.entityRenderQueue);
         }
 
-        RenderSystem.renderEntityInstanced(parts);
+        this.chunkRenderQueue.renderAll();
+        this.entityRenderQueue.renderAll();
     }
 }

@@ -4,6 +4,7 @@ import block.AirBlock;
 import block.Block;
 import block.BlockPosition;
 import block.Blocks;
+import entity.render.ChunkRenderQueue;
 import render.RenderSystem;
 import util.collection.PaletteContainer;
 
@@ -39,10 +40,9 @@ public class Chunk {
     }
 
     public void unload() {
-
     }
 
-    public void render() {
+    public void render(ChunkRenderQueue queue) {
         if (this.isNeedsMeshing()) {
             for (int x = 0; x < 4; x++) {
                 for (int z = 0; z < 4; z++) {
@@ -56,7 +56,7 @@ public class Chunk {
             this.needsMeshing = false;
         }
 
-        RenderSystem.renderChunk(this.mesh, this);
+        queue.submit(this);
     }
 
     public ChunkPosition getChunkPosition() {

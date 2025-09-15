@@ -55,27 +55,40 @@ public abstract class EntityModel<T extends Entity> {
         return instances;
     }
 
-    public Box getEntityBoundingBox() {
-        double minX = Float.POSITIVE_INFINITY, minY = Float.POSITIVE_INFINITY, minZ = Float.POSITIVE_INFINITY;
-        double maxX = Float.NEGATIVE_INFINITY, maxY = Float.NEGATIVE_INFINITY, maxZ = Float.NEGATIVE_INFINITY;
+    private static double roundToThousandth(double value) {
+        return Math.round(value * 1000.0) / 1000.0;
+    }
+
+    public void setEntityBoundingBox(Box box) {
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        double maxZ = Double.NEGATIVE_INFINITY;
 
         for (ModelPart part : this.getModelParts()) {
-            double localMinX = part.getPivotX();
-            double localMinY = part.getPivotY();
-            double localMinZ = part.getPivotZ();
-            double localMaxX = part.getPivotX() + part.getScaleX();
-            double localMaxY = part.getPivotY() + part.getScaleY();
-            double localMaxZ = part.getPivotZ() + part.getScaleZ();
+            double halfScaleX = part.getScaleX() / 2.0;
+            double halfScaleY = part.getScaleY() / 2.0;
+            double halfScaleZ = part.getScaleZ() / 2.0;
 
-            minX = Math.min(minX, localMinX);
-            minY = Math.min(minY, localMinY);
-            minZ = Math.min(minZ, localMinZ);
-            maxX = Math.max(maxX, localMaxX);
-            maxY = Math.max(maxY, localMaxY);
-            maxZ = Math.max(maxZ, localMaxZ);
+            double localMinX = part.getPivotX() - halfScaleX;
+            double localMinY = part.getPivotY() - halfScaleY;
+            double localMinZ = part.getPivotZ() - halfScaleZ;
+
+            double localMaxX = part.getPivotX() + halfScaleX;
+            double localMaxY = part.getPivotY() + halfScaleY;
+            double localMaxZ = part.getPivotZ() + halfScaleZ;
+
+            minX = Math.min(minX, roundToThousandth(localMinX));
+            minY = Math.min(minY, roundToThousandth(localMinY));
+            minZ = Math.min(minZ, roundToThousandth(localMinZ));
+            maxX = Math.max(maxX, roundToThousandth(localMaxX));
+            maxY = Math.max(maxY, roundToThousandth(localMaxY));
+            maxZ = Math.max(maxZ, roundToThousandth(localMaxZ));
         }
 
-        return new Box(minX, minY, minZ, maxX, maxY, maxZ);
+        box.setPosition(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
     public abstract void appendRootPart();
