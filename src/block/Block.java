@@ -8,7 +8,7 @@ import util.Hitbox;
 import java.util.Objects;
 
 public abstract class Block implements Renderable {
-    private final Hitbox hitbox = new Hitbox(new Box(1, 1, 1));
+    private final Box shape = new Box(1, 1, 1);
     private final BlockModel model;
 
     protected Block(BlockModel model) {
@@ -18,6 +18,10 @@ public abstract class Block implements Renderable {
     @Override
     public BlockModel getModel() {
         return model;
+    }
+
+    public Box getShape() {
+        return shape;
     }
 
     public boolean isAirBlock() {

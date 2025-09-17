@@ -1,6 +1,8 @@
 package entity;
 
+import block.Block;
 import block.BlockPosition;
+import render.RenderSystem;
 import util.Box;
 import util.Hitbox;
 import world.World;
@@ -17,15 +19,16 @@ public abstract class Entity {
     private double rotZ;
     private double velocity;
     private double velocityX;
-    private double velocityY;
+    private double velocityY = -0.7;
     private double velocityZ;
-    boolean isFalling;
-    private final BlockPosition blockPosition = new BlockPosition();
+    private BlockPosition blockPosition = new BlockPosition();
     private final UUID ID = UUID.randomUUID();
     private final EntityType<?> type;
     private final Box boundingBox = Box.NULL_BOX.get();
     private final Hitbox hitbox;
     private final World world;
+    private boolean isJumping;
+    private boolean isFalling;
 
     public Entity(double x, double y, double z, EntityType<?> type, World world) {
         this.x = x;
@@ -47,16 +50,31 @@ public abstract class Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getID(), this.type);
+        return Objects.hash(this.getID(), this.getType());
     }
 
     public void tick() {
+        this.y += this.velocityY;
         this.hitbox.moveTo(this.x, this.y, this.z);
-        this.blockPosition.set(
-                (int) Math.floor(this.x),
-                (int) Math.floor(this.y),
-                (int) Math.floor(this.z)
-        );
+        double bottomY = this.boundingBox.getMinY();
+        this.blockPosition = new BlockPosition(this.x, this.y + bottomY, this.z);
+
+        Hitbox blockBox = new Hitbox(this.world.getBlock(blockPosition).getShape());
+        blockBox.moveTo(this.blockPosition.getX(), this.blockPosition.getY(), this.blockPosition.getZ());
+
+        if (this.hitbox.intersects(blockBox)) {
+            if (!this.world.getBlock(blockPosition).isAirBlock()) {
+                this.onBlockCollision(this.world.getBlock(blockPosition), blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
+                this.velocityY = 0;
+                this.y = blockBox.getWorldBox().getMaxY() + Math.abs(this.boundingBox.getMinY());
+            }
+        }
+
+        RenderSystem.renderHitbox(blockBox.getWorldBox(), 0, 0, 0);
+    }
+
+    private void onBlockCollision(Block block, int bx, int by, int bz) {
+        System.out.println("COLLISION");
     }
 
     public void destroy() {

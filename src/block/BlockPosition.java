@@ -100,6 +100,15 @@ public class BlockPosition {
         return Objects.hash(this.getX(), this.getY(), this.getZ());
     }
 
+    @Override
+    public String toString() {
+        return "BlockPosition{" +
+                "x=" + this.x +
+                ", y=" + this.y +
+                ", z=" + this.z +
+                '}';
+    }
+
     public ChunkPosition toChunkPosition() {
         int chunkX = this.getX() / Chunk.CHUNK_WIDTH;
         int chunkZ = this.getZ() / Chunk.CHUNK_WIDTH;
