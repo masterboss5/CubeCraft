@@ -2,9 +2,12 @@ package entity;
 
 import block.Block;
 import block.BlockPosition;
+import block.Blocks;
 import render.RenderSystem;
+import util.Axis;
 import util.Box;
 import util.Hitbox;
+import util.collection.Pair;
 import world.World;
 
 import java.util.Objects;
@@ -18,14 +21,14 @@ public abstract class Entity {
     private double rotY;
     private double rotZ;
     private double velocity;
-    private double velocityX;
-    private double velocityY = -0.7;
-    private double velocityZ;
-    private BlockPosition blockPosition = new BlockPosition();
+    private double velocityX = 0;
+    private double velocityY = 0;
+    private double velocityZ = 0;
     private final UUID ID = UUID.randomUUID();
     private final EntityType<?> type;
     private final Box boundingBox = Box.NULL_BOX.get();
     private final Hitbox hitbox;
+    private final BlockPosition blockPosition = new BlockPosition();
     private final World world;
     private boolean isJumping;
     private boolean isFalling;
@@ -53,24 +56,78 @@ public abstract class Entity {
         return Objects.hash(this.getID(), this.getType());
     }
 
+    //TODO optimize
     public void tick() {
-        this.y += this.velocityY;
-        this.hitbox.moveTo(this.x, this.y, this.z);
-        double bottomY = this.boundingBox.getMinY();
-        this.blockPosition = new BlockPosition(this.x, this.y + bottomY, this.z);
+        double damping = 0.9; // or 0.95 for gentler slowdown
 
-        Hitbox blockBox = new Hitbox(this.world.getBlock(blockPosition).getShape());
-        blockBox.moveTo(this.blockPosition.getX(), this.blockPosition.getY(), this.blockPosition.getZ());
+        this.velocityX *= damping;
+        this.velocityZ *= damping;
+        double nextX = this.x + this.velocityX;
+        double nextY = this.y + this.velocityY;
+        double nextZ = this.z + this.velocityZ;
+        double bottomYOffset = Math.abs(this.boundingBox.getMinY());
 
-        if (this.hitbox.intersects(blockBox)) {
-            if (!this.world.getBlock(blockPosition).isAirBlock()) {
-                this.onBlockCollision(this.world.getBlock(blockPosition), blockPosition.getX(), blockPosition.getY(), blockPosition.getZ());
-                this.velocityY = 0;
-                this.y = blockBox.getWorldBox().getMaxY() + Math.abs(this.boundingBox.getMinY());
-            }
+        this.hitbox.moveTo(nextX, nextY, nextZ);
+        Hitbox footCollisionHitbox = new Hitbox(new Box(
+                this.boundingBox.getMinX(),
+                this.boundingBox.getMinY(),
+                this.boundingBox.getMinZ(),
+                this.boundingBox.getMaxX(),
+                this.boundingBox.getMinY(),
+                this.boundingBox.getMaxZ()
+        ));
+        footCollisionHitbox.moveTo(nextX, nextY, nextZ);
+
+        Pair<Block, BlockPosition> footBlock = footCollisionHitbox.intersectsBlock(world, Axis.Y);
+        if (footBlock != null) {
+            this.velocityY = 0;
+            this.y = footBlock.first().getShape().getMaxY() + footBlock.second().getY() + bottomYOffset;
+            nextY = this.y;
+        } else {
+            this.y = nextY;
         }
 
-        RenderSystem.renderHitbox(blockBox.getWorldBox(), 0, 0, 0);
+        this.hitbox.moveTo(nextX, nextY, nextZ);
+        Hitbox sideCollisionHitbox = new Hitbox(new Box(
+                this.boundingBox.getMinX(),
+                this.boundingBox.getMinY(),
+                this.boundingBox.getMinZ(),
+                this.boundingBox.getMinX(),
+                this.boundingBox.getMaxY(),
+                this.boundingBox.getMaxZ()
+        ));
+        sideCollisionHitbox.moveTo(nextX, nextY, nextZ);
+
+        Pair<Block, BlockPosition> sideBlock = sideCollisionHitbox.intersectsBlock(world, Axis.X);
+        if (sideBlock != null) {
+            this.velocityX = 0;
+            this.x = sideBlock.first().getShape().getMaxX() + sideBlock.second().getX() + Math.abs(this.boundingBox.getMinX());;
+            nextX = this.x;
+        } else {
+            this.x = nextX;
+        }
+
+        this.hitbox.moveTo(nextX, nextY, nextZ);
+        Hitbox frontCollisionHitbox = new Hitbox(new Box(
+                this.boundingBox.getMinX(),
+                this.boundingBox.getMinY(),
+                this.boundingBox.getMinZ(),
+                this.boundingBox.getMaxX(),
+                this.boundingBox.getMaxY(),
+                this.boundingBox.getMinZ()
+        ));
+        frontCollisionHitbox.moveTo(nextX, nextY, nextZ);
+
+        if (frontCollisionHitbox.intersectsBlock(world, Axis.Z) != null) {
+            this.velocityZ = 0;
+        } else {
+            this.z = nextZ;
+        }
+
+        RenderSystem.renderHitbox(footCollisionHitbox.getWorldBox(), 0, -1, 0);
+        RenderSystem.renderHitbox(sideCollisionHitbox.getWorldBox(), -1, 0, 0);
+        RenderSystem.renderHitbox(frontCollisionHitbox.getWorldBox(), 0, 0, -1);
+
     }
 
     private void onBlockCollision(Block block, int bx, int by, int bz) {
@@ -133,5 +190,29 @@ public abstract class Entity {
 
     public Box getBoundingBox() {
         return boundingBox;
+    }
+
+    public double getVelocityZ() {
+        return velocityZ;
+    }
+
+    public void setVelocityZ(double velocityZ) {
+        this.velocityZ = velocityZ;
+    }
+
+    public double getVelocityY() {
+        return velocityY;
+    }
+
+    public void setVelocityY(double velocityY) {
+        this.velocityY = velocityY;
+    }
+
+    public double getVelocityX() {
+        return velocityX;
+    }
+
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
     }
 }

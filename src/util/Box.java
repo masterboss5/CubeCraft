@@ -97,6 +97,18 @@ public class Box {
                 this.maxZ > otherBox.minZ && this.minZ < otherBox.maxZ;
     }
 
+    public boolean intersectsX(Box otherBox) {
+        return this.maxX > otherBox.minX && this.minX < otherBox.maxX;
+    }
+
+    public boolean intersectsY(Box otherBox) {
+        return this.maxY > otherBox.minY && this.minY < otherBox.maxY;
+    }
+
+    public boolean intersectsZ(Box otherBox) {
+        return this.maxZ > otherBox.minZ && this.minZ < otherBox.maxZ;
+    }
+
     public boolean contains(Vector3d point) {
         return point.x >= minX && point.x <= maxX &&
                 point.y >= minY && point.y <= maxY &&

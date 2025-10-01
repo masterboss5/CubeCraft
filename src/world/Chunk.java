@@ -44,13 +44,6 @@ public class Chunk {
 
     public void render(ChunkRenderQueue queue) {
         if (this.isNeedsMeshing()) {
-            for (int x = 0; x < 4; x++) {
-                for (int z = 0; z < 4; z++) {
-                    this.setBlock(Blocks.AIR_BLOCK, new BlockPosition(4 + x, 4, 4 + z));
-                }
-            }
-
-            this.setBlock(Blocks.AIR_BLOCK, new BlockPosition(0, 4, 0));
 
             this.mesh = WorldChunkManager.CHUNK_MESHER.meshChunk(this);
             this.needsMeshing = false;

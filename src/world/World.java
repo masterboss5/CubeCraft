@@ -67,7 +67,6 @@ public class World {
 
     public void tickWorld() {
         this.entityManager.tickEntities();
-//        entity.setPosition(0, 0, 0);
     }
 
     public void renderWorld() {

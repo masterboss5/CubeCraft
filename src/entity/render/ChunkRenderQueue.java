@@ -7,10 +7,7 @@ import world.Chunk;
 public class ChunkRenderQueue extends RenderQueue<Chunk> {
     @Override
     public void renderAll() {
-        for (Chunk chunk : this.queue) {
-            RenderSystem.renderChunk(chunk.getMesh(), chunk);
-        }
-
+        RenderSystem.renderChunk(this.queue);
         this.queue.clear();
     }
 }

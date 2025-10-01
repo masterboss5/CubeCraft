@@ -43,21 +43,24 @@ public class RenderSystem {
         GL46.glUseProgram(0);
     }
 
-    public static void renderChunk(ChunkMesh chunkMesh, Chunk chunk) {
-        chunkMesh.startShaderProgram();
-        chunkMesh.getVertexBuffer().bindAll();
-
-        chunkMesh.getShaderProgram().setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
-//        chunkMesh.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
-        chunkMesh.getShaderProgram().setTransformationMatrix4fUniform(chunkMesh.getTransformationMatrix());
-
+    private static final Matrix4f chunkMatrices = new Matrix4f();
+    public static void renderChunk(List<Chunk> chunks) {
+        GL46.glUseProgram(ShaderPrograms.CUBE_ALL_TEXTURED_SHADER_PROGRAM.getProgramID());
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL13.glBindTexture(GL46.GL_TEXTURE_2D_ARRAY, TextureArrays.BLOCK_TEXTURE_ARRAY.getArrayID());
 
-        GL46.glDrawElements(GL46.GL_TRIANGLES, chunkMesh.getVertexBuffer().getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+        ShaderPrograms.CUBE_ALL_TEXTURED_SHADER_PROGRAM.setViewMatrix4fUniform(MathUtils.createViewMatrix(camera));
 
-        chunkMesh.getVertexBuffer().unbindAll();
-        GL46.glUseProgram(0);
+        for (Chunk chunk : chunks) {
+            final ChunkMesh chunkMesh = chunk.getMesh();
+            //TODO check if we can just bind the VAO instead of all attributes
+            chunkMesh.getVertexBuffer().bindAll();
+            ShaderPrograms.CUBE_ALL_TEXTURED_SHADER_PROGRAM.setTransformationMatrix4fUniform(chunkMesh.getTransformationMatrix(chunkMatrices));
+            GL46.glDrawElements(GL46.GL_TRIANGLES, chunkMesh.getVertexBuffer().getIndicesCount(), GL46.GL_UNSIGNED_INT, 0);
+
+        }
+
+//        chunkMesh.getShaderProgram().setProjectionMatrix4fUniform(projectionMatrix);
     }
 
     public static void renderEntity(VertexBuffer vertexBuffer, Entity entity) {
@@ -120,7 +123,6 @@ public class RenderSystem {
     }*/
 
     private static final int textureShaderStorageBufferObjectID = GL46.glGenBuffers();
-
     public static void renderEntityInstanced(List<ModelPartInstance> parts) {
         GL46.glUseProgram(ShaderPrograms.ENTITY_SHADER_PROGRAM.getProgramID());
         ModelPart.UNIFORM_CUBE_VERTEX_BUFFER.bindAll();
@@ -157,9 +159,6 @@ public class RenderSystem {
                 0,
                 parts.size()
         );
-
-        GL46.glBindVertexArray(0);
-        GL46.glUseProgram(0);
     }
 
     public static void renderHitbox(Box box, Entity entity) {

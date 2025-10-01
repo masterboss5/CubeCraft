@@ -8,9 +8,9 @@ import java.util.Objects;
 
 public class BlockPosition {
     public static final BlockPosition ORIGIN = new BlockPosition();
-    private final int x;
-    private final int y;
-    private final int z;
+    private int x;
+    private int y;
+    private int z;
 
     public BlockPosition(double x, double y, double z) {
         this((int) x, (int) y, (int) z);
@@ -34,28 +34,30 @@ public class BlockPosition {
         return x;
     }
 
-    public BlockPosition setX(int x) {
-        return new BlockPosition(x, this.getY(), this.getZ());
+    public void setX(int x) {
+        this.x = x;
     }
 
     public int getY() {
         return y;
     }
 
-    public BlockPosition setY(int y) {
-        return new BlockPosition(this.getX(), y, this.getZ());
+    public void setY(int y) {
+        this.y = y;
     }
 
     public int getZ() {
         return z;
     }
 
-    public BlockPosition setZ(int z) {
-        return new BlockPosition(this.getX(), this.getY(), z);
+    public void setZ(int z) {
+        this.z = z;
     }
 
-    public BlockPosition set(int x, int y, int z) {
-        return new BlockPosition(x, y, z);
+    public void set(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public double distanceTo(BlockPosition other) {
@@ -71,7 +73,7 @@ public class BlockPosition {
     }
 
     public BlockPosition offset(int dx, int dy, int dz) {
-        return new BlockPosition(this.getX() + dx, this.getY() + dy, this.getZ() + dz);
+        return new BlockPosition(this.x + dx, this.y + dy, this.z + dz);
     }
 
     public boolean isAlignedX(BlockPosition other) {

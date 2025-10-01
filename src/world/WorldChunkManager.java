@@ -40,7 +40,7 @@ public class WorldChunkManager {
                 }
             }
         }
-        chunk.setBlock(Blocks.COBBLESTONE_BLOCK, new BlockPosition(0, 0, 0));
+        chunk.setBlock(Blocks.COBBLESTONE_BLOCK, new BlockPosition(0, 10, 0));
 
         this.cache(chunk);
     }
